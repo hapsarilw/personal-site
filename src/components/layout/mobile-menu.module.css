@@ -1,0 +1,59 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  padding: 78px clamp(20px, 6vw, 40px) 32px;
+  background: var(--scrim);
+  backdrop-filter: blur(20px);
+  animation: slide-up 0.22s ease-out;
+}
+
+.close {
+  position: absolute;
+  top: 14px;
+  right: var(--gutter);
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-bold);
+  border-radius: 8px;
+  color: var(--text-strong);
+  font: 400 20px / 1 var(--font-sans), sans-serif;
+  cursor: pointer;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.link {
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border-faint);
+  color: var(--text-strong);
+  font: 600 26px / 1.2 var(--font-sans), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.cta {
+  display: inline-flex;
+  height: 52px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font: 600 15px / 1 var(--font-sans), sans-serif;
+}

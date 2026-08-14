@@ -1,0 +1,121 @@
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 40;
+  border-bottom: 1px solid var(--border-faint);
+  background: var(--header-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.nav {
+  display: flex;
+  max-width: var(--container);
+  height: var(--header-height);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  align-items: center;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 9px;
+  color: var(--text-strong);
+  font: 700 13px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.02em;
+}
+
+.brandMark {
+  color: var(--accent-text);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  margin-left: 22px;
+}
+
+.link {
+  color: var(--text-muted);
+  font: 500 13px / 1 var(--font-sans), sans-serif;
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: var(--text-strong);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.cta {
+  display: inline-flex;
+  height: 36px;
+  padding: 0 15px;
+  align-items: center;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font: 600 12.5px / 1 var(--font-sans), sans-serif;
+  transition: background-color 0.2s;
+}
+
+.cta:hover {
+  background: var(--hi);
+  color: var(--on-hi);
+}
+
+.menuButton {
+  display: inline-flex;
+  width: 44px;
+  height: 36px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid var(--border-bold);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.menuBar {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: var(--text-strong);
+}
+
+.progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+/* The desktop links and CTA collapse into the menu button below 900px. */
+@media (max-width: 899px) {
+  .links,
+  .cta {
+    display: none;
+  }
+}
+
+@media (min-width: 900px) {
+  .menuButton {
+    display: none;
+  }
+}

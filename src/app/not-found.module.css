@@ -1,0 +1,37 @@
+.main {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  min-height: 100svh;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--header-height) var(--gutter) 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 18px;
+}
+
+.code {
+  color: var(--accent-text);
+  font: 500 12px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.14em;
+}
+
+.title {
+  font: 600 clamp(30px, 5.4vw, 50px) / 1.1 var(--font-sans), sans-serif;
+  letter-spacing: -0.03em;
+}
+
+.body {
+  max-width: 52ch;
+  color: var(--text-muted);
+  font: 400 16px / 1.7 var(--font-sans), sans-serif;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}

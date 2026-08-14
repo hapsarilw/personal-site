@@ -1,0 +1,36 @@
+.main {
+  position: relative;
+  z-index: 2;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: calc(var(--header-height) + clamp(40px, 8vh, 72px)) var(--gutter)
+    clamp(64px, 12vh, 120px);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  color: var(--text-subtle);
+  font: 500 11px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.08em;
+  transition: color 0.2s;
+}
+
+.back:hover {
+  color: var(--text-strong);
+}
+
+.title {
+  font: 600 clamp(30px, 5.4vw, 50px) / 1.1 var(--font-sans), sans-serif;
+  letter-spacing: -0.03em;
+}
+
+.intro {
+  max-width: 60ch;
+  margin: 16px 0 clamp(28px, 5vw, 44px);
+  color: var(--text-muted);
+  font: 400 clamp(15.5px, 1.6vw, 18px) / 1.7 var(--font-sans), sans-serif;
+  text-wrap: pretty;
+}

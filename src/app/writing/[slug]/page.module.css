@@ -1,0 +1,119 @@
+/*
+ * The reading surface is opaque. The ambient 3D field is decoration for the
+ * landing page; behind body copy it cuts straight through the text, so a post
+ * gets a solid ground the way the previous full-screen reader did.
+ */
+.page {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  padding-top: var(--header-height);
+  background: var(--bg);
+}
+
+.bar {
+  position: sticky;
+  /* Sits below the fixed site header rather than colliding with it. */
+  top: var(--header-height);
+  z-index: 30;
+  border-bottom: 1px solid var(--border-faint);
+  /* Opaque: body copy scrolls beneath it, and translucency here only ghosts. */
+  background: var(--bg);
+}
+
+.barInner {
+  display: flex;
+  max-width: 760px;
+  height: 58px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 32px);
+  align-items: center;
+  gap: 14px;
+}
+
+.back {
+  display: inline-flex;
+  height: 38px;
+  padding: 0 14px;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--text);
+  font: 500 12px / 1 var(--font-mono), monospace;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.back:hover {
+  border-color: var(--accent-text);
+  color: var(--text-strong);
+}
+
+.meta {
+  margin-left: auto;
+  color: var(--text-placeholder);
+  font: 400 11px / 1 var(--font-mono), monospace;
+}
+
+.article {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(36px, 7vw, 64px) clamp(16px, 4vw, 32px) clamp(64px, 12vh, 120px);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 20px;
+}
+
+.title {
+  margin-bottom: 18px;
+  font: 600 clamp(30px, 5.4vw, 50px) / 1.1 var(--font-sans), sans-serif;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.excerpt {
+  margin-bottom: 30px;
+  color: var(--text-subtle);
+  font: 400 clamp(16px, 1.8vw, 19px) / 1.65 var(--font-sans), sans-serif;
+  text-wrap: pretty;
+}
+
+.cover {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 34px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background-color: var(--surface-2);
+  background-position: center;
+  background-size: cover;
+}
+
+.divider {
+  height: 1px;
+  margin-bottom: 34px;
+  background: var(--border);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 56px;
+  padding-top: 26px;
+  border-top: 1px solid var(--border);
+}
+
+.footerText {
+  color: var(--text-subtle);
+  font: 400 13px / 1.6 var(--font-sans), sans-serif;
+}

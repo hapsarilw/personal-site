@@ -1,0 +1,42 @@
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: minmax(96px, 140px) minmax(0, 1fr);
+  gap: clamp(14px, 3vw, 40px);
+  padding: clamp(20px, 3vw, 28px) 0;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.period {
+  color: var(--accent-text);
+  font: 500 12px / 1.5 var(--font-mono), monospace;
+  letter-spacing: 0.03em;
+}
+
+.industry {
+  margin-top: 4px;
+  color: var(--text-placeholder);
+  font: 400 11px / 1.5 var(--font-mono), monospace;
+}
+
+.role {
+  font: 600 clamp(17px, 1.9vw, 21px) / 1.3 var(--font-sans), sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.company {
+  color: var(--text-subtle);
+  font-weight: 400;
+}
+
+.summary {
+  max-width: 72ch;
+  margin-top: 9px;
+  color: var(--text-muted);
+  font: 400 14.5px / 1.65 var(--font-sans), sans-serif;
+  text-wrap: pretty;
+}

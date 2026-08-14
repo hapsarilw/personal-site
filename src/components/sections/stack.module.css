@@ -1,0 +1,30 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(198px, 1fr));
+  gap: clamp(10px, 1.3vw, 14px);
+}
+
+.group {
+  padding: clamp(18px, 2vw, 24px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: var(--panel);
+}
+
+.groupTitle {
+  margin-bottom: 16px;
+  color: var(--accent-text);
+  font: 500 10px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.13em;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.item {
+  color: var(--text);
+  font: 400 14px / 1 var(--font-sans), sans-serif;
+}

@@ -1,0 +1,31 @@
+.heading {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  margin-bottom: clamp(28px, 5vw, 52px);
+}
+
+.tight {
+  margin-bottom: clamp(22px, 4vw, 32px);
+}
+
+.index {
+  color: var(--accent-text);
+  font: 500 11px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  font: 600 clamp(25px, 3.6vw, 42px) / 1.05 var(--font-sans), sans-serif;
+  letter-spacing: -0.025em;
+}
+
+.meta {
+  margin-left: auto;
+  color: var(--text-faint);
+  font: 400 11px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.08em;
+  text-align: right;
+}

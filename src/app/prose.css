@@ -1,0 +1,251 @@
+/*
+ * Styling for rendered markdown. The renderer emits semantic HTML with a small
+ * set of class hooks; everything visual is decided here, so post output can be
+ * restyled without touching the parser.
+ */
+
+.prose {
+  color: var(--text-prose);
+}
+
+.prose > *:last-child {
+  margin-bottom: 0;
+}
+
+.prose p {
+  margin: 0 0 1.35em;
+  font: 400 clamp(15.5px, 1.7vw, 17.5px) / 1.78 var(--font-sans), sans-serif;
+  text-wrap: pretty;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin: 2.1em 0 0.65em;
+  color: var(--text-strong);
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.prose h1 {
+  font-size: clamp(26px, 3.6vw, 34px);
+}
+
+.prose h2 {
+  font-size: clamp(21px, 2.6vw, 26px);
+}
+
+.prose h3 {
+  font-size: clamp(17.5px, 2vw, 20px);
+}
+
+.prose h4 {
+  font-size: 16px;
+}
+
+.prose ul,
+.prose ol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin: 0 0 1.5em;
+  padding-left: 22px;
+}
+
+.prose li {
+  margin: 0;
+  font: 400 clamp(15.5px, 1.7vw, 17.5px) / 1.78 var(--font-sans), sans-serif;
+  text-wrap: pretty;
+}
+
+.prose blockquote {
+  margin: 0 0 1.6em;
+  padding: 2px 0 2px 20px;
+  border-left: 2px solid var(--accent-text);
+  color: var(--text-muted);
+  font: 400 clamp(16px, 1.8vw, 18.5px) / 1.7 var(--font-sans), sans-serif;
+  text-wrap: pretty;
+}
+
+.prose strong {
+  color: var(--text-strong);
+  font-weight: 600;
+}
+
+.prose a {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: var(--hi);
+}
+
+.prose :not(pre) > code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--accent-tint);
+  color: var(--accent-text);
+  font: 400 0.88em / 1.4 var(--font-mono), monospace;
+}
+
+.prose hr {
+  height: 1px;
+  margin: 2.4em 0;
+  border: 0;
+  background: var(--border);
+}
+
+/* ---- Figures ---- */
+
+.prose figure {
+  margin: 0 0 1.9em;
+}
+
+.prose figure a {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+
+.prose figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.prose figcaption {
+  margin-top: 10px;
+  color: var(--text-faint);
+  font: 400 12.5px / 1.55 var(--font-mono), monospace;
+  text-wrap: pretty;
+}
+
+/* ---- Code blocks ---- */
+
+.prose .code-block {
+  overflow: hidden;
+  margin: 0 0 1.6em;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--surface-3);
+}
+
+.prose .code-block__label {
+  padding: 8px 13px;
+  border-bottom: 1px solid var(--border-faint);
+  color: var(--text-faint);
+  font: 500 9.5px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.13em;
+}
+
+.prose pre {
+  overflow-x: auto;
+  margin: 0;
+  padding: 15px 16px;
+  color: var(--text);
+  font: 400 13px / 1.7 var(--font-mono), monospace;
+}
+
+.prose pre code {
+  font: inherit;
+}
+
+.tok-comment {
+  color: var(--text-placeholder);
+}
+
+.tok-string {
+  color: #9be58a;
+}
+
+.tok-keyword {
+  color: #e48bff;
+}
+
+.tok-number {
+  color: #f2b25e;
+}
+
+.tok-fn {
+  color: #7fd4ff;
+}
+
+[data-theme='light'] .tok-string {
+  color: #2f7d20;
+}
+
+[data-theme='light'] .tok-keyword {
+  color: #8b2bb0;
+}
+
+[data-theme='light'] .tok-number {
+  color: #9a5b00;
+}
+
+[data-theme='light'] .tok-fn {
+  color: #0d6c94;
+}
+
+/* ---- YouTube preview card ---- */
+
+.prose .video-card {
+  position: relative;
+  display: block;
+  margin: 0 0 1.9em;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background-color: var(--surface-2);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+
+.prose .video-card__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 9, 10, 0.15), rgba(8, 9, 10, 0.72));
+}
+
+.prose .video-card__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  width: 66px;
+  height: 46px;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: #ff0033;
+}
+
+.prose .video-card__play::after {
+  content: '';
+  width: 0;
+  height: 0;
+  margin-left: 3px;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 15px solid #ffffff;
+}
+
+.prose .video-card__label {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  color: #ffffff;
+  font: 500 10px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.14em;
+}

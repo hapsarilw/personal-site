@@ -1,0 +1,84 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+  white-space: nowrap;
+}
+
+/* ---- Variants ---- */
+
+.primary {
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 1px solid var(--accent);
+  font-weight: 600;
+}
+
+.primary:hover {
+  background: var(--hi);
+  border-color: var(--hi);
+  color: var(--on-hi);
+}
+
+.outline {
+  border: 1px solid var(--border-bold);
+  color: var(--text-strong);
+  font-weight: 500;
+}
+
+.outline:hover {
+  border-color: var(--accent-text);
+  background: var(--accent-wash);
+}
+
+.subtle {
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font-weight: 500;
+}
+
+.subtle:hover {
+  border-color: var(--accent-text);
+  color: var(--hi);
+}
+
+/* ---- Sizes ---- */
+
+.sm {
+  height: 36px;
+  min-width: 44px;
+  padding: 0 13px;
+  font: 500 12px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.03em;
+  border-radius: 8px;
+}
+
+.md {
+  height: 46px;
+  padding: 0 18px;
+  font-size: 13px;
+  font-family: var(--font-mono), monospace;
+  letter-spacing: 0.03em;
+}
+
+.lg {
+  height: 48px;
+  padding: 0 22px;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 14.5px;
+}
+
+.icon {
+  width: 44px;
+  height: 36px;
+  padding: 0;
+  border-radius: 8px;
+  font: 400 15px / 1 var(--font-mono), monospace;
+}

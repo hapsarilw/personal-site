@@ -1,0 +1,21 @@
+.action {
+  display: inline-flex;
+  height: 44px;
+  margin-top: 18px;
+  padding: 0 18px;
+  align-items: center;
+  gap: 9px;
+  border: 1px dashed var(--border-bold);
+  border-radius: var(--radius-md);
+  color: var(--text-subtle);
+  font: 500 13px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.03em;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.action:hover {
+  border-color: var(--accent-text);
+  color: var(--text-strong);
+}

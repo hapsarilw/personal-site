@@ -1,0 +1,66 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 4vw, 40px);
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-faint);
+  font: 500 10px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.16em;
+}
+
+.rule {
+  flex: 1;
+  min-width: 40px;
+  height: 1px;
+  background: var(--border);
+}
+
+.email {
+  display: inline-block;
+  align-self: flex-start;
+  max-width: 100%;
+  padding-bottom: 0.1em;
+  background: linear-gradient(var(--accent), var(--accent)) left bottom / 0% 4px no-repeat;
+  color: var(--text-strong);
+  font: 600 clamp(27px, 5.6vw, 64px) / 1.02 var(--font-sans), sans-serif;
+  letter-spacing: -0.042em;
+  word-break: break-word;
+  transition: background-size 0.5s cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+
+.email:hover {
+  background-size: 100% 4px;
+  color: var(--text-strong);
+}
+
+.emailDomain {
+  color: var(--accent-text);
+}
+
+.blurb {
+  max-width: 52ch;
+  color: var(--text-subtle);
+  font: 400 13.5px / 1.6 var(--font-sans), sans-serif;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.linkArrow {
+  color: var(--text-placeholder);
+}

@@ -1,0 +1,134 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: clamp(20px, 3vw, 28px);
+}
+
+.search {
+  display: flex;
+  flex: 1 1 240px;
+  min-width: 0;
+  height: 44px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--panel-solid);
+}
+
+.search:focus-within {
+  border-color: var(--accent-border-strong);
+}
+
+.searchMark {
+  color: var(--text-placeholder);
+  font: 400 13px / 1 var(--font-mono), monospace;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-strong);
+  font: 400 14px / 1 var(--font-sans), sans-serif;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.chip {
+  display: inline-flex;
+  height: 32px;
+  padding: 0 12px;
+  align-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-subtle);
+  font: 500 11.5px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    background-color 0.18s,
+    border-color 0.18s,
+    color 0.18s;
+}
+
+.chip:hover {
+  border-color: var(--accent-border);
+  color: var(--text-strong);
+}
+
+.chipActive {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.clear {
+  color: var(--accent-text);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---- Pagination ---- */
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.range {
+  color: var(--text-faint);
+  font: 400 10.5px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.1em;
+}
+
+.pages {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.page {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font: 500 11.5px / 1 var(--font-mono), monospace;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    background-color 0.18s,
+    border-color 0.18s,
+    color 0.18s;
+}
+
+.page:hover:not(:disabled) {
+  border-color: var(--accent-border);
+}
+
+.pageActive {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.page:disabled {
+  border-color: var(--border-faint);
+  color: var(--text-dim);
+  cursor: not-allowed;
+}

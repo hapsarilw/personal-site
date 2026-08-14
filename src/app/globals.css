@@ -1,0 +1,268 @@
+/*
+ * Design tokens.
+ *
+ * The previous build computed every colour in JavaScript and wrote ~40 custom
+ * properties onto <html> on each render. Both themes are now declared here and
+ * switched with a single `data-theme` attribute, so theming costs one attribute
+ * write and colours are inspectable in devtools.
+ */
+
+:root {
+  /* Accent — one hue, with the alpha steps the UI actually uses. */
+  --accent: #c6f24e;
+  --accent-text: #c6f24e;
+  --accent-comet: 198, 242, 78;
+  --on-accent: #08090a;
+  --accent-wash: rgba(198, 242, 78, 0.06);
+  --accent-tint: rgba(198, 242, 78, 0.1);
+  --accent-tint-strong: rgba(198, 242, 78, 0.14);
+  --accent-border: rgba(198, 242, 78, 0.28);
+  --accent-border-strong: rgba(198, 242, 78, 0.3);
+  --accent-border-hover: rgba(198, 242, 78, 0.42);
+  --accent-glow: rgba(198, 242, 78, 0.35);
+
+  /* Surfaces */
+  --bg: #08090a;
+  --surface-1: #0a0c0d;
+  --surface-2: #0b0d0f;
+  --surface-3: #0c0f11;
+  --surface-hover: #101314;
+  --panel: rgba(12, 14, 16, 0.72);
+  --panel-solid: rgba(12, 14, 16, 0.8);
+  --header-bg: rgba(8, 9, 10, 0.74);
+  --footer-bg: rgba(8, 9, 10, 0.86);
+  --scrim: rgba(8, 9, 10, 0.97);
+
+  /* Text */
+  --text-strong: #edede8;
+  --text: #c9cdd2;
+  --text-prose: #c0c6cc;
+  --text-muted: #9aa1a8;
+  --text-subtle: #8b9199;
+  --text-label: #7c838b;
+  --text-faint: #6b737b;
+  --text-placeholder: #5c646c;
+  --text-ghost: #4a5158;
+  --text-dim: #3a4046;
+
+  /* Borders */
+  --border-faint: rgba(255, 255, 255, 0.07);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --border-bold: rgba(255, 255, 255, 0.18);
+
+  /* Feedback */
+  --hi: #ffffff;
+  --on-hi: #08090a;
+  --warn: #f2b25e;
+  --danger: #e5484d;
+
+  /* Chrome */
+  --scrollbar-track: #0c0e10;
+  --scrollbar-thumb: #22262a;
+  --scrollbar-thumb-hover: #333940;
+
+  /* Layout */
+  --container: 1240px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --header-height: 62px;
+  --radius-sm: 7px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+[data-theme='light'] {
+  --accent-text: #5b6f24;
+  --accent-comet: 103, 126, 41;
+  --on-accent: #1c1b17;
+  --accent-wash: rgba(198, 242, 78, 0.09);
+  --accent-tint: rgba(198, 242, 78, 0.15);
+  --accent-tint-strong: rgba(198, 242, 78, 0.21);
+  --accent-border: rgba(198, 242, 78, 0.42);
+  --accent-border-strong: rgba(198, 242, 78, 0.45);
+  --accent-border-hover: rgba(198, 242, 78, 0.63);
+  --accent-glow: rgba(198, 242, 78, 0.5);
+
+  --bg: #fbfaf8;
+  --surface-1: #ffffff;
+  --surface-2: #faf8f4;
+  --surface-3: #ffffff;
+  --surface-hover: #f0eee8;
+  --panel: rgba(255, 255, 255, 0.94);
+  --panel-solid: #ffffff;
+  --header-bg: rgba(251, 250, 248, 0.74);
+  --footer-bg: rgba(251, 250, 248, 0.86);
+  --scrim: rgba(251, 250, 248, 0.97);
+
+  --text-strong: #1c1b17;
+  --text: #302d29;
+  --text-prose: #3a3733;
+  --text-muted: #514c46;
+  --text-subtle: #5c5750;
+  --text-label: #68635b;
+  --text-faint: #746f67;
+  --text-placeholder: #847f77;
+  --text-ghost: #97928a;
+  --text-dim: #c4c0b6;
+
+  --border-faint: rgba(28, 27, 23, 0.13);
+  --border-subtle: rgba(28, 27, 23, 0.14);
+  --border: rgba(28, 27, 23, 0.18);
+  --border-strong: rgba(28, 27, 23, 0.25);
+  --border-bold: rgba(28, 27, 23, 0.32);
+
+  --hi: #1c1b17;
+  --on-hi: #fbfaf8;
+  --warn: #a05b00;
+
+  --scrollbar-track: #eeece6;
+  --scrollbar-thumb: #cdcac1;
+  --scrollbar-thumb-hover: #b2aea4;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Anchor links land below the fixed header instead of under it. */
+  scroll-padding-top: calc(var(--header-height) + 16px);
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-strong);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+::placeholder {
+  color: var(--text-placeholder);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border: 3px solid var(--scrollbar-track);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--accent-glow);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(198, 242, 78, 0);
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Utility for screen-reader-only text. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

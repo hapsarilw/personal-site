@@ -1,0 +1,19 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 2.4vw, 28px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+}
+
+.interactive {
+  transition:
+    border-color 0.25s,
+    transform 0.25s;
+}
+
+.interactive:hover {
+  border-color: var(--accent-border-hover);
+  transform: translateY(-4px);
+}

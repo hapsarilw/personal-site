@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#08090A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg,#08090A);color:var(--tx,#EDEDE8);font-family:Archivo,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;overscroll-behavior-y:none}
+a{color:var(--acx,#C6F24E);text-decoration:none}
+a:hover{color:var(--hi,#FFFFFF)}
+h1,h2,h3,h4,p{margin:0}
+button,input,textarea,select{font-family:inherit;color:inherit;border:0;background:none;outline:none}
+textarea{resize:none}
+::selection{background:var(--accf,#C6F24E);color:var(--onacc,var(--bg,#08090A))}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:var(--sb,#0C0E10)}
+::-webkit-scrollbar-thumb{background:var(--sbt,#22262A);border:3px solid var(--sb,#0C0E10);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:var(--sbh,#333940)}
+input::placeholder,textarea::placeholder{color:var(--g7,#5C646C)}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 var(--a35,rgba(198,242,78,.35))}50%{box-shadow:0 0 0 6px rgba(198,242,78,0)}}
+@keyframes caret{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative;width:100%;min-height:100vh">
+
+<canvas ref="{{ canvasRef }}" aria-hidden="true" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none"></canvas>
+<canvas ref="{{ cometRef }}" aria-hidden="true" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:55;pointer-events:none"></canvas>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:40;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:var(--k74,rgba(8,9,10,.74));border-bottom:1px solid var(--w07,rgba(255,255,255,.07))">
+<nav style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,48px);height:62px;display:flex;align-items:center;gap:20px">
+<a href="#top" style="display:flex;align-items:center;gap:9px;font:700 13px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em;color:var(--tx,#EDEDE8);flex:none">
+<span style="color:var(--acx,#C6F24E)">&lt;/&gt;</span>H.LAKSMI
+</a>
+<sc-if value="{{ wideNav }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:center;gap:26px;margin-left:22px">
+<a href="#work" style="font:500 13px/1 Archivo,sans-serif;color:var(--g3,#9AA1A8)">Work</a>
+<a href="#experience" style="font:500 13px/1 Archivo,sans-serif;color:var(--g3,#9AA1A8)">Experience</a>
+<a href="#stack" style="font:500 13px/1 Archivo,sans-serif;color:var(--g3,#9AA1A8)">Stack</a>
+<a href="#writing" style="font:500 13px/1 Archivo,sans-serif;color:var(--g3,#9AA1A8)">Writing</a>
+<a href="#about" style="font:500 13px/1 Archivo,sans-serif;color:var(--g3,#9AA1A8)">About</a>
+</div>
+</sc-if>
+<div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+<button onClick="{{ toggleTheme }}" title="Toggle theme" aria-label="Toggle theme" style="width:44px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--w16,rgba(255,255,255,.16));border-radius:8px;font:400 15px/1 'JetBrains Mono',monospace;color:var(--tx2,#C9CDD2);cursor:pointer" style-hover="border-color:var(--acx,#C6F24E);color:var(--hi,#FFFFFF)">{{ themeIcon }}</button>
+<sc-if value="{{ installable }}" hint-placeholder-val="{{ false }}">
+<button onClick="{{ install }}" style="height:36px;padding:0 13px;border:1px solid var(--w16,rgba(255,255,255,.16));border-radius:8px;font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.03em;color:var(--tx2,#C9CDD2);cursor:pointer" style-hover="border-color:var(--acx,#C6F24E);color:var(--hi,#FFFFFF)">INSTALL</button>
+</sc-if>
+<button onClick="{{ openStudio }}" title="Write a post" style="height:36px;min-width:44px;padding:0 13px;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--w16,rgba(255,255,255,.16));border-radius:8px;font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.03em;color:var(--tx2,#C9CDD2);cursor:pointer" style-hover="border-color:var(--acx,#C6F24E);color:var(--hi,#FFFFFF)">
+<span style="color:var(--acx,#C6F24E)">&#9679;</span>STUDIO
+</button>
+<sc-if value="{{ wideNav }}" hint-placeholder-val="{{ true }}">
+<a href="#contact" style="height:36px;padding:0 15px;display:inline-flex;align-items:center;border-radius:8px;background:var(--accf,#C6F24E);color:var(--onacc,var(--bg,#08090A));font:600 12.5px/1 Archivo,sans-serif" style-hover="background:var(--hi,#FFFFFF);color:var(--onhi,var(--bg,#08090A))">Get in touch</a>
+</sc-if>
+<sc-if value="{{ narrowNav }}" hint-placeholder-val="{{ false }}">
+<button onClick="{{ toggleMenu }}" aria-label="Menu" style="width:44px;height:36px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:1px solid var(--w16,rgba(255,255,255,.16));border-radius:8px;cursor:pointer">
+<span style="display:block;width:16px;height:1.5px;background:var(--tx,#EDEDE8)"></span>
+<span style="display:block;width:16px;height:1.5px;background:var(--tx,#EDEDE8)"></span>
+</button>
+</sc-if>
+</div>
+</nav>
+<div data-progress style="position:absolute;left:0;bottom:0;width:100%;height:2px;background:var(--accf,#C6F24E);transform:scaleX(0);transform-origin:0 50%"></div>
+</header>
+
+<main style="position:relative;z-index:2">
+
+<section id="top" style="position:relative;max-width:1240px;margin:0 auto;width:100%;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:118px clamp(16px,4vw,48px) clamp(48px,8vh,88px)">
+<div data-reveal style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;padding:6px 13px 6px 11px;border:1px solid var(--w13,rgba(255,255,255,.13));border-radius:999px;background:var(--w025,rgba(255,255,255,.025));font:500 10.5px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.09em;color:var(--g2,#B7BDC4)">
+<span style="width:7px;height:7px;border-radius:50%;background:var(--accf,#C6F24E);animation:pulseDot 2.6s ease-in-out infinite"></span>
+OPEN TO JUNIOR SOFTWARE ENGINEER ROLES
+</div>
+<p data-reveal style="margin:clamp(28px,5vh,44px) 0 clamp(14px,2vh,20px);font:500 12px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;color:var(--g5,#7C838B)">HAPSARI LAKSMI WIJAYANTI &nbsp;/&nbsp; JUNIOR SOFTWARE ENGINEER</p>
+<h1 data-reveal style="font:600 clamp(34px,6.6vw,76px)/1.04 Archivo,sans-serif;letter-spacing:-.035em;max-width:20ch;text-wrap:balance">Four years of production frontend. Now shipping the API behind it.<span style="color:var(--acx,#C6F24E);animation:caret 1.1s step-end infinite">_</span></h1>
+<p data-reveal style="margin:clamp(22px,3.5vh,32px) 0 0;max-width:64ch;font:400 clamp(15.5px,1.6vw,19px)/1.65 Archivo,sans-serif;color:var(--g3,#9AA1A8);text-wrap:pretty">I write TypeScript for enterprise logistics, where a mis-rendered pallet ID sends someone to the wrong aisle. That taught me to be careful about state and unromantic about clever code. I am applying the same discipline to the other half of the stack &mdash; NestJS, Prisma, Postgres, containerised and deployed.</p>
+<div data-reveal style="display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(20px,3vh,28px)">
+<span style="padding:7px 12px;border:1px solid var(--a28,rgba(198,242,78,.28));border-radius:7px;font:500 11.5px/1 'JetBrains Mono',monospace;letter-spacing:.04em;color:var(--acx,#C6F24E)">4 YRS PRODUCTION REACT</span>
+<span style="padding:7px 12px;border:1px solid var(--w13,rgba(255,255,255,.13));border-radius:7px;font:500 11.5px/1 'JetBrains Mono',monospace;letter-spacing:.04em;color:var(--g3,#9AA1A8)">LED A FEATURE AREA END TO END</span>
+<span style="padding:7px 12px;border:1px solid var(--w13,rgba(255,255,255,.13));border-radius:7px;font:500 11.5px/1 'JetBrains Mono',monospace;letter-spacing:.04em;color:var(--g3,#9AA1A8)">BUILDING FULL-STACK NOW</span>
+</div>
+<div data-reveal style="display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(28px,4.5vh,42px)">
+<a href="#work" style="height:48px;padding:0 22px;display:inline-flex;align-items:center;gap:9px;border-radius:10px;background:var(--accf,#C6F24E);color:var(--onacc,var(--bg,#08090A));font:600 14.5px/1 Archivo,sans-serif" style-hover="background:var(--hi,#FFFFFF);color:var(--onhi,var(--bg,#08090A))">Selected work <span style="font-size:15px">&rarr;</span></a>
+<button onClick="{{ downloadResume }}" style="height:48px;padding:0 22px;display:inline-flex;align-items:center;gap:9px;border:1px solid var(--w18,rgba(255,255,255,.18));border-radius:10px;font:500 14.5px/1 Archivo,sans-serif;color:var(--tx,#EDEDE8);cursor:pointer" style-hover="border-color:var(--acx,#C6F24E);background:var(--a06,rgba(198,242,78,.06))">Download r&eacute;sum&eacute; <span style="font:400 11px/1 'JetBrains Mono',monospace;color:var(--g5,#7C838B)">PDF</span></button>
+</div>
+<div data-reveal style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--w08,rgba(255,255,255,.08));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;overflow:hidden;margin-top:clamp(44px,7vh,76px)">
+<div style="background:var(--s1,#0A0C0D);padding:16px 18px"><p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--g6,#6B737B);margin-bottom:9px">BASED</p><p style="font:500 14px/1.4 Archivo,sans-serif;color:var(--tx,#EDEDE8)">Bandung, Indonesia &middot; GMT+7</p></div>
+<div style="background:var(--s1,#0A0C0D);padding:16px 18px"><p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--g6,#6B737B);margin-bottom:9px">FOCUS</p><p style="font:500 14px/1.4 Archivo,sans-serif;color:var(--tx,#EDEDE8)">Full-stack TypeScript &mdash; React front, NestJS back</p></div>
+<div style="background:var(--s1,#0A0C0D);padding:16px 18px"><p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--g6,#6B737B);margin-bottom:9px">OPEN TO</p><p style="font:500 14px/1.4 Archivo,sans-serif;color:var(--tx,#EDEDE8)">Junior software engineer &mdash; frontend or full-stack</p></div>
+</div>
+</section>
+
+<section id="work" style="max-width:1240px;margin:0 auto;padding:clamp(64px,11vh,120px) clamp(16px,4vw,48px) 0">
+<div data-reveal style="display:flex;align-items:baseline;gap:16px;border-top:1px solid var(--w1,rgba(255,255,255,.1));padding-top:20px;margin-bottom:clamp(28px,5vw,52px)">
+<span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--acx,#C6F24E)">01</span>
+<h2 style="font:600 clamp(25px,3.6vw,42px)/1.05 Archivo,sans-serif;letter-spacing:-.025em">Selected work</h2>
+<span style="margin-left:auto;font:400 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--g6,#6B737B)">THREE BUILDS</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(14px,2vw,22px)">
+
+<article data-reveal style="display:flex;flex-direction:column;background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:14px;padding:clamp(20px,2.4vw,28px);transition:border-color .25s,transform .25s" style-hover="border-color:var(--a42,rgba(198,242,78,.42));transform:translateY(-4px)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px"><span style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--acx,#C6F24E)">01</span><span style="font:400 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--g6,#6B737B);text-align:right">LEAD FRONTEND &middot; 2022&ndash;NOW</span></div>
+<h3 style="font:600 clamp(19px,2.1vw,23px)/1.25 Archivo,sans-serif;letter-spacing:-.015em;margin-bottom:10px">Crew communication portal</h3>
+<p style="font:400 14.5px/1.62 Archivo,sans-serif;color:var(--g3,#9AA1A8);margin-bottom:22px;text-wrap:pretty">Lead frontend developer on a vessel crew portal at OneByOne Logistical. Real-time group chat on SignalR with optimistic rendering, live typing, edit, delete and unread-count sync &mdash; sub-second, no polling. React 19 + TypeScript + Vite across 350+ modules and 15 feature areas.</p>
+<div style="display:grid;gap:1px;background:var(--w08,rgba(255,255,255,.08));border-radius:9px;overflow:hidden;margin-top:auto;margin-bottom:18px">
+<div style="background:var(--s2,#0B0D0F);padding:11px 13px;display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font:400 11px/1.3 'JetBrains Mono',monospace;color:var(--g6,#6B737B)">commits authored</span><span style="font:500 13px/1 'JetBrains Mono',monospace;color:var(--acx,#C6F24E)">391 of 576</span></div>
+<div style="background:var(--s2,#0B0D0F);padding:11px 13px;display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font:400 11px/1.3 'JetBrains Mono',monospace;color:var(--g6,#6B737B)">UI system</span><span style="font:500 13px/1 'JetBrains Mono',monospace;color:var(--acx,#C6F24E)">48 components</span></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">React 19</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">TypeScript</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">SignalR</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">Redux Toolkit</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">Storybook</span>
+</div>
+</article>
+
+<article data-reveal style="display:flex;flex-direction:column;background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:14px;padding:clamp(20px,2.4vw,28px);transition:border-color .25s,transform .25s" style-hover="border-color:var(--a42,rgba(198,242,78,.42));transform:translateY(-4px)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px"><span style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--acx,#C6F24E)">02</span><span style="font:400 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--g6,#6B737B);text-align:right">SOLO BUILD</span></div>
+<h3 style="font:600 clamp(19px,2.1vw,23px)/1.25 Archivo,sans-serif;letter-spacing:-.015em;margin-bottom:10px">OptiRoute dispatcher dashboard</h3>
+<p style="font:400 14.5px/1.62 Archivo,sans-serif;color:var(--g3,#9AA1A8);margin-bottom:22px;text-wrap:pretty">A logistics platform I built end to end, modelling a four-stage pipeline: ingestion, AI route optimisation, fleet dispatch, live telemetry. Nearest-driver assignment by Haversine distance, off-route alerts on Mapbox GL, role-based access.</p>
+<div style="display:grid;gap:1px;background:var(--w08,rgba(255,255,255,.08));border-radius:9px;overflow:hidden;margin-top:auto;margin-bottom:18px">
+<div style="background:var(--s2,#0B0D0F);padding:11px 13px;display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font:400 11px/1.3 'JetBrains Mono',monospace;color:var(--g6,#6B737B)">manifest grid</span><span style="font:500 13px/1 'JetBrains Mono',monospace;color:var(--acx,#C6F24E)">10k rows, ~25 in DOM</span></div>
+<div style="background:var(--s2,#0B0D0F);padding:11px 13px;display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font:400 11px/1.3 'JetBrains Mono',monospace;color:var(--g6,#6B737B)">filter + sort latency</span><span style="font:500 13px/1 'JetBrains Mono',monospace;color:var(--acx,#C6F24E)">under 200ms</span></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">Next.js 16</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">TypeScript</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">Mapbox GL</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">TanStack Virtual</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">Vitest</span>
+</div>
+</article>
+
+<article data-reveal style="display:flex;flex-direction:column;background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:14px;padding:clamp(20px,2.4vw,28px);transition:border-color .25s,transform .25s" style-hover="border-color:var(--a42,rgba(198,242,78,.42));transform:translateY(-4px)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px"><span style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--acx,#C6F24E)">03</span><span style="font:400 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--g6,#6B737B);text-align:right">FULL-STACK &middot; IN PROGRESS</span></div>
+<h3 style="font:600 clamp(19px,2.1vw,23px)/1.25 Archivo,sans-serif;letter-spacing:-.015em;margin-bottom:10px">Ecommerce store &mdash; NestJS + Next.js</h3>
+<p style="font:400 14.5px/1.62 Archivo,sans-serif;color:var(--g3,#9AA1A8);margin-bottom:22px;text-wrap:pretty">A scalable backend API and storefront built the way production systems are: modular NestJS services, Prisma over PostgreSQL, JWT auth with role guards, containerised and shipped through CI/CD to AWS.</p>
+<div style="display:grid;gap:1px;background:var(--w08,rgba(255,255,255,.08));border-radius:9px;overflow:hidden;margin-top:auto;margin-bottom:18px">
+<div style="background:var(--s2,#0B0D0F);padding:11px 13px;display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font:400 11px/1.3 'JetBrains Mono',monospace;color:var(--g6,#6B737B)">API surface</span><span style="font:500 13px/1 'JetBrains Mono',monospace;color:var(--acx,#C6F24E)">modular NestJS</span></div>
+<div style="background:var(--s2,#0B0D0F);padding:11px 13px;display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font:400 11px/1.3 'JetBrains Mono',monospace;color:var(--g6,#6B737B)">deploy</span><span style="font:500 13px/1 'JetBrains Mono',monospace;color:var(--acx,#C6F24E)">Docker &rarr; CI/CD &rarr; AWS</span></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">NestJS</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">Prisma</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">PostgreSQL</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">JWT</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">Docker</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">AWS</span>
+<span style="padding:5px 9px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">Sass</span>
+</div>
+</article>
+
+</div>
+</section>
+
+<section id="experience" style="max-width:1240px;margin:0 auto;padding:clamp(64px,11vh,120px) clamp(16px,4vw,48px) 0">
+<div data-reveal style="display:flex;align-items:baseline;gap:16px;border-top:1px solid var(--w1,rgba(255,255,255,.1));padding-top:20px;margin-bottom:clamp(28px,5vw,52px)">
+<span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--acx,#C6F24E)">02</span>
+<h2 style="font:600 clamp(25px,3.6vw,42px)/1.05 Archivo,sans-serif;letter-spacing:-.025em">Experience</h2>
+<span style="margin-left:auto;font:400 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--g6,#6B737B)">4+ YRS</span>
+</div>
+<div style="display:flex;flex-direction:column">
+
+<div data-reveal style="display:grid;grid-template-columns:minmax(96px,140px) minmax(0,1fr);gap:clamp(14px,3vw,40px);padding:clamp(20px,3vw,28px) 0;border-bottom:1px solid var(--w07,rgba(255,255,255,.07))">
+<div><p style="font:500 12px/1.5 'JetBrains Mono',monospace;letter-spacing:.03em;color:var(--acx,#C6F24E)">MAY 2022 &mdash; NOW</p><p style="font:400 11px/1.5 'JetBrains Mono',monospace;color:var(--g7,#5C646C);margin-top:4px">Logistics</p></div>
+<div>
+<h3 style="font:600 clamp(17px,1.9vw,21px)/1.3 Archivo,sans-serif;letter-spacing:-.01em">Front End Developer &mdash; <span style="color:var(--g4,#8B9199);font-weight:400">OneByOne Logistical</span></h3>
+<p style="font:400 14.5px/1.65 Archivo,sans-serif;color:var(--g3,#9AA1A8);margin-top:9px;max-width:72ch;text-wrap:pretty">Two products, one team. Led the frontend of the crew communication portal, and built out the warehouse management portal before it. Along the way: a 48-component library with 40 Storybook stories, multi-environment CI/CD on Azure Pipelines and Vercel, i18next localisation, and type-safe forms with React Hook Form + Zod.</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="stack" style="max-width:1240px;margin:0 auto;padding:clamp(64px,11vh,120px) clamp(16px,4vw,48px) 0">
+<div data-reveal style="display:flex;align-items:baseline;gap:16px;border-top:1px solid var(--w1,rgba(255,255,255,.1));padding-top:20px;margin-bottom:clamp(28px,5vw,52px)">
+<span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--acx,#C6F24E)">03</span>
+<h2 style="font:600 clamp(25px,3.6vw,42px)/1.05 Archivo,sans-serif;letter-spacing:-.025em">Stack</h2>
+<span style="margin-left:auto;font:400 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--g6,#6B737B)">SHIPPED WITH, NOT SKIMMED</span>
+</div>
+<div data-reveal style="display:grid;grid-template-columns:repeat(auto-fit,minmax(198px,1fr));gap:clamp(10px,1.3vw,14px);background:transparent">
+<div style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;padding:clamp(18px,2vw,24px)">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:16px">LANGUAGES</p>
+<div style="display:flex;flex-direction:column;gap:9px"><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">TypeScript</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">JavaScript (ES6+)</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">HTML5</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">CSS3 &amp; Sass</span></div>
+</div>
+<div style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;padding:clamp(18px,2vw,24px)">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:16px">FRONTEND</p>
+<div style="display:flex;flex-direction:column;gap:9px"><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">React 19</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Next.js 16</span></div>
+</div>
+<div style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;padding:clamp(18px,2vw,24px)">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:16px">BACKEND</p>
+<div style="display:flex;flex-direction:column;gap:9px"><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">NestJS</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Express</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Node.js</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">REST API design</span></div>
+</div>
+<div style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;padding:clamp(18px,2vw,24px)">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:16px">DATABASE &amp; ORM</p>
+<div style="display:flex;flex-direction:column;gap:9px"><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">PostgreSQL</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Prisma</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">SQL</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Schema migrations</span></div>
+</div>
+<div style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;padding:clamp(18px,2vw,24px)">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:16px">AUTH &amp; ACCESS</p>
+<div style="display:flex;flex-direction:column;gap:9px"><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">JWT authentication</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Role-based access</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Guards &amp; interceptors</span></div>
+</div>
+<div style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;padding:clamp(18px,2vw,24px)">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:16px">STATE &amp; DATA</p>
+<div style="display:flex;flex-direction:column;gap:9px"><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Redux Toolkit</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Zustand</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">TanStack Query</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">TanStack Table &amp; Virtual</span></div>
+</div>
+<div style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;padding:clamp(18px,2vw,24px)">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:16px">FORMS &amp; VALIDATION</p>
+<div style="display:flex;flex-direction:column;gap:9px"><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">React Hook Form</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Zod</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Formik</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Yup</span></div>
+</div>
+<div style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;padding:clamp(18px,2vw,24px)">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:16px">UI &amp; DESIGN SYSTEMS</p>
+<div style="display:flex;flex-direction:column;gap:9px"><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Tailwind CSS</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Radix UI</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Storybook</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Component architecture</span></div>
+</div>
+<div style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;padding:clamp(18px,2vw,24px)">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:16px">REAL-TIME &amp; MAPS</p>
+<div style="display:flex;flex-direction:column;gap:9px"><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">SignalR</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Mapbox GL</span></div>
+</div>
+<div style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;padding:clamp(18px,2vw,24px)">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:16px">TOOLING &amp; TESTING</p>
+<div style="display:flex;flex-direction:column;gap:9px"><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Git &amp; GitHub</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Vitest &amp; RTL</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">MSW</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">SonarQube</span></div>
+</div>
+<div style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;padding:clamp(18px,2vw,24px)">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:16px">DEVOPS &amp; CLOUD</p>
+<div style="display:flex;flex-direction:column;gap:9px"><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Docker</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">AWS</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">CI/CD pipelines</span><span style="font:400 14px/1 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Azure Pipelines &amp; Vercel</span></div>
+</div>
+</div>
+</section>
+
+<section id="writing" style="max-width:1240px;margin:0 auto;padding:clamp(64px,11vh,120px) clamp(16px,4vw,48px) 0">
+<div data-reveal style="display:flex;align-items:baseline;gap:16px;border-top:1px solid var(--w1,rgba(255,255,255,.1));padding-top:20px;margin-bottom:clamp(22px,4vw,32px)">
+<span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--acx,#C6F24E)">04</span>
+<h2 style="font:600 clamp(25px,3.6vw,42px)/1.05 Archivo,sans-serif;letter-spacing:-.025em">Writing</h2>
+<span style="margin-left:auto;font:400 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--g6,#6B737B)">{{ postCountLabel }}</span>
+</div>
+<div data-reveal style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:clamp(20px,3vw,28px)">
+<div style="display:flex;align-items:center;gap:9px;flex:1 1 240px;min-width:0;height:44px;padding:0 14px;background:var(--c8,rgba(12,14,16,.8));border:1px solid var(--w1,rgba(255,255,255,.1));border-radius:10px">
+<span style="font:400 13px/1 'JetBrains Mono',monospace;color:var(--g7,#5C646C)">/</span>
+<input value="{{ query }}" onInput="{{ onQuery }}" placeholder="Search posts and tags" style="flex:1;min-width:0;background:none;font:400 14px/1 Archivo,sans-serif;color:var(--tx,#EDEDE8)">
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:7px">
+<sc-for list="{{ tagChips }}" as="chip" hint-placeholder-count="5">
+<button onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:1px;background:var(--w08,rgba(255,255,255,.08));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:14px;overflow:hidden">
+<sc-for list="{{ visiblePosts }}" as="post" hint-placeholder-count="3">
+<article onClick="{{ post.open }}" style="background:var(--s1,#0A0C0D);padding:clamp(20px,2.6vw,28px);cursor:pointer;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px 28px;align-items:start;transition:background .2s" style-hover="background:var(--s5,#101314)">
+<div style="min-width:0">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:10px">
+<span style="font:400 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--g6,#6B737B)">{{ post.dateLabel }}</span>
+<span style="width:3px;height:3px;border-radius:50%;background:var(--g9,#3A4046)"></span>
+<span style="font:400 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--g6,#6B737B)">{{ post.readLabel }}</span>
+</div>
+<h3 style="font:600 clamp(18px,2vw,22px)/1.3 Archivo,sans-serif;letter-spacing:-.015em;color:var(--tx,#EDEDE8);text-wrap:pretty">{{ post.title }}</h3>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px">
+<sc-for list="{{ post.tags }}" as="t" hint-placeholder-count="2">
+<span style="padding:4px 8px;border:1px solid var(--w11,rgba(255,255,255,.11));border-radius:5px;font:400 10px/1 'JetBrains Mono',monospace;letter-spacing:.04em;color:var(--g4,#8B9199)">{{ t }}</span>
+</sc-for>
+</div>
+</div>
+<div style="min-width:0;display:flex;align-items:flex-start;gap:16px">
+<p style="flex:1;font:400 14.5px/1.62 Archivo,sans-serif;color:var(--g4,#8B9199);text-wrap:pretty">{{ post.excerpt }}</p>
+<span style="flex:none;font:400 16px/1 'JetBrains Mono',monospace;color:var(--acx,#C6F24E);margin-top:2px">&rarr;</span>
+</div>
+</article>
+</sc-for>
+<sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+<div style="background:var(--s1,#0A0C0D);padding:44px 28px;text-align:center">
+<p style="font:400 14px/1.6 Archivo,sans-serif;color:var(--g6,#6B737B)">No posts match that. <button onClick="{{ clearFilters }}" style="color:var(--acx,#C6F24E);cursor:pointer;text-decoration:underline">Clear filters</button></p>
+</div>
+</sc-if>
+</div>
+<sc-if value="{{ showPager }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px">
+<span style="font:400 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--g6,#6B737B)">{{ rangeLabel }}</span>
+<div style="margin-left:auto;display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+<button onClick="{{ prevPage }}" style="{{ prevStyle }}">&larr; PREV</button>
+<sc-for list="{{ pageChips }}" as="pg" hint-placeholder-count="2">
+<button onClick="{{ pg.onClick }}" style="{{ pg.style }}">{{ pg.label }}</button>
+</sc-for>
+<button onClick="{{ nextPage }}" style="{{ nextStyle }}">NEXT &rarr;</button>
+</div>
+</div>
+</sc-if>
+<button onClick="{{ openStudio }}" style="margin-top:18px;height:44px;padding:0 18px;display:inline-flex;align-items:center;gap:9px;border:1px dashed var(--w18,rgba(255,255,255,.18));border-radius:10px;font:500 13px/1 'JetBrains Mono',monospace;letter-spacing:.03em;color:var(--g4,#8B9199);cursor:pointer" style-hover="border-color:var(--acx,#C6F24E);color:var(--tx,#EDEDE8)">
+<span style="color:var(--acx,#C6F24E);font-size:15px">+</span> WRITE A NEW POST
+</button>
+</section>
+
+<section id="about" style="max-width:1240px;margin:0 auto;padding:clamp(64px,11vh,120px) clamp(16px,4vw,48px) 0">
+<div data-reveal style="display:flex;align-items:baseline;gap:16px;border-top:1px solid var(--w1,rgba(255,255,255,.1));padding-top:20px;margin-bottom:clamp(28px,5vw,52px)">
+<span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--acx,#C6F24E)">05</span>
+<h2 style="font:600 clamp(25px,3.6vw,42px)/1.05 Archivo,sans-serif;letter-spacing:-.025em">About</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(24px,4vw,56px);align-items:start">
+<div data-reveal style="position:relative;aspect-ratio:4/5;max-width:420px;width:100%;border:1px dashed var(--w16,rgba(255,255,255,.16));border-radius:14px;background:var(--c6,rgba(12,14,16,.6));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
+<span style="font:400 11px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--g8,#4A5158)">PORTRAIT PLACEHOLDER</span>
+<span style="font:400 11px/1.5 'JetBrains Mono',monospace;color:var(--g9,#3A4046)">4 : 5 &middot; drop a photo here</span>
+</div>
+<div data-reveal style="display:flex;flex-direction:column;gap:20px">
+<p style="font:400 clamp(15.5px,1.6vw,18px)/1.7 Archivo,sans-serif;color:var(--tx2,#C9CDD2);max-width:60ch;text-wrap:pretty">I write frontend for enterprise logistics &mdash; software where a mis-rendered pallet ID sends someone to the wrong aisle. Four years of that has made me careful about state and unromantic about clever code.</p>
+<p style="font:400 clamp(15.5px,1.6vw,18px)/1.7 Archivo,sans-serif;color:var(--g3,#9AA1A8);max-width:60ch;text-wrap:pretty">I am looking for a junior software engineer role where I can widen out: keep the React and TypeScript depth, and add the backend, testing, and systems work I currently only meet from the client side of the fetch.</p>
+<div style="display:grid;gap:1px;background:var(--w08,rgba(255,255,255,.08));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:12px;overflow:hidden;margin-top:6px">
+<div style="background:var(--s1,#0A0C0D);padding:14px 16px;display:grid;grid-template-columns:minmax(80px,110px) 1fr;gap:14px"><span style="font:400 11px/1.5 'JetBrains Mono',monospace;color:var(--g6,#6B737B)">LEARNING</span><span style="font:400 13.5px/1.5 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">NestJS, Prisma and Postgres &mdash; the other side of the request</span></div>
+<div style="background:var(--s1,#0A0C0D);padding:14px 16px;display:grid;grid-template-columns:minmax(80px,110px) 1fr;gap:14px"><span style="font:400 11px/1.5 'JetBrains Mono',monospace;color:var(--g6,#6B737B)">BUILDING</span><span style="font:400 13.5px/1.5 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">OptiRoute &mdash; a dispatcher dashboard I use as a proving ground</span></div>
+<div style="background:var(--s1,#0A0C0D);padding:14px 16px;display:grid;grid-template-columns:minmax(80px,110px) 1fr;gap:14px"><span style="font:400 11px/1.5 'JetBrains Mono',monospace;color:var(--g6,#6B737B)">HABIT</span><span style="font:400 13.5px/1.5 Archivo,sans-serif;color:var(--tx2,#C9CDD2)">Writing the reusable version the second time, not the fourth</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<sc-if value="{{ showServices }}" hint-placeholder-val="{{ true }}">
+<section id="services" style="max-width:1240px;margin:0 auto;padding:clamp(64px,11vh,120px) clamp(16px,4vw,48px) 0">
+<div data-reveal style="display:flex;align-items:baseline;gap:16px;border-top:1px solid var(--w1,rgba(255,255,255,.1));padding-top:20px;margin-bottom:clamp(28px,5vw,52px)">
+<span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--acx,#C6F24E)">06</span>
+<h2 style="font:600 clamp(25px,3.6vw,42px)/1.05 Archivo,sans-serif;letter-spacing:-.025em">What I am looking for</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(266px,1fr));gap:clamp(14px,2vw,22px)">
+<div data-reveal style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:14px;padding:clamp(20px,2.4vw,28px);display:flex;flex-direction:column;transition:border-color .25s" style-hover="border-color:var(--a42,rgba(198,242,78,.42))">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:14px">THE ROLE</p>
+<h3 style="font:600 20px/1.3 Archivo,sans-serif;letter-spacing:-.015em;margin-bottom:10px">Junior software engineer</h3>
+<p style="font:400 14.5px/1.62 Archivo,sans-serif;color:var(--g3,#9AA1A8);margin-bottom:20px;text-wrap:pretty">Frontend-leaning or full-stack. Four years of production React means I arrive useful on day one &mdash; and I am already writing the NestJS half in my own time.</p>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--w08,rgba(255,255,255,.08));padding-top:16px">
+<span style="font:400 12px/1.5 'JetBrains Mono',monospace;color:var(--g5,#7C838B)">&middot; React + TypeScript foundation</span>
+<span style="font:400 12px/1.5 'JetBrains Mono',monospace;color:var(--g5,#7C838B)">&middot; Open to backend and platform</span>
+</div>
+</div>
+<div data-reveal style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:14px;padding:clamp(20px,2.4vw,28px);display:flex;flex-direction:column;transition:border-color .25s" style-hover="border-color:var(--a42,rgba(198,242,78,.42))">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:14px">THE TEAM</p>
+<h3 style="font:600 20px/1.3 Archivo,sans-serif;letter-spacing:-.015em;margin-bottom:10px">Somewhere with real users</h3>
+<p style="font:400 14.5px/1.62 Archivo,sans-serif;color:var(--g3,#9AA1A8);margin-bottom:20px;text-wrap:pretty">Operations tooling, logistics, anything with a domain. I do my best work where correctness matters more than novelty.</p>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--w08,rgba(255,255,255,.08));padding-top:16px">
+<span style="font:400 12px/1.5 'JetBrains Mono',monospace;color:var(--g5,#7C838B)">&middot; Code review and pairing</span>
+<span style="font:400 12px/1.5 'JetBrains Mono',monospace;color:var(--g5,#7C838B)">&middot; Remote or Bandung / Jakarta</span>
+</div>
+</div>
+<div data-reveal style="background:var(--c72,rgba(12,14,16,.72));border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:14px;padding:clamp(20px,2.4vw,28px);display:flex;flex-direction:column;transition:border-color .25s" style-hover="border-color:var(--a42,rgba(198,242,78,.42))">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--acx,#C6F24E);margin-bottom:14px">DAY ONE</p>
+<h3 style="font:600 20px/1.3 Archivo,sans-serif;letter-spacing:-.015em;margin-bottom:10px">What I bring with me</h3>
+<p style="font:400 14.5px/1.62 Archivo,sans-serif;color:var(--g3,#9AA1A8);margin-bottom:20px;text-wrap:pretty">A design-system habit, comfort owning a feature area from Figma through CI to release, and a backend I built rather than read about.</p>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--w08,rgba(255,255,255,.08));padding-top:16px">
+<span style="font:400 12px/1.5 'JetBrains Mono',monospace;color:var(--g5,#7C838B)">&middot; TypeScript-first, front and back</span>
+<span style="font:400 12px/1.5 'JetBrains Mono',monospace;color:var(--g5,#7C838B)">&middot; Storybook, Vitest, Docker, CI/CD</span>
+</div>
+</div>
+</div>
+</section>
+</sc-if>
+
+<section id="contact" style="max-width:1240px;margin:0 auto;padding:clamp(64px,11vh,120px) clamp(16px,4vw,48px) clamp(48px,7vh,80px)">
+<div data-reveal style="display:flex;align-items:baseline;gap:16px;border-top:1px solid var(--w1,rgba(255,255,255,.1));padding-top:20px;margin-bottom:clamp(28px,5vw,52px)">
+<span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--acx,#C6F24E)">07</span>
+<h2 style="font:600 clamp(25px,3.6vw,42px)/1.05 Archivo,sans-serif;letter-spacing:-.025em">Contact</h2>
+</div>
+<div data-reveal style="display:flex;flex-direction:column;gap:clamp(24px,4vw,40px)">
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px">
+<span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:var(--g6,#6B737B)">WRITE TO ME</span>
+<span style="flex:1;min-width:40px;height:1px;background:var(--w1,rgba(255,255,255,.1))"></span>
+<button onClick="{{ copyEmail }}" style="{{ copyBtnStyle }}">{{ copyLabel }}</button>
+</div>
+<a href="mailto:hapsari.laksmiw@gmail.com" style="display:inline-block;align-self:flex-start;max-width:100%;font:600 clamp(27px,5.6vw,64px)/1.02 Archivo,sans-serif;letter-spacing:-.042em;color:var(--tx,#EDEDE8);word-break:break-word;padding-bottom:.1em;background:linear-gradient(var(--accf,#C6F24E),var(--accf,#C6F24E)) left bottom / 0% 4px no-repeat;transition:background-size .5s cubic-bezier(.2,.75,.2,1)" style-hover="background-size:100% 4px">hapsari.laksmiw<span style="color:var(--acx,#C6F24E)">@gmail.com</span></a>
+<p style="font:400 13.5px/1.6 Archivo,sans-serif;color:var(--g4,#8B9199);max-width:52ch">Send a role, a repo, or a problem you are stuck on. I answer everything within a day.</p>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<a href="https://github.com/hapsarilw" style="height:46px;padding:0 18px;display:inline-flex;align-items:center;gap:9px;border:1px solid var(--w14,rgba(255,255,255,.14));border-radius:10px;font:500 13px/1 'JetBrains Mono',monospace;letter-spacing:.03em;color:var(--tx2,#C9CDD2)" style-hover="border-color:var(--acx,#C6F24E);color:var(--hi,#FFFFFF)">GITHUB/HAPSARILW <span style="color:var(--g7,#5C646C)">&#8599;</span></a>
+<a href="https://www.linkedin.com/in/hapsarilw" style="height:46px;padding:0 18px;display:inline-flex;align-items:center;gap:9px;border:1px solid var(--w14,rgba(255,255,255,.14));border-radius:10px;font:500 13px/1 'JetBrains Mono',monospace;letter-spacing:.03em;color:var(--tx2,#C9CDD2)" style-hover="border-color:var(--acx,#C6F24E);color:var(--hi,#FFFFFF)">LINKEDIN/HAPSARILW <span style="color:var(--g7,#5C646C)">&#8599;</span></a>
+<button onClick="{{ downloadResume }}" style="height:46px;padding:0 18px;display:inline-flex;align-items:center;gap:9px;border-radius:10px;background:var(--accf,#C6F24E);color:var(--onacc,var(--bg,#08090A));font:600 13px/1 'JetBrains Mono',monospace;letter-spacing:.03em;cursor:pointer" style-hover="background:var(--hi,#FFFFFF);color:var(--onhi,var(--bg,#08090A))">RESUME.PDF &darr;</button>
+</div>
+</div>
+</section>
+
+<footer style="border-top:1px solid var(--w07,rgba(255,255,255,.07));background:var(--k86,rgba(8,9,10,.86))">
+<div style="max-width:1240px;margin:0 auto;padding:26px clamp(16px,4vw,48px);display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px">
+<span style="font:400 11.5px/1.5 'JetBrains Mono',monospace;color:var(--g7,#5C646C)">&copy; 2026 Hapsari Laksmi Wijayanti</span>
+<span style="font:400 11.5px/1.5 'JetBrains Mono',monospace;color:var(--g7,#5C646C)">three.js &middot; GSAP &middot; installable PWA</span>
+<a href="#top" style="margin-left:auto;font:400 11.5px/1.5 'JetBrains Mono',monospace;color:var(--g4,#8B9199)">BACK TO TOP &uarr;</a>
+</div>
+</footer>
+
+</main>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:60;background:var(--k97,rgba(8,9,10,.97));backdrop-filter:blur(20px);display:flex;flex-direction:column;padding:78px clamp(20px,6vw,40px) 32px;animation:slideUp .22s ease-out">
+<button onClick="{{ toggleMenu }}" aria-label="Close" style="position:absolute;top:14px;right:clamp(16px,4vw,48px);width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--w16,rgba(255,255,255,.16));border-radius:8px;font:400 20px/1 Archivo,sans-serif;color:var(--tx,#EDEDE8);cursor:pointer">&times;</button>
+<div style="display:flex;flex-direction:column;gap:2px">
+<a href="#work" onClick="{{ toggleMenu }}" style="padding:15px 0;border-bottom:1px solid var(--w07,rgba(255,255,255,.07));font:600 26px/1.2 Archivo,sans-serif;letter-spacing:-.02em;color:var(--tx,#EDEDE8)">Work</a>
+<a href="#experience" onClick="{{ toggleMenu }}" style="padding:15px 0;border-bottom:1px solid var(--w07,rgba(255,255,255,.07));font:600 26px/1.2 Archivo,sans-serif;letter-spacing:-.02em;color:var(--tx,#EDEDE8)">Experience</a>
+<a href="#stack" onClick="{{ toggleMenu }}" style="padding:15px 0;border-bottom:1px solid var(--w07,rgba(255,255,255,.07));font:600 26px/1.2 Archivo,sans-serif;letter-spacing:-.02em;color:var(--tx,#EDEDE8)">Stack</a>
+<a href="#writing" onClick="{{ toggleMenu }}" style="padding:15px 0;border-bottom:1px solid var(--w07,rgba(255,255,255,.07));font:600 26px/1.2 Archivo,sans-serif;letter-spacing:-.02em;color:var(--tx,#EDEDE8)">Writing</a>
+<a href="#about" onClick="{{ toggleMenu }}" style="padding:15px 0;border-bottom:1px solid var(--w07,rgba(255,255,255,.07));font:600 26px/1.2 Archivo,sans-serif;letter-spacing:-.02em;color:var(--tx,#EDEDE8)">About</a>
+<a href="#services" onClick="{{ toggleMenu }}" style="padding:15px 0;border-bottom:1px solid var(--w07,rgba(255,255,255,.07));font:600 26px/1.2 Archivo,sans-serif;letter-spacing:-.02em;color:var(--tx,#EDEDE8)">Looking for</a>
+</div>
+<button onClick="{{ toggleTheme }}" style="margin-top:auto;height:48px;display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--w16,rgba(255,255,255,.16));border-radius:11px;font:500 13px/1 'JetBrains Mono',monospace;letter-spacing:.04em;color:var(--tx2,#C9CDD2);cursor:pointer;margin-bottom:10px"><span style="font-size:15px">{{ themeIcon }}</span>{{ themeLabel }}</button>
+<a href="#contact" onClick="{{ toggleMenu }}" style="height:52px;display:inline-flex;align-items:center;justify-content:center;border-radius:11px;background:var(--accf,#C6F24E);color:var(--onacc,var(--bg,#08090A));font:600 15px/1 Archivo,sans-serif">Get in touch</a>
+</div>
+</sc-if>
+
+<sc-if value="{{ readerOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:70;background:var(--bg,#08090A);overflow-y:auto;-webkit-overflow-scrolling:touch">
+<div style="position:sticky;top:0;z-index:2;backdrop-filter:blur(16px);background:var(--k82,rgba(8,9,10,.82));border-bottom:1px solid var(--w07,rgba(255,255,255,.07))">
+<div style="max-width:760px;margin:0 auto;padding:0 clamp(16px,4vw,32px);height:58px;display:flex;align-items:center;gap:14px">
+<button onClick="{{ closeReader }}" style="height:38px;padding:0 14px;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--w14,rgba(255,255,255,.14));border-radius:8px;font:500 12px/1 'JetBrains Mono',monospace;color:var(--tx2,#C9CDD2);cursor:pointer" style-hover="border-color:var(--acx,#C6F24E);color:var(--hi,#FFFFFF)">&larr; ALL POSTS</button>
+<span style="margin-left:auto;font:400 11px/1 'JetBrains Mono',monospace;color:var(--g7,#5C646C)">{{ readerMeta }}</span>
+</div>
+</div>
+<article style="max-width:760px;margin:0 auto;padding:clamp(36px,7vw,64px) clamp(16px,4vw,32px) clamp(64px,12vh,120px)">
+<div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px">
+<sc-for list="{{ readerTags }}" as="t" hint-placeholder-count="2">
+<span style="padding:5px 9px;border:1px solid var(--a28,rgba(198,242,78,.28));border-radius:6px;font:400 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.05em;color:var(--acx,#C6F24E)">{{ t }}</span>
+</sc-for>
+</div>
+<h1 style="font:600 clamp(30px,5.4vw,50px)/1.1 Archivo,sans-serif;letter-spacing:-.03em;margin-bottom:18px;text-wrap:balance">{{ readerTitle }}</h1>
+<p style="font:400 clamp(16px,1.8vw,19px)/1.65 Archivo,sans-serif;color:var(--g4,#8B9199);margin-bottom:30px;text-wrap:pretty">{{ readerExcerpt }}</p>
+<sc-if value="{{ readerCover }}" hint-placeholder-val="{{ false }}">
+<div role="img" style="{{ readerCoverStyle }}"></div>
+</sc-if>
+<div style="height:1px;background:var(--w1,rgba(255,255,255,.1));margin-bottom:34px"></div>
+<div dangerouslySetInnerHTML="{{ readerHtml }}"></div>
+<div style="margin-top:56px;padding-top:26px;border-top:1px solid var(--w1,rgba(255,255,255,.1));display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+<span style="font:400 13px/1.6 Archivo,sans-serif;color:var(--g4,#8B9199)">Questions, or hiring for a junior role?</span>
+<a href="mailto:hapsari.laksmiw@gmail.com" onClick="{{ closeReader }}" style="height:42px;padding:0 16px;display:inline-flex;align-items:center;border-radius:9px;background:var(--accf,#C6F24E);color:var(--onacc,var(--bg,#08090A));font:600 13px/1 Archivo,sans-serif">Get in touch</a>
+</div>
+</article>
+</div>
+</sc-if>
+
+<sc-if value="{{ studioOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:80;background:var(--bg,#08090A);display:flex;flex-direction:column">
+<div style="flex:none;height:56px;display:flex;align-items:center;gap:12px;padding:0 clamp(12px,2vw,20px);border-bottom:1px solid var(--w08,rgba(255,255,255,.08));background:var(--s1,#0A0C0D)">
+<span style="display:flex;align-items:center;gap:8px;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--tx,#EDEDE8)"><span style="color:var(--acx,#C6F24E)">&#9679;</span>STUDIO</span>
+<span style="font:400 11px/1 'JetBrains Mono',monospace;color:{{ saveColor }}">{{ saveLabel }}</span>
+<div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+<sc-if value="{{ hasDraft }}" hint-placeholder-val="{{ false }}">
+<button onClick="{{ togglePublish }}" style="{{ publishBtnStyle }}">{{ publishLabel }}</button>
+</sc-if>
+<button onClick="{{ closeStudio }}" style="height:38px;min-width:44px;padding:0 14px;border:1px solid var(--w14,rgba(255,255,255,.14));border-radius:8px;font:500 12px/1 'JetBrains Mono',monospace;color:var(--tx2,#C9CDD2);cursor:pointer" style-hover="border-color:var(--hi,#FFFFFF);color:var(--hi,#FFFFFF)">CLOSE</button>
+</div>
+</div>
+<div style="{{ studioGridStyle }}">
+
+<sc-if value="{{ showList }}" hint-placeholder-val="{{ true }}">
+<aside style="min-width:0;display:flex;flex-direction:column;border-right:1px solid var(--w08,rgba(255,255,255,.08));background:var(--s0,#090B0C);overflow:hidden">
+<div style="flex:none;padding:12px;display:flex;flex-direction:column;gap:9px;border-bottom:1px solid var(--w07,rgba(255,255,255,.07))">
+<button onClick="{{ newPost }}" style="height:40px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:9px;background:var(--accf,#C6F24E);color:var(--onacc,var(--bg,#08090A));font:600 12.5px/1 'JetBrains Mono',monospace;letter-spacing:.03em;cursor:pointer" style-hover="background:var(--hi,#FFFFFF);color:var(--onhi,var(--bg,#08090A))">+ NEW POST</button>
+<input value="{{ studioQuery }}" onInput="{{ onStudioQuery }}" placeholder="Filter&hellip;" style="height:36px;padding:0 11px;background:var(--s4,#0E1113);border:1px solid var(--w1,rgba(255,255,255,.1));border-radius:8px;font:400 13px/1 Archivo,sans-serif;color:var(--tx,#EDEDE8)">
+<div style="display:flex;gap:5px">
+<sc-for list="{{ studioFilters }}" as="f" hint-placeholder-count="3">
+<button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
+</sc-for>
+</div>
+</div>
+<div style="flex:1;overflow-y:auto;min-height:0">
+<sc-for list="{{ studioPosts }}" as="p" hint-placeholder-count="4">
+<div onClick="{{ p.select }}" style="{{ p.rowStyle }}">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+<span style="{{ p.dotStyle }}"></span>
+<span style="font:400 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.09em;color:var(--g6,#6B737B)">{{ p.statusLabel }}</span>
+<span style="margin-left:auto;font:400 9.5px/1 'JetBrains Mono',monospace;color:var(--g8,#4A5158)">{{ p.dateLabel }}</span>
+</div>
+<p style="font:500 13.5px/1.4 Archivo,sans-serif;color:var(--tx,#EDEDE8);text-wrap:pretty">{{ p.title }}</p>
+<p style="font:400 11px/1.45 'JetBrains Mono',monospace;color:var(--g7,#5C646C);margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.tagLine }}</p>
+</div>
+</sc-for>
+<sc-if value="{{ studioEmpty }}" hint-placeholder-val="{{ false }}">
+<p style="padding:28px 16px;text-align:center;font:400 12px/1.6 'JetBrains Mono',monospace;color:var(--g8,#4A5158)">Nothing here yet.</p>
+</sc-if>
+</div>
+</aside>
+</sc-if>
+
+<sc-if value="{{ hasDraft }}" hint-placeholder-val="{{ true }}">
+<div style="{{ editorWrapStyle }}">
+<sc-if value="{{ showTabs }}" hint-placeholder-val="{{ false }}">
+<div style="flex:none;display:flex;gap:4px;padding:8px 10px;border-bottom:1px solid var(--w07,rgba(255,255,255,.07));background:var(--s1,#0A0C0D)">
+<sc-for list="{{ studioTabs }}" as="t" hint-placeholder-count="2">
+<button onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ showEditor }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;min-height:0;overflow-y:auto;padding:clamp(14px,2vw,22px);display:flex;flex-direction:column;gap:14px">
+<input value="{{ draftTitle }}" onInput="{{ onTitle }}" placeholder="Post title" style="flex:none;width:100%;background:none;font:600 clamp(22px,3vw,30px)/1.2 Archivo,sans-serif;letter-spacing:-.025em;color:var(--tx,#EDEDE8)">
+<p style="flex:none;font:400 11px/1 'JetBrains Mono',monospace;color:var(--g8,#4A5158)">/writing/{{ draftSlug }}</p>
+<textarea value="{{ draftExcerpt }}" onInput="{{ onExcerpt }}" placeholder="One-line summary shown in the index&hellip;" style="flex:none;width:100%;height:88px;min-height:88px;overflow-y:auto;padding:12px;background:var(--s3,#0C0F11);border:1px solid var(--w1,rgba(255,255,255,.1));border-radius:9px;font:400 13.5px/1.55 Archivo,sans-serif;color:var(--tx2,#C9CDD2)"></textarea>
+<div style="flex:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+<div style="display:flex;flex-direction:column;gap:6px">
+<label style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--g6,#6B737B)">TAGS &mdash; COMMA SEPARATED</label>
+<input value="{{ draftTags }}" onInput="{{ onTags }}" placeholder="react, typescript" style="height:38px;padding:0 11px;background:var(--s3,#0C0F11);border:1px solid var(--w1,rgba(255,255,255,.1));border-radius:8px;font:400 12.5px/1 'JetBrains Mono',monospace;color:var(--tx,#EDEDE8)">
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<label style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--g6,#6B737B)">COVER IMAGE URL</label>
+<input value="{{ draftCover }}" onInput="{{ onCover }}" placeholder="https://&hellip; (optional)" style="height:38px;padding:0 11px;background:var(--s3,#0C0F11);border:1px solid var(--w1,rgba(255,255,255,.1));border-radius:8px;font:400 12.5px/1 'JetBrains Mono',monospace;color:var(--tx,#EDEDE8)">
+</div>
+</div>
+<div style="flex:none;display:flex;align-items:center;gap:14px;padding:9px 12px;background:var(--s3,#0C0F11);border:1px solid var(--w08,rgba(255,255,255,.08));border-radius:8px">
+<span style="font:400 11px/1 'JetBrains Mono',monospace;color:var(--g6,#6B737B)">{{ draftWords }} words</span>
+<span style="font:400 11px/1 'JetBrains Mono',monospace;color:var(--g6,#6B737B)">{{ draftRead }}</span>
+<button onClick="{{ deleteDraft }}" style="{{ deleteBtnStyle }}">{{ deleteLabel }}</button>
+</div>
+<div style="flex:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+<span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--g6,#6B737B);margin-right:2px">INSERT</span>
+<button onClick="{{ insertImage }}" style="{{ insertBtnStyle }}" style-hover="border-color:var(--acx,#C6F24E);color:var(--tx,#EDEDE8)">IMAGE</button>
+<button onClick="{{ insertLink }}" style="{{ insertBtnStyle }}" style-hover="border-color:var(--acx,#C6F24E);color:var(--tx,#EDEDE8)">LINK</button>
+<button onClick="{{ insertYoutube }}" style="{{ insertBtnStyle }}" style-hover="border-color:var(--acx,#C6F24E);color:var(--tx,#EDEDE8)">YOUTUBE</button>
+<button onClick="{{ insertCode }}" style="{{ insertBtnStyle }}" style-hover="border-color:var(--acx,#C6F24E);color:var(--tx,#EDEDE8)">CODE</button>
+<span style="flex:1;min-width:120px;text-align:right;font:400 10px/1.5 'JetBrains Mono',monospace;color:var(--g8,#4A5158)">a YouTube link on its own line becomes a preview</span>
+</div>
+<textarea ref="{{ bodyRef }}" value="{{ draftBody }}" onInput="{{ onBody }}" placeholder="# Write in markdown&#10;&#10;![caption](image-url) &middot; [text](url) &middot; paste a YouTube link on its own line" style="flex:1;min-height:340px;width:100%;padding:16px;background:var(--s3,#0C0F11);border:1px solid var(--w1,rgba(255,255,255,.1));border-radius:10px;font:400 13.5px/1.75 'JetBrains Mono',ui-monospace,monospace;color:var(--tx2,#C9CDD2);resize:vertical"></textarea>
+</div>
+</sc-if>
+<sc-if value="{{ showPreview }}" hint-placeholder-val="{{ false }}">
+<div style="{{ previewPaneStyle }}">
+<p style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.13em;color:var(--g8,#4A5158);margin-bottom:18px">LIVE PREVIEW</p>
+<h1 style="font:600 clamp(24px,3.4vw,34px)/1.15 Archivo,sans-serif;letter-spacing:-.028em;margin-bottom:12px;text-wrap:balance">{{ previewTitle }}</h1>
+<p style="font:400 15px/1.6 Archivo,sans-serif;color:var(--g4,#8B9199);margin-bottom:24px">{{ draftExcerpt }}</p>
+<sc-if value="{{ draftCover }}" hint-placeholder-val="{{ false }}">
+<div role="img" style="{{ draftCoverStyle }}"></div>
+</sc-if>
+<div style="height:1px;background:var(--w1,rgba(255,255,255,.1));margin-bottom:24px"></div>
+<div dangerouslySetInnerHTML="{{ previewHtml }}"></div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ noDraft }}" hint-placeholder-val="{{ false }}">
+<div style="min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:40px">
+<p style="font:400 13px/1.7 'JetBrains Mono',monospace;color:var(--g8,#4A5158);text-align:center;max-width:36ch">Select a post from the list, or start a new one. Everything autosaves to this device.</p>
+<button onClick="{{ newPost }}" style="height:44px;padding:0 20px;border-radius:10px;background:var(--accf,#C6F24E);color:var(--onacc,var(--bg,#08090A));font:600 13px/1 'JetBrains Mono',monospace;letter-spacing:.03em;cursor:pointer">+ NEW POST</button>
+</div>
+</sc-if>
+
+</div>
+</div>
+</sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#FF6B9D&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;,&quot;options&quot;:[&quot;#C6F24E&quot;,&quot;#FF8A3D&quot;,&quot;#5EE7FF&quot;,&quot;#FF6B9D&quot;]},&quot;ambient3D&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;fieldDensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2000,&quot;min&quot;:200,&quot;max&quot;:4000,&quot;step&quot;:100,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;reduceMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;showServices&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+const F = String.fromCharCode(96, 96, 96);
+
+const PAGE_SIZE = 3;
+
+const SEED = [
+  {
+    id: 'p1', slug: 'system-design-crew-chat-module', status: 'published',
+    title: 'System design: the chat module in a crew communication portal',
+    excerpt: 'One container, one SignalR hub, two databases, and a media path that never touches the API. Here is the whole shape, and the one constraint that decides everything else.',
+    tags: ['system-design', 'signalr', 'azure', 'architecture'], cover: '',
+    createdAt: '2026-07-22T09:00:00.000Z', updatedAt: '2026-07-22T09:00:00.000Z',
+    body: [
+      'Crew Connect is a portal for offshore crews: rosters, forms, pool management, and a chat module that has to work over a satellite link. The chat is the part people judge the product by, so it is worth drawing the whole system before talking about any single feature.',
+      '',
+      '![Crew Connect infrastructure — frontend, backend, data stores, and the third-party services around them](./assets/crew-connect-infrastructure.png)',
+      '',
+      '## The layers, briefly',
+      '',
+      'A React SPA is served as static output from Vercel. Every non-asset path rewrites to `index.html`, and the API base URL is injected at build time rather than discovered at runtime.',
+      '',
+      'The backend is a single ASP.NET Core container on Azure App Service. Auth, Chat, Pool, Form, Metadata, and admin all register as modules **inside one process** — not separate microservices. For a team of this size that is the right call: one deploy, one set of logs, no distributed transaction to reason about when a message send also has to write a notification.',
+      '',
+      '```',
+      'Browser (React SPA, Vercel)',
+      '   │  REST + WebSocket',
+      '   ▼',
+      'Azure App Service — CrewConnect.API (Linux container)',
+      '   ├── CORS → AuthN (JWT Bearer) → AuthZ',
+      '   ├── Controllers   /chats, /contacts, …',
+      '   └── SignalR Hub   /hubs/chat',
+      '        │',
+      '        ├── SQL Server      (EF Core, OLTP — messages live here)',
+      '        ├── Fabric DB       (read models, synced in background)',
+      '        └── Blob Storage    (media, via SAS URL — bytes skip the API)',
+      F.slice(0),
+      '',
+      '## The constraint that shapes everything',
+      '',
+      'The hub is registered with a plain `AddSignalR()` — no Redis, no Azure SignalR Service, no backplane of any kind. Group membership therefore lives in the memory of **one** instance.',
+      '',
+      '> This design is correct for exactly one App Service instance. Scale out to two and half your connections stop receiving broadcasts, because the instance that owns the group is not the instance that received the send.',
+      '',
+      'That is not a bug to fix later; it is a documented ceiling. It means the scaling plan has to be written down next to the deployment config, so the person who eventually clicks "scale out" knows what they are buying.',
+      '',
+      '## Why media never goes through the API',
+      '',
+      'A chat with photo attachments is a file-transfer product wearing a messaging hat. Routing bytes through the API container would make request timeouts, memory, and deploy windows all a function of how large a photo someone took.',
+      '',
+      'So the browser asks the backend for a SAS URL, uploads **directly** to Blob Storage, and sends the resulting URL as the message payload. The API only ever handles strings. Video takes one extra hop through Bitmovin for transcoding, so a phone-recorded clip plays on a ship laptop.',
+      '',
+      '```ts',
+      '// 1. ask for a scoped, expiring upload target',
+      'const { uploadUrl, blobUrl } = await api.post("/chats/media-token", {',
+      '  chatId, contentType: file.type,',
+      '});',
+      '',
+      '// 2. bytes go straight to storage — the API is not in this path',
+      'await fetch(uploadUrl, { method: "PUT", body: file });',
+      '',
+      '// 3. the message itself is just a reference',
+      'await hub.invoke("SendMessage", { chatId, clientId, mediaUrl: blobUrl });',
+      F.slice(0),
+      '',
+      '## Two databases, two jobs',
+      '',
+      'SQL Server via EF Core is the source of truth for every module, chat included. A second store, Fabric DB, is kept in sync by a background service and exists so that reporting and analytics queries never compete with the write path for the same locks.',
+      '',
+      'The rule I would write on the wall: **one writer, many readers, and the readers are allowed to be stale.** A chat message must be durable the instant it is acknowledged. A dashboard counting messages per vessel can be a minute behind and nobody notices.',
+      '',
+      '## Notifications are a fan-out, not a feature',
+      '',
+      'Every new message triggers a push through Azure Notification Hub in parallel with the SignalR broadcast — because the people who most need the message are the ones with the app closed. Transactional email goes out through Azure Communication Services for the non-push cases, like an invitation to a new chat.',
+      '',
+      'Two things matter here. The push is fired **alongside** the broadcast, not after it, so a slow push provider cannot delay the in-app message. And the push carries an identifier rather than the message body, so the client fetches current state instead of rendering a payload that may already be stale or redacted.',
+      '',
+      '## What I would change next',
+      '',
+      '1. Put a backplane in before anyone needs to scale out, not after.',
+      '2. Tighten CORS — allow-all is fine in development and indefensible in production.',
+      '3. Add real tracing. There is a `/health` endpoint aggregating both database contexts, but no distributed tracing, so a slow send is currently diagnosed by reading code rather than a span.',
+      '',
+      'None of those are rewrites. That is usually the sign that the original shape was right: the improvements are additions, not replacements.'
+    ].join('\n')
+  },
+  {
+    id: 'p2', slug: 'message-state-machine', status: 'published',
+    title: 'Designing the message state machine before the chat UI',
+    excerpt: 'Sending, sent, failed. Most chat clients model the first two and let the third quietly corrupt the list.',
+    tags: ['system-design', 'react', 'signalr'], cover: '',
+    createdAt: '2026-06-18T09:00:00.000Z', updatedAt: '2026-06-18T09:00:00.000Z',
+    body: [
+      'A chat client is a distributed system with a text input attached. The interesting design work is not the bubbles, it is deciding what a message *is* while the network is still deciding whether it happened.',
+      '',
+      '## The naive version',
+      '',
+      'Push the message into the list, fire the hub call, replace it when the server echoes back. That works until the echo arrives before the local write, or never arrives at all.',
+      '',
+      '```ts',
+      'type Message = {',
+      '  id: string;          // server id, or a client uuid while pending',
+      '  clientId: string;    // never changes — this is the reconciliation key',
+      '  status: "pending" | "sent" | "failed";',
+      '  body: string;',
+      '};',
+      F.slice(0),
+      '',
+      'The fix is `clientId`. The server echoes it back, so reconciliation is a lookup rather than a guess based on text and timestamp. It also makes retries idempotent: the server can recognise a duplicate send instead of creating a second message.',
+      '',
+      '## Failure is a state, not an exception',
+      '',
+      'A failed send stays in the list, greyed, with a retry affordance. Removing it is worse: the user watched themselves type it.',
+      '',
+      '- Pending messages sort by local time.',
+      '- Sent messages re-sort by server sequence.',
+      '- Failed messages hold their position and never re-sort.',
+      '',
+      '> Unread counts are the same problem wearing a hat. Derive them from the last read sequence, never by incrementing a local counter — a counter drifts the first time a reconnect replays messages you already saw.',
+      '',
+      'Sub-second updates with no polling, and the list stays honest when the connection does not.'
+    ].join('\n')
+  },
+  {
+    id: 'p3', slug: 'reconnect-is-the-design', status: 'published',
+    title: 'Reconnect is the design, not the edge case',
+    excerpt: 'On a satellite link the connection drops constantly. What the client does in those forty seconds is the whole product.',
+    tags: ['system-design', 'real-time', 'reliability'], cover: '',
+    createdAt: '2026-05-28T09:00:00.000Z', updatedAt: '2026-05-28T09:00:00.000Z',
+    body: [
+      'Offshore connectivity is not slow so much as intermittent. Planning for a healthy socket and treating the drop as an error path gets the priorities exactly backwards.',
+      '',
+      '## Three questions a reconnect has to answer',
+      '',
+      '1. What did I miss while I was gone?',
+      '2. What did I send that never landed?',
+      '3. What should the user see while I work it out?',
+      '',
+      'Only the third is a UI problem, and it is the one most implementations spend all their effort on.',
+      '',
+      '## Sequence numbers, not timestamps',
+      '',
+      'Client clocks on shared vessel laptops are wrong often enough that timestamps cannot order anything. The server assigns a monotonic sequence per chat; the client stores the highest one it has seen and asks for everything after it.',
+      '',
+      '```ts',
+      'hub.onreconnected(async () => {',
+      '  const since = store.lastSeq(chatId);      // never a Date',
+      '  const missed = await api.get(`/chats/${chatId}/messages?after=${since}`);',
+      '  store.merge(missed);                      // keyed by clientId + seq',
+      '  await resendPending(chatId);              // idempotent by clientId',
+      '});',
+      F.slice(0),
+      '',
+      '## The banner is part of the contract',
+      '',
+      'A quiet connection state is worse than a broken one, because the user keeps typing into a void. A thin persistent bar — reconnecting, then syncing, then gone — costs almost nothing and turns a mystery into a wait.',
+      '',
+      '> Design the offline state as a first-class screen. If the only way to see it is to unplug your laptop, nobody on the team has ever really looked at it.'
+    ].join('\n')
+  },
+  {
+    id: 'p4', slug: 'read-models-second-database', status: 'published',
+    title: 'When a second database earns its keep',
+    excerpt: 'Reporting queries and chat writes want opposite things. Splitting them is cheap; deciding what may be stale is the design.',
+    tags: ['system-design', 'databases', 'architecture'], cover: '',
+    createdAt: '2026-04-30T09:00:00.000Z', updatedAt: '2026-04-30T09:00:00.000Z',
+    body: [
+      'Crew Connect runs two stores: SQL Server as the transactional source of truth, and a second analytical database kept in sync by a background service. That is not redundancy — it is two different access patterns refusing to share a lock.',
+      '',
+      '## The pattern that forces the split',
+      '',
+      'Someone asks for "messages per vessel per week, by department". Answered against the OLTP database, that query scans the same table the send path writes to, at exactly the hour crews are most active.',
+      '',
+      '- Writes want narrow rows, tight indexes, short transactions.',
+      '- Reports want wide scans, denormalised shapes, and no urgency at all.',
+      '',
+      '## What the sync service must guarantee',
+      '',
+      'Not freshness. **Ordering and eventual completeness.** A read model that is two minutes behind is a product decision you can explain; one that is missing a random 0.3% of rows is a bug you will chase for a quarter.',
+      '',
+      '```sql',
+      '-- read model: denormalised on purpose, rebuilt not patched',
+      'CREATE TABLE fact_message_daily (',
+      '  vessel_id    INT      NOT NULL,',
+      '  department   VARCHAR(64) NOT NULL,',
+      '  day          DATE     NOT NULL,',
+      '  message_count INT     NOT NULL,',
+      '  PRIMARY KEY (vessel_id, department, day)',
+      ');',
+      F.slice(0),
+      '',
+      '## The honest trade',
+      '',
+      'You have accepted a second thing that can break, a second schema to migrate, and a lag the business will eventually ask you to shrink. In exchange, no analyst can take down chat with a `GROUP BY`. On a system where the chat is the product, that is a trade worth making — and worth writing down, so the next person knows it was a choice.'
+    ].join('\n')
+  },
+  {
+    id: 'p5', slug: 'scaling-signalr-past-one-instance', status: 'published',
+    title: 'Scaling SignalR past one instance',
+    excerpt: 'In-memory groups are the default and the ceiling. What actually changes when you add a backplane.',
+    tags: ['system-design', 'signalr', 'scalability'], cover: '',
+    createdAt: '2026-03-14T09:00:00.000Z', updatedAt: '2026-03-14T09:00:00.000Z',
+    body: [
+      'A plain `AddSignalR()` keeps group membership in process memory. One instance, and everything works. Two instances behind a load balancer, and a broadcast reaches only the clients that happen to be connected to the instance that received it.',
+      '',
+      '## Why it fails quietly',
+      '',
+      'Nothing throws. The send succeeds, the database row is written, the sender sees their own message. Only the other half of the room sees nothing — and they report it as "chat is laggy", which sends you looking at the wrong layer entirely.',
+      '',
+      '```',
+      'Client A ──▶ Instance 1 ──▶ group "chat:42" (in memory of Instance 1)',
+      'Client B ──▶ Instance 2 ──▶ group "chat:42" (a DIFFERENT in-memory group)',
+      '',
+      'A sends → Instance 1 broadcasts → B never hears it.',
+      F.slice(0),
+      '',
+      '## The two real options',
+      '',
+      '1. **Redis backplane.** Instances publish hub messages to Redis; every instance forwards to its own connections. Cheap, well understood, and now Redis is on your critical path for chat delivery.',
+      '2. **Azure SignalR Service.** Connections terminate at a managed service instead of your container. More expensive, far less to operate, and it removes socket count as a reason to scale the API.',
+      '',
+      '## What changes in your code',
+      '',
+      'Almost nothing — one registration line. What changes is what you must now think about.',
+      '',
+      '- Message ordering is per-connection, never global.',
+      '- A backplane outage becomes a chat outage, so it needs its own alert.',
+      '- Sticky sessions stop being a fix and become a smell.',
+      '',
+      '> The line of code is trivial. The reason to write it early is that adding it during an incident means learning your delivery guarantees under pressure.'
+    ].join('\n')
+  },
+  {
+    id: 'p6', slug: 'tracing-a-slow-send', status: 'draft',
+    title: 'Tracing a slow message send',
+    excerpt: 'Draft — a health endpoint tells you the service is up. It does not tell you which of six hops ate 900ms.',
+    tags: ['system-design', 'observability'], cover: '',
+    createdAt: '2026-08-06T09:00:00.000Z', updatedAt: '2026-08-06T09:00:00.000Z',
+    body: [
+      'Notes toward a proper write-up. Right now the system exposes `GET /health` aggregating both database contexts, and nothing else — no spans, no APM.',
+      '',
+      '## The six hops a send actually makes',
+      '',
+      '1. Hub invoke over the socket',
+      '2. Authorisation and chat membership check',
+      '3. EF Core insert',
+      '4. SignalR broadcast to the group',
+      '5. Push fan-out to Notification Hub',
+      '6. Background sync into the read model',
+      '',
+      'Without tracing, "sending is slow" is indistinguishable across all six. With one trace id threaded from the client, it is a glance.',
+      '',
+      'TODO: embed the walkthrough recording here once it is edited.',
+      '',
+      'https://www.youtube.com/watch?v=8aGhZQkoFbQ',
+      '',
+      'TODO: decide whether the trace id comes from the client or the hub, and what it costs to log it on every message at crew-wide volume.'
+    ].join('\n')
+  }
+];
+
+const ALPHAS = {
+  w: ['025', '03', '06', '07', '08', '09', '1', '11', '13', '14', '16', '18'],
+  k: ['74', '82', '86', '97'],
+  c: ['6', '72', '8'],
+  a: ['06', '1', '14', '28', '3', '35', '42']
+};
+
+const LIGHT = {
+  '--bg': '#FBFAF8', '--s0': '#F3F1EB', '--s1': '#FFFFFF', '--s2': '#FAF8F4',
+  '--s3': '#FFFFFF', '--s4': '#F3F1EB', '--s5': '#F0EEE8', '--sb': '#EEECE6',
+  '--sbt': '#CDCAC1', '--sbh': '#B2AEA4',
+  '--g9': '#C4C0B6', '--g8': '#97928A', '--g7': '#847F77', '--g6': '#746F67',
+  '--g5': '#68635B', '--g4': '#5C5750', '--g3': '#514C46', '--g2': '#464240',
+  '--tx3': '#3A3733', '--tx2': '#302D29', '--tx': '#1C1B17', '--warn': '#A05B00',
+  '--hi': '#1C1B17', '--onhi': '#FBFAF8', '--onacc': '#1C1B17'
+};
+
+const KEY = 'hlw_posts_v3';
+const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+class Component extends DCLogic {
+  canvasRef = React.createRef();
+  cometRef = React.createRef();
+  bodyRef = React.createRef();
+  rootRef = React.createRef();
+
+  state = {
+    theme: (function () {
+      try {
+        const t = localStorage.getItem('hlw_theme_v1');
+        if (t === 'light' || t === 'dark') return t;
+        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      } catch (e) { return 'dark'; }
+    })(),
+    view: 'site',
+    menuOpen: false,
+    vw: typeof window !== 'undefined' ? window.innerWidth : 1440,
+    posts: SEED,
+    query: '',
+    tag: 'All',
+    page: 1,
+    readerId: null,
+    editingId: null,
+    draft: null,
+    studioQuery: '',
+    studioFilter: 'all',
+    studioTab: 'write',
+    saveState: 'idle',
+    confirmDelete: false,
+    copied: false,
+    installable: false
+  };
+
+  componentDidMount() {
+    this.alive = true;
+    this.onResize = () => this.setState({ vw: window.innerWidth });
+    window.addEventListener('resize', this.onResize);
+    this.onInstall = e => { e.preventDefault(); this.deferred = e; this.setState({ installable: true }); };
+    window.addEventListener('beforeinstallprompt', this.onInstall);
+    this.loadPosts();
+    this.applyTheme();
+    this.initComet();
+    this.waitForLibs();
+    try {
+      if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      }
+    } catch (e) {}
+  }
+
+  componentDidUpdate() {
+    this.applyTheme();
+    document.body.style.overflow = this.state.view === 'site' && !this.state.menuOpen ? '' : 'hidden';
+  }
+
+  componentWillUnmount() {
+    this.alive = false;
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('beforeinstallprompt', this.onInstall);
+    if (this.onCanvasResize) window.removeEventListener('resize', this.onCanvasResize);
+    if (this.onCometResize) window.removeEventListener('resize', this.onCometResize);
+    if (this.onCometMove) window.removeEventListener('pointermove', this.onCometMove);
+    if (this.cometRaf) cancelAnimationFrame(this.cometRaf);
+    if (this.raf) cancelAnimationFrame(this.raf);
+    if (this.libTimer) clearInterval(this.libTimer);
+    if (this.saveTimer) clearTimeout(this.saveTimer);
+    if (this.renderer) { try { this.renderer.dispose(); } catch (e) {} }
+    document.body.style.overflow = '';
+  }
+
+  rgbOf(hex) {
+    const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
+    if (!m) return { r: 198, g: 242, b: 78 };
+    const n = parseInt(m[1], 16);
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  }
+  scaleHex(c, k) {
+    const h = v => Math.max(0, Math.min(255, Math.round(v * k))).toString(16).padStart(2, '0');
+    return '#' + h(c.r) + h(c.g) + h(c.b);
+  }
+
+  applyTheme() {
+    const theme = this.state.theme;
+    const acc = this.props.accent || '#C6F24E';
+    if (theme === this.lastTheme && acc === this.lastAccent) return;
+    this.lastTheme = theme; this.lastAccent = acc;
+    const light = theme === 'light';
+    const rs = document.documentElement.style;
+    const A = this.rgbOf(acc);
+
+    Object.keys(LIGHT).forEach(k => rs.removeProperty(k));
+    ['w', 'k', 'c', 'a'].forEach(fam => ALPHAS[fam].forEach(s => rs.removeProperty('--' + fam + s)));
+    rs.removeProperty('--acx'); rs.removeProperty('--accf');
+
+    if (light) Object.keys(LIGHT).forEach(k => rs.setProperty(k, LIGHT[k]));
+    rs.setProperty('--accf', acc);
+    rs.setProperty('--acx', light ? this.scaleHex(A, 0.46) : acc);
+
+    ALPHAS.a.forEach(s => {
+      const a = parseFloat('.' + s);
+      rs.setProperty('--a' + s, 'rgba(' + A.r + ',' + A.g + ',' + A.b + ',' + (light ? Math.min(1, a * 1.5) : a) + ')');
+    });
+    if (light) {
+      ALPHAS.w.forEach(s => {
+        const a = parseFloat('.' + s);
+        rs.setProperty('--w' + s, 'rgba(28,27,23,' + Math.min(0.9, a * 1.8).toFixed(3) + ')');
+      });
+      ALPHAS.k.forEach(s => rs.setProperty('--k' + s, 'rgba(251,250,248,' + parseFloat('.' + s) + ')'));
+      ALPHAS.c.forEach(s => rs.setProperty('--c' + s, 'rgba(255,255,255,' + Math.min(1, parseFloat('.' + s) + 0.22).toFixed(3) + ')'));
+    }
+
+    const tc = document.querySelector('meta[name="theme-color"]');
+    if (tc) tc.setAttribute('content', light ? '#FBFAF8' : '#08090A');
+    document.body.style.background = light ? '#FBFAF8' : '#08090A';
+    this.updateFieldColors();
+  }
+
+  updateFieldColors() {
+    if (!this.points || !window.THREE || !this.accFlags) return;
+    const THREE = window.THREE;
+    const light = this.state.theme === 'light';
+    const A = this.rgbOf(this.props.accent || '#C6F24E');
+    const accCol = new THREE.Color(light ? this.scaleHex(A, 0.4) : (this.props.accent || '#C6F24E'));
+    const baseCol = new THREE.Color(light ? 0x33302A : 0xB9C0C7);
+    const attr = this.points.geometry.getAttribute('color');
+    for (let i = 0; i < this.accFlags.length; i++) {
+      const c = this.accFlags[i] ? accCol : baseCol;
+      attr.setXYZ(i, c.r, c.g, c.b);
+    }
+    attr.needsUpdate = true;
+    if (this.mat) {
+      this.mat.opacity = light ? 0.68 : 0.62;
+      this.mat.size = light ? 0.09 : 0.075;
+      this.mat.needsUpdate = true;
+    }
+    const CA = light ? this.rgbOf(this.scaleHex(A, 0.52)) : A;
+    this.cometRGB = CA.r + ',' + CA.g + ',' + CA.b;
+    if (this.shapeMats) {
+      this.shapeMats.forEach((m, i) => {
+        m.color = new THREE.Color(light ? this.scaleHex(A, 0.26) : (this.props.accent || '#C6F24E'));
+        m.opacity = light ? (i === 0 ? 0.34 : 0.56) : (i === 0 ? 0.13 : 0.09);
+        m.needsUpdate = true;
+      });
+    }
+  }
+
+  toggleTheme = () => {
+    const theme = this.state.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('hlw_theme_v1', theme); } catch (e) {}
+    this.setState({ theme });
+  };
+
+  loadPosts() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length) this.setState({ posts: parsed });
+      }
+    } catch (e) {}
+  }
+  save(posts) {
+    try { localStorage.setItem(KEY, JSON.stringify(posts)); } catch (e) {}
+  }
+
+  waitForLibs() {
+    let tries = 0;
+    this.libTimer = setInterval(() => {
+      tries++;
+      if (!this.alive || tries > 120) { clearInterval(this.libTimer); return; }
+      if (window.THREE && !this.scene) this.initThree();
+      if (window.gsap && window.ScrollTrigger && !this.revealDone) this.initReveals();
+      if ((this.scene || this.threeFailed) && this.revealDone) clearInterval(this.libTimer);
+    }, 120);
+  }
+
+  // comet trail on its own overlay canvas, above the page content
+  initComet() {
+    const cv = this.cometRef.current;
+    if (!cv || this.cometOn || this.prefersReduced()) return;
+    const ctx = cv.getContext('2d');
+    if (!ctx) return;
+    this.cometOn = true;
+
+    const size = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = Math.floor(window.innerWidth * dpr);
+      cv.height = Math.floor(window.innerHeight * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    size();
+    this.onCometResize = size;
+    window.addEventListener('resize', size);
+
+    const N = 22, hist = [];
+    let mx = 0, my = 0, seen = false;
+    this.onCometMove = e => {
+      const t = e.touches ? e.touches[0] : e;
+      mx = t.clientX; my = t.clientY;
+      if (!seen) { seen = true; for (let i = 0; i < N; i++) beads[i].x = mx, beads[i].y = my; }
+    };
+    const beads = [];
+    for (let i = 0; i < N; i++) beads.push({ x: 0, y: 0 });
+    window.addEventListener('pointermove', this.onCometMove, { passive: true });
+
+    const draw = () => {
+      if (!this.alive) return;
+      this.cometRaf = requestAnimationFrame(draw);
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      if (!seen) return;
+
+      hist.unshift(mx, my);
+      if (hist.length > 240) hist.length = 240;
+      const frames = hist.length / 2;
+      const rgb = this.cometRGB || '198,242,78';
+
+      for (let i = N - 1; i >= 0; i--) {
+        const s = Math.min(frames - 1, i * 3) * 2;
+        const b = beads[i];
+        b.x += (hist[s] - b.x) * 0.55;
+        b.y += (hist[s + 1] - b.y) * 0.55;
+        const fr = i / (N - 1);
+        const r = 5.5 * (1 - fr * 0.86);
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, r, 0, 6.2832);
+        ctx.fillStyle = 'rgba(' + rgb + ',' + ((1 - fr) * 0.8 + 0.03).toFixed(3) + ')';
+        ctx.fill();
+      }
+
+      // soft glow on the head
+      const h = beads[0];
+      const g = ctx.createRadialGradient(h.x, h.y, 0, h.x, h.y, 26);
+      g.addColorStop(0, 'rgba(' + rgb + ',0.3)');
+      g.addColorStop(1, 'rgba(' + rgb + ',0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(h.x, h.y, 26, 0, 6.2832);
+      ctx.fill();
+    };
+    draw();
+  }
+
+  prefersReduced() {
+    if (this.props.reduceMotion) return true;
+    try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; }
+  }
+
+  initThree() {
+    const THREE = window.THREE;
+    const canvas = this.canvasRef.current;
+    if (!canvas || this.props.ambient3D === false) { this.threeFailed = true; return; }
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'low-power' });
+    } catch (e) { this.threeFailed = true; return; }
+    this.renderer = renderer;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+    const scene = new THREE.Scene();
+    this.scene = scene;
+    const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 140);
+    camera.position.set(0, 0, 16);
+    this.camera = camera;
+
+    const acc = new THREE.Color(this.props.accent || '#C6F24E');
+    const count = Math.max(200, Math.min(4000, Math.round(this.props.fieldDensity || 1500)));
+    const pos = new Float32Array(count * 3);
+    const col = new Float32Array(count * 3);
+    const flags = [];
+    for (let i = 0; i < count; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * 58;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 38;
+      // keep every point well behind the camera plane so none renders as a
+      // giant near-field square that appears to track the cursor
+      pos[i * 3 + 2] = -6 - Math.random() * 46;
+      const isAcc = Math.random() < 0.16;
+      flags.push(isAcc);
+      const c = isAcc ? acc : new THREE.Color(0xB9C0C7);
+      col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    const mat = new THREE.PointsMaterial({ size: 0.075, vertexColors: true, transparent: true, opacity: 0.62, depthWrite: false, sizeAttenuation: true });
+    this.mat = mat;
+    const points = new THREE.Points(geo, mat);
+    scene.add(points);
+    this.points = points;
+    this.accFlags = flags;
+
+    this.shapes = [];
+    this.shapeMats = [];
+    const defs = [
+      { g: new THREE.IcosahedronGeometry(4.4, 1), p: [-11, 3.5, -14] },
+      { g: new THREE.TorusGeometry(3.1, 0.9, 10, 34), p: [12.5, -4.5, -17] },
+      { g: new THREE.OctahedronGeometry(3.3, 0), p: [7, 6.5, -21] }
+    ];
+    defs.forEach((d, i) => {
+      const m = new THREE.MeshBasicMaterial({ color: acc.clone(), wireframe: true, transparent: true, opacity: i === 0 ? 0.13 : 0.09 });
+      const mesh = new THREE.Mesh(d.g, m);
+      mesh.position.set(d.p[0], d.p[1], d.p[2]);
+      mesh.userData.base = { x: d.p[0], y: d.p[1], z: d.p[2] };
+      scene.add(mesh);
+      this.shapes.push(mesh);
+      this.shapeMats.push(m);
+    });
+
+    this.updateFieldColors();
+
+    this.prog = 0;
+    this.look = { x: 0, y: 0 };
+    this.mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+    this.onMove = e => {
+      const t = e.touches ? e.touches[0] : e;
+      this.mouse.tx = (t.clientX / window.innerWidth - 0.5) * 2;
+      this.mouse.ty = (t.clientY / window.innerHeight - 0.5) * 2;
+      if (!this.pointerSeen) {
+        this.pointerSeen = true;
+        if (this.trailGroup && !this.prefersReduced()) this.trailGroup.visible = true;
+      }
+    };
+    window.addEventListener('pointermove', this.onMove, { passive: true });
+
+    const resize = () => {
+      const w = window.innerWidth, h = window.innerHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    };
+    resize();
+    this.onCanvasResize = resize;
+    window.addEventListener('resize', resize);
+
+    const reduced = this.prefersReduced();
+    const clock = new THREE.Clock();
+    const loop = () => {
+      if (!this.alive) return;
+      this.raf = requestAnimationFrame(loop);
+      const t = clock.getElapsedTime();
+      const sc = window.scrollY || 0;
+      const docH = Math.max(1, document.body.scrollHeight - window.innerHeight);
+      const prog = Math.min(1, sc / docH);
+
+      this.mouse.x += (this.mouse.tx - this.mouse.x) * 0.045;
+      this.mouse.y += (this.mouse.ty - this.mouse.y) * 0.045;
+
+      // ease the scroll value so the camera glides instead of snapping
+      this.prog += (prog - this.prog) * 0.07;
+      const p = this.prog;
+
+      if (!reduced) {
+        // field drifts and banks as you travel down the page
+        points.rotation.y = t * 0.02 + p * 0.65 + this.mouse.x * 0.14;
+        points.rotation.x = this.mouse.y * 0.09 + p * 0.14;
+        points.rotation.z = p * 0.3;
+        points.position.y = Math.sin(t * 0.12) * 0.7;
+
+        // each solid follows its own slow lissajous orbit
+        this.shapes.forEach((mesh, i) => {
+          const b = mesh.userData.base;
+          const k = 1 + i * 0.55;
+          mesh.position.x = b.x + Math.sin(t * 0.13 * k + i) * 2.3;
+          mesh.position.y = b.y + Math.cos(t * 0.1 * k + i * 1.7) * 1.9;
+          mesh.position.z = b.z + Math.sin(t * 0.075 * k) * 2.6;
+          mesh.rotation.x = t * (0.09 + i * 0.03);
+          mesh.rotation.y = t * (0.13 - i * 0.02);
+          mesh.rotation.z = t * 0.05 * (i % 2 ? -1 : 1);
+        });
+      }
+
+      // camera travels a curved arc through the field rather than zooming
+      const a = p * Math.PI * 1.25;
+      camera.position.x = Math.sin(a) * 7.6 + this.mouse.x * 1.1;
+      camera.position.y = -p * 8 + Math.sin(p * Math.PI * 2.2) * 1.5 + this.mouse.y * -0.7;
+      camera.position.z = 15.5 - p * 2.4 + Math.cos(a) * 3.4;
+
+      this.look.x += (Math.sin(a * 0.62) * 3.4 - this.look.x) * 0.05;
+      this.look.y += (-p * 8 - this.look.y) * 0.05;
+      camera.lookAt(this.look.x, this.look.y, -15);
+      camera.rotation.z = Math.sin(a) * 0.065;
+
+      renderer.render(scene, camera);
+    };
+    loop();
+  }
+
+  initReveals() {
+    this.revealDone = true;
+    const gsap = window.gsap, ST = window.ScrollTrigger;
+    if (!gsap || !ST) return;
+    try {
+      gsap.registerPlugin(ST);
+      const all = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+      if (!all.length) return;
+      if (this.prefersReduced()) return;
+
+      const hero = all.filter(e => e.closest('#top'));
+      const rest = all.filter(e => !e.closest('#top'));
+      const heads = rest.filter(e => !!e.querySelector('h2'));
+      const cards = rest.filter(e => heads.indexOf(e) < 0 && (e.tagName === 'ARTICLE' || !!e.querySelector('h3')));
+      const grids = rest.filter(e => heads.indexOf(e) < 0 && cards.indexOf(e) < 0 && e.children.length > 3);
+      const plain = rest.filter(e => heads.indexOf(e) < 0 && cards.indexOf(e) < 0 && grids.indexOf(e) < 0);
+
+      // ---- hero: staggered rise, headline wipes open ----
+      gsap.set(hero, { opacity: 0, y: 30 });
+      gsap.to(hero, { opacity: 1, y: 0, duration: 0.95, stagger: 0.09, ease: 'power3.out', delay: 0.15 });
+      const h1 = document.querySelector('#top h1');
+      if (h1) {
+        gsap.fromTo(h1,
+          { clipPath: 'inset(0 100% 0 0)' },
+          { clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'expo.out', delay: 0.4 });
+      }
+
+      // ---- hero parallaxes away as you leave it ----
+      gsap.to('#top', {
+        y: -80, opacity: 0.12, ease: 'none',
+        scrollTrigger: {
+          trigger: '#top', start: 'top top', end: 'bottom top', scrub: 0.6,
+          onUpdate: self => {
+            const el = document.getElementById('top');
+            if (el) el.style.pointerEvents = self.progress > 0.3 ? 'none' : '';
+          }
+        }
+      });
+
+      // ---- section headers: number, title wipe, right label ----
+      heads.forEach(h => {
+        const kids = Array.prototype.slice.call(h.children);
+        gsap.set(kids, { opacity: 0, y: 22 });
+        ST.create({
+          trigger: h, start: 'top 88%', once: true,
+          onEnter: () => {
+            gsap.to(kids, { opacity: 1, y: 0, duration: 0.85, stagger: 0.09, ease: 'power3.out' });
+            const t = h.querySelector('h2');
+            if (t) gsap.fromTo(t,
+              { clipPath: 'inset(0 100% 0 0)' },
+              { clipPath: 'inset(0 0% 0 0)', duration: 1, ease: 'expo.out' });
+          }
+        });
+      });
+
+      // ---- cards: tilt up into place, then hand transform back to CSS hover ----
+      gsap.set(cards, { opacity: 0, y: 52, scale: 0.965, rotateX: 8, transformPerspective: 900, transformOrigin: '50% 0%' });
+      ST.batch(cards, {
+        start: 'top 90%', once: true,
+        onEnter: b => gsap.to(b, {
+          opacity: 1, y: 0, scale: 1, rotateX: 0, duration: 1, stagger: 0.1, ease: 'power3.out',
+          onComplete: () => gsap.set(b, { clearProps: 'transform,transformPerspective,transformOrigin' })
+        })
+      });
+
+      // ---- grids: cells cascade in ----
+      grids.forEach(g => {
+        const kids = Array.prototype.slice.call(g.children);
+        gsap.set(kids, { opacity: 0, y: 30 });
+        ST.create({
+          trigger: g, start: 'top 90%', once: true,
+          onEnter: () => gsap.to(kids, {
+            opacity: 1, y: 0, duration: 0.75, stagger: 0.055, ease: 'power2.out', clearProps: 'transform'
+          })
+        });
+      });
+
+      // ---- everything else ----
+      gsap.set(plain, { opacity: 0, y: 26 });
+      ST.batch(plain, {
+        start: 'top 90%', once: true,
+        onEnter: b => gsap.to(b, { opacity: 1, y: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out', clearProps: 'transform' })
+      });
+
+      // ---- reading progress in the nav ----
+      const bar = document.querySelector('[data-progress]');
+      if (bar) {
+        gsap.set(bar, { scaleX: 0 });
+        const qx = gsap.quickTo(bar, 'scaleX', { duration: 0.25, ease: 'power2.out' });
+        ST.create({
+          start: 0, end: 'max',
+          onUpdate: self => qx(self.progress)
+        });
+      }
+
+      // ---- nav retracts on the way down, returns on the way up ----
+      const hdr = document.querySelector('header');
+      if (hdr) {
+        let last = 0;
+        ST.create({
+          start: 0, end: 'max',
+          onUpdate: self => {
+            const y = self.scroll();
+            const hide = y > last + 2 && y > 220;
+            const show = y < last - 2 || y <= 220;
+            last = y;
+            if (hide || show) gsap.to(hdr, { yPercent: hide ? -110 : 0, duration: 0.45, ease: 'power3.out', overwrite: true });
+          }
+        });
+      }
+
+      ST.refresh();
+    } catch (e) {}
+  }
+
+  highlight(code, lang) {
+    const esc = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const KW = lang === 'py'
+      ? 'def|class|return|import|from|as|with|for|in|if|elif|else|while|try|except|finally|yield|lambda|None|True|False|and|or|not|async|await|pass|raise'
+      : lang === 'sql'
+        ? 'CREATE|INDEX|CONCURRENTLY|ON|SELECT|FROM|WHERE|INSERT|INTO|UPDATE|SET|DELETE|JOIN|GROUP|ORDER|BY|DESC|ASC|LIMIT|VALUES|TABLE|PRIMARY|KEY'
+        : 'const|let|var|function|return|async|await|if|else|for|of|in|while|switch|case|break|new|class|extends|import|export|from|default|type|interface|typeof|null|undefined|true|false|try|catch|throw';
+    const parts = [];
+    const stash = s => { parts.push(s); return '\u0001' + (parts.length - 1) + '\u0001'; };
+    let out = esc
+      .replace(/(\/\/[^\n]*|#[^\n]*)/g, m => stash('<span style="color:#5C646C">' + m + '</span>'))
+      .replace(/(&quot;|"|'|`)(?:\\.|(?!\1)[^\\\n])*\1/g, m => stash('<span style="color:#9BE58A">' + m + '</span>'))
+      .replace(new RegExp('\\b(' + KW + ')\\b', 'g'), m => stash('<span style="color:#E48BFF">' + m + '</span>'))
+      .replace(/\b(\d+(?:\.\d+)?)\b/g, m => stash('<span style="color:#F2B25E">' + m + '</span>'))
+      .replace(/\b([A-Za-z_$][\w$]*)(?=\()/g, m => stash('<span style="color:#7FD4FF">' + m + '</span>'));
+    out = out.replace(/\u0001(\d+)\u0001/g, (m, i) => parts[+i]);
+    return out;
+  }
+
+  codeBlock(code, lang) {
+    const label = (lang || 'text').toUpperCase();
+    return '<div style="margin:0 0 1.6em;border:1px solid rgba(255,255,255,.09);border-radius:10px;overflow:hidden;background:#0C0F11">'
+      + '<div style="padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.07);font:500 9.5px/1 \'JetBrains Mono\',monospace;letter-spacing:.13em;color:#6B737B">' + label + '</div>'
+      + '<pre style="margin:0;padding:15px 16px;overflow-x:auto;font:400 13px/1.7 \'JetBrains Mono\',ui-monospace,monospace;color:#C9CDD2"><code>'
+      + this.highlight(code, lang) + '</code></pre></div>';
+  }
+
+  escAttr(s) {
+    return String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  figureBlock(url, alt) {
+    const safe = this.escAttr(encodeURI(url).replace(/"/g, '%22'));
+    const cap = this.escAttr(alt);
+    return '<figure style="margin:0 0 1.9em">'
+      + '<a href="' + safe + '" target="_blank" rel="noopener" style="display:block;border:1px solid var(--w1,rgba(255,255,255,.1));border-radius:12px;overflow:hidden;background:var(--s2,#0B0D0F)">'
+      + '<img src="' + safe + '" alt="' + cap + '" loading="lazy" style="display:block;width:100%;height:auto">'
+      + '</a>'
+      + (cap ? '<figcaption style="margin-top:10px;font:400 12.5px/1.55 \'JetBrains Mono\',ui-monospace,monospace;color:var(--g6,#6B737B);text-wrap:pretty">' + cap + '</figcaption>' : '')
+      + '</figure>';
+  }
+
+  ytId(s) {
+    const m = /^(?:https?:\/\/)?(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?(?:[^\s]*&)?v=|embed\/|live\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,20})(?:[?&#][^\s]*)?$/.exec(s);
+    return m ? m[1] : null;
+  }
+
+  ytBlock(id) {
+    const watch = 'https://www.youtube.com/watch?v=' + id;
+    const thumb = 'https://img.youtube.com/vi/' + id + '/hqdefault.jpg';
+    return '<a href="' + watch + '" target="_blank" rel="noopener" style="display:block;position:relative;margin:0 0 1.9em;border:1px solid var(--w1,rgba(255,255,255,.1));border-radius:12px;overflow:hidden;background:#0B0D0F url(' + thumb + ') center/cover no-repeat;aspect-ratio:16/9;text-decoration:none">'
+      + '<span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,10,.15),rgba(8,9,10,.72))"></span>'
+      + '<span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:66px;height:46px;border-radius:11px;background:#FF0033;display:flex;align-items:center;justify-content:center">'
+      + '<span style="width:0;height:0;border-left:15px solid #FFFFFF;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:3px"></span></span>'
+      + '<span style="position:absolute;left:14px;bottom:12px;font:500 10px/1 \'JetBrains Mono\',monospace;letter-spacing:.14em;color:#FFFFFF">WATCH ON YOUTUBE</span>'
+      + '</a>';
+  }
+
+  md(src) {
+    if (!src) return '';
+    const blocks = [];
+    let s = String(src).replace(/\r\n/g, '\n');
+    const re = new RegExp(F + '(\\w*)\\n([\\s\\S]*?)' + F, 'g');
+    s = s.replace(re, (m, lang, code) => {
+      blocks.push(this.codeBlock(code.replace(/\n$/, ''), lang));
+      return '\u0002' + (blocks.length - 1) + '\u0002';
+    });
+
+    const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const inline = t => esc(t)
+      .replace(/`([^`]+)`/g, '<code style="background:var(--a1,rgba(198,242,78,.1));color:var(--acx,#C6F24E);padding:2px 6px;border-radius:4px;font:400 .88em/1.4 \'JetBrains Mono\',monospace">$1</code>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong style="color:var(--tx,#EDEDE8);font-weight:600">$1</strong>')
+      .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2" style="color:var(--acx,#C6F24E);text-decoration:underline;text-underline-offset:3px">$1</a>');
+
+    const P = 'font:400 clamp(15.5px,1.7vw,17.5px)/1.78 Archivo,sans-serif;color:var(--tx3,#C0C6CC);margin:0 0 1.35em;text-wrap:pretty';
+    const lines = s.split('\n');
+    const out = [];
+    let list = null, quote = [];
+    const flushList = () => {
+      if (!list) return;
+      const tag = list.type;
+      out.push('<' + tag + ' style="margin:0 0 1.5em;padding-left:22px;display:flex;flex-direction:column;gap:.5em">'
+        + list.items.map(i => '<li style="' + P + ';margin:0">' + inline(i) + '</li>').join('') + '</' + tag + '>');
+      list = null;
+    };
+    const flushQuote = () => {
+      if (!quote.length) return;
+      out.push('<blockquote style="margin:0 0 1.6em;padding:2px 0 2px 20px;border-left:2px solid var(--acx,#C6F24E);font:400 clamp(16px,1.8vw,18.5px)/1.7 Archivo,sans-serif;color:var(--g3,#9AA1A8);text-wrap:pretty">'
+        + inline(quote.join(' ')) + '</blockquote>');
+      quote = [];
+    };
+
+    lines.forEach(raw => {
+      const line = raw.replace(/\s+$/, '');
+      if (/^\u0002\d+\u0002$/.test(line)) { flushList(); flushQuote(); out.push(line); return; }
+      if (!line.trim()) { flushList(); flushQuote(); return; }
+      let m;
+      if ((m = line.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/))) {
+        flushList(); flushQuote();
+        out.push(this.figureBlock(m[2], m[1]));
+        return;
+      }
+      const vid = this.ytId(line.trim());
+      if (vid) { flushList(); flushQuote(); out.push(this.ytBlock(vid)); return; }
+      if ((m = line.match(/^(#{1,4})\s+(.*)$/))) {
+        flushList(); flushQuote();
+        const lvl = m[1].length;
+        const sizes = { 1: 'clamp(26px,3.6vw,34px)', 2: 'clamp(21px,2.6vw,26px)', 3: 'clamp(17.5px,2vw,20px)', 4: '16px' };
+        out.push('<h' + lvl + ' style="font:600 ' + sizes[lvl] + '/1.25 Archivo,sans-serif;letter-spacing:-.02em;color:var(--tx,#EDEDE8);margin:2.1em 0 .65em;text-wrap:balance">' + inline(m[2]) + '</h' + lvl + '>');
+        return;
+      }
+      if (/^>\s?/.test(line)) { flushList(); quote.push(line.replace(/^>\s?/, '')); return; }
+      if ((m = line.match(/^[-*]\s+(.*)$/))) {
+        flushQuote();
+        if (!list || list.type !== 'ul') { flushList(); list = { type: 'ul', items: [] }; }
+        list.items.push(m[1]); return;
+      }
+      if ((m = line.match(/^\d+\.\s+(.*)$/))) {
+        flushQuote();
+        if (!list || list.type !== 'ol') { flushList(); list = { type: 'ol', items: [] }; }
+        list.items.push(m[1]); return;
+      }
+      if (/^---+$/.test(line)) { flushList(); flushQuote(); out.push('<div style="height:1px;background:var(--w1,rgba(255,255,255,.1));margin:2.4em 0"></div>'); return; }
+      flushList(); flushQuote();
+      out.push('<p style="' + P + '">' + inline(line) + '</p>');
+    });
+    flushList(); flushQuote();
+
+    return out.join('').replace(/\u0002(\d+)\u0002/g, (m, i) => blocks[+i] || '');
+  }
+
+  words(t) { return (String(t || '').trim().match(/\S+/g) || []).length; }
+  readMin(t) { return Math.max(1, Math.round(this.words(t) / 220)); }
+  dateLabel(iso) {
+    const d = new Date(iso);
+    if (isNaN(d)) return '';
+    return MONTHS[d.getMonth()] + ' ' + d.getDate() + ' ' + d.getFullYear();
+  }
+  slugify(t) {
+    return String(t || '').toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-').slice(0, 60) || 'untitled';
+  }
+
+  openStudio = () => {
+    const first = this.state.posts[0];
+    this.setState({
+      view: 'studio', menuOpen: false, confirmDelete: false,
+      editingId: this.state.editingId || (first ? first.id : null),
+      draft: this.state.draft || (first ? Object.assign({}, first) : null)
+    });
+  };
+  closeStudio = () => { this.flushSave(); this.setState({ view: 'site' }); };
+
+  openReader = id => () => { this.setState({ view: 'reader', readerId: id }); window.scrollTo(0, 0); };
+  closeReader = () => this.setState({ view: 'site', readerId: null });
+
+  toggleMenu = () => this.setState(s => ({ menuOpen: !s.menuOpen }));
+
+  copyEmail = () => {
+    const addr = 'hapsari.laksmiw@gmail.com';
+    const done = () => {
+      this.setState({ copied: true });
+      if (this.copyTimer) clearTimeout(this.copyTimer);
+      this.copyTimer = setTimeout(() => this.alive && this.setState({ copied: false }), 1900);
+    };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(addr).then(done).catch(done);
+        return;
+      }
+    } catch (e) {}
+    const ta = document.createElement('textarea');
+    ta.value = addr;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    ta.remove();
+    done();
+  };
+
+  install = async () => {
+    if (!this.deferred) return;
+    this.deferred.prompt();
+    try { await this.deferred.userChoice; } catch (e) {}
+    this.deferred = null;
+    this.setState({ installable: false });
+  };
+
+  downloadResume = () => {
+    const txt = 'HAPSARI LAKSMI WIJAYANTI — Front End Developer\nhapsari.laksmiw@gmail.com · linkedin.com/in/hapsarilw · github.com/hapsarilw\n\nReplace this placeholder with your real résumé PDF.\n';
+    const blob = new Blob([txt], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'hapsari-laksmi-resume.txt';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+
+  setQuery = e => this.setState({ query: e.target.value, page: 1 });
+  setTag = t => () => this.setState({ tag: t, page: 1 });
+  clearFilters = () => this.setState({ query: '', tag: 'All', page: 1 });
+
+  setPage = n => () => {
+    this.setState({ page: n });
+    const el = document.getElementById('writing');
+    if (el) {
+      const top = window.scrollY + el.getBoundingClientRect().top - 78;
+      try { window.scrollTo({ top: top, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, top); }
+    }
+  };
+
+  insertMd = kind => () => {
+    const ta = this.bodyRef.current;
+    const d = this.state.draft;
+    if (!ta || !d) return;
+    const snips = {
+      image: '![caption](https://)',
+      link: '[link text](https://)',
+      youtube: 'https://www.youtube.com/watch?v=',
+      code: F + 'ts\n\n' + F
+    };
+    const snip = snips[kind];
+    if (!snip) return;
+    const body = d.body || '';
+    const at = typeof ta.selectionStart === 'number' ? ta.selectionStart : body.length;
+    const end = typeof ta.selectionEnd === 'number' ? ta.selectionEnd : at;
+    const block = kind !== 'link';
+    const lead = block && at > 0 && body[at - 1] !== '\n' ? '\n' : '';
+    const text = lead + snip + (block ? '\n' : '');
+    this.patch({ body: body.slice(0, at) + text + body.slice(end) });
+    let caret = at + lead.length + snip.length;
+    if (kind === 'image' || kind === 'link') caret = at + lead.length + snip.indexOf('https://') + 8;
+    if (kind === 'code') caret = at + lead.length + snip.indexOf('\n') + 1;
+    requestAnimationFrame(() => {
+      try { ta.focus(); ta.setSelectionRange(caret, caret); } catch (e) {}
+    });
+  };
+  setStudioQuery = e => this.setState({ studioQuery: e.target.value });
+  setStudioFilter = f => () => this.setState({ studioFilter: f });
+  setStudioTab = t => () => this.setState({ studioTab: t });
+
+  newPost = () => {
+    const now = new Date().toISOString();
+    const post = {
+      id: 'p' + Date.now().toString(36), slug: 'untitled', status: 'draft',
+      title: '', excerpt: '', tags: [], cover: '', body: '', createdAt: now, updatedAt: now
+    };
+    const posts = [post].concat(this.state.posts);
+    this.save(posts);
+    this.setState({ posts, editingId: post.id, draft: Object.assign({}, post), studioTab: 'write', confirmDelete: false, saveState: 'saved' });
+  };
+
+  selectPost = id => () => {
+    this.flushSave();
+    const p = this.state.posts.find(x => x.id === id);
+    if (!p) return;
+    this.setState({ editingId: id, draft: Object.assign({}, p), studioTab: 'write', confirmDelete: false, saveState: 'idle' });
+  };
+
+  patch(fields) {
+    const draft = Object.assign({}, this.state.draft, fields, { updatedAt: new Date().toISOString() });
+    if (fields.title !== undefined) draft.slug = this.slugify(fields.title);
+    this.setState({ draft, saveState: 'saving' });
+    if (this.saveTimer) clearTimeout(this.saveTimer);
+    this.saveTimer = setTimeout(() => this.commit(draft), 550);
+  }
+  commit(draft) {
+    const posts = this.state.posts.map(p => (p.id === draft.id ? draft : p));
+    this.save(posts);
+    this.setState({ posts, saveState: 'saved' });
+  }
+  flushSave() {
+    if (this.saveTimer) { clearTimeout(this.saveTimer); this.saveTimer = null; }
+    if (this.state.draft) this.commit(this.state.draft);
+  }
+
+  onTitle = e => this.patch({ title: e.target.value });
+  onExcerpt = e => this.patch({ excerpt: e.target.value });
+  onBody = e => this.patch({ body: e.target.value });
+  onCover = e => this.patch({ cover: e.target.value });
+  onTags = e => this.patch({ tags: e.target.value.split(',').map(t => t.trim()).filter(Boolean) });
+
+  togglePublish = () => {
+    const d = this.state.draft;
+    if (!d) return;
+    const draft = Object.assign({}, d, { status: d.status === 'published' ? 'draft' : 'published', updatedAt: new Date().toISOString() });
+    this.setState({ draft });
+    this.commit(draft);
+  };
+
+  deleteDraft = () => {
+    if (!this.state.confirmDelete) {
+      this.setState({ confirmDelete: true });
+      if (this.confirmTimer) clearTimeout(this.confirmTimer);
+      this.confirmTimer = setTimeout(() => this.alive && this.setState({ confirmDelete: false }), 3200);
+      return;
+    }
+    if (this.saveTimer) { clearTimeout(this.saveTimer); this.saveTimer = null; }
+    const posts = this.state.posts.filter(p => p.id !== this.state.draft.id);
+    this.save(posts);
+    const next = posts[0] || null;
+    this.setState({ posts, confirmDelete: false, editingId: next ? next.id : null, draft: next ? Object.assign({}, next) : null, saveState: 'idle' });
+  };
+
+  coverStyle(url, radius, gap) {
+    return 'width:100%;aspect-ratio:16/9;border-radius:' + radius + 'px;border:1px solid var(--w08,rgba(255,255,255,.08));margin-bottom:' + gap
+      + 'px;background-color:var(--s2,#0B0D0F);background-image:url("' + encodeURI(url || '').replace(/"/g, '%22')
+      + '");background-size:cover;background-position:center';
+  }
+
+  renderVals() {
+    const s = this.state;
+    const vw = s.vw;
+    const chipBase = 'height:32px;padding:0 12px;display:inline-flex;align-items:center;border-radius:7px;font:500 11.5px/1 \'JetBrains Mono\',monospace;letter-spacing:.04em;cursor:pointer;transition:all .18s;';
+    const chipOn = chipBase + 'background:var(--accf,#C6F24E);color:var(--onacc,var(--bg,#08090A));border:1px solid var(--acx,#C6F24E)';
+    const chipOff = chipBase + 'background:var(--w03,rgba(255,255,255,.03));color:var(--g4,#8B9199);border:1px solid var(--w11,rgba(255,255,255,.11))';
+
+    const published = s.posts.filter(p => p.status === 'published');
+    const allTags = ['All'].concat(Array.from(new Set(published.reduce((a, p) => a.concat(p.tags || []), []))));
+    const q = s.query.trim().toLowerCase();
+    const visible = published.filter(p => {
+      const okTag = s.tag === 'All' || (p.tags || []).indexOf(s.tag) > -1;
+      const okQ = !q || (p.title + ' ' + p.excerpt + ' ' + (p.tags || []).join(' ')).toLowerCase().indexOf(q) > -1;
+      return okTag && okQ;
+    }).sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+
+    const pageCount = Math.max(1, Math.ceil(visible.length / PAGE_SIZE));
+    const page = Math.min(Math.max(1, s.page), pageCount);
+    const first = (page - 1) * PAGE_SIZE;
+    const paged = visible.slice(first, first + PAGE_SIZE);
+    const pgBase = 'min-width:34px;height:34px;padding:0 10px;border-radius:8px;font:500 11.5px/1 \'JetBrains Mono\',monospace;letter-spacing:.04em;cursor:pointer;transition:all .18s;';
+
+    const reader = s.posts.find(p => p.id === s.readerId);
+    const d = s.draft;
+
+    const sq = s.studioQuery.trim().toLowerCase();
+    const studioPosts = s.posts.filter(p => {
+      const okF = s.studioFilter === 'all' || p.status === s.studioFilter;
+      const okQ = !sq || ((p.title || 'untitled') + ' ' + (p.tags || []).join(' ')).toLowerCase().indexOf(sq) > -1;
+      return okF && okQ;
+    }).sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1));
+
+    const wide = vw >= 1180;
+    const mid = vw >= 820;
+    const gridCols = wide ? '300px minmax(0,1fr)' : mid ? '262px minmax(0,1fr)' : '1fr';
+    const showTabs = !wide && !!d;
+
+    const smallBtn = 'height:38px;padding:0 14px;border-radius:8px;font:600 12px/1 \'JetBrains Mono\',monospace;letter-spacing:.04em;cursor:pointer;';
+
+    return {
+      rootRef: this.rootRef,
+      canvasRef: this.canvasRef,
+      cometRef: this.cometRef,
+      themeIcon: s.theme === 'dark' ? '\u263D' : '\u2600',
+      themeLabel: s.theme === 'dark' ? 'Light mode' : 'Dark mode',
+      toggleTheme: this.toggleTheme,
+      wideNav: vw >= 900,
+      narrowNav: vw < 900,
+      menuOpen: s.menuOpen,
+      toggleMenu: this.toggleMenu,
+      installable: s.installable,
+      install: this.install,
+      downloadResume: this.downloadResume,
+      copyEmail: this.copyEmail,
+      copyLabel: s.copied ? 'COPIED' : 'COPY ADDRESS',
+      copyBtnStyle: 'height:32px;padding:0 12px;border-radius:7px;font:500 10px/1 \'JetBrains Mono\',monospace;letter-spacing:.12em;cursor:pointer;transition:all .2s;'
+        + (s.copied
+          ? 'background:var(--a14,rgba(198,242,78,.14));color:var(--acx,#C6F24E);border:1px solid var(--a3,rgba(198,242,78,.3))'
+          : 'background:transparent;color:var(--g5,#7C838B);border:1px solid var(--w13,rgba(255,255,255,.13))'),
+      showServices: this.props.showServices !== false,
+
+      openStudio: this.openStudio,
+      closeStudio: this.closeStudio,
+      studioOpen: s.view === 'studio',
+      readerOpen: s.view === 'reader' && !!reader,
+      closeReader: this.closeReader,
+
+      query: s.query,
+      onQuery: this.setQuery,
+      clearFilters: this.clearFilters,
+      noResults: visible.length === 0,
+      postCountLabel: published.length + (published.length === 1 ? ' POST' : ' POSTS'),
+      tagChips: allTags.map(t => ({
+        label: t === 'All' ? 'ALL' : t.toUpperCase(),
+        style: s.tag === t ? chipOn : chipOff,
+        onClick: this.setTag(t)
+      })),
+      visiblePosts: paged.map(p => ({
+        title: p.title || 'Untitled',
+        excerpt: p.excerpt || '',
+        tags: p.tags || [],
+        dateLabel: this.dateLabel(p.createdAt),
+        readLabel: this.readMin(p.body) + ' MIN READ',
+        open: this.openReader(p.id)
+      })),
+      showPager: pageCount > 1,
+      rangeLabel: visible.length
+        ? 'SHOWING ' + (first + 1) + '\u2013' + Math.min(visible.length, first + PAGE_SIZE) + ' OF ' + visible.length
+        : '',
+      pageChips: Array.from({ length: pageCount }, (x, i) => i + 1).map(n => ({
+        label: String(n),
+        onClick: this.setPage(n),
+        style: pgBase + (n === page
+          ? 'background:var(--accf,#C6F24E);color:var(--onacc,var(--bg,#08090A));border:1px solid var(--acx,#C6F24E)'
+          : 'background:transparent;color:var(--g4,#8B9199);border:1px solid var(--w11,rgba(255,255,255,.11))')
+      })),
+      prevPage: this.setPage(Math.max(1, page - 1)),
+      nextPage: this.setPage(Math.min(pageCount, page + 1)),
+      prevStyle: pgBase + (page === 1
+        ? 'background:transparent;color:var(--g9,#3A4046);border:1px solid var(--w06,rgba(255,255,255,.06));cursor:not-allowed'
+        : 'background:transparent;color:var(--tx2,#C9CDD2);border:1px solid var(--w14,rgba(255,255,255,.14))'),
+      nextStyle: pgBase + (page === pageCount
+        ? 'background:transparent;color:var(--g9,#3A4046);border:1px solid var(--w06,rgba(255,255,255,.06));cursor:not-allowed'
+        : 'background:transparent;color:var(--tx2,#C9CDD2);border:1px solid var(--w14,rgba(255,255,255,.14))'),
+
+      readerTitle: reader ? (reader.title || 'Untitled') : '',
+      readerExcerpt: reader ? reader.excerpt : '',
+      readerTags: reader ? (reader.tags || []) : [],
+      readerCover: reader && reader.cover ? reader.cover : '',
+      readerCoverStyle: this.coverStyle(reader && reader.cover, 12, 34),
+      readerMeta: reader ? this.dateLabel(reader.createdAt) + ' · ' + this.readMin(reader.body) + ' MIN' : '',
+      readerHtml: { __html: reader ? this.md(reader.body) : '' },
+
+      studioGridStyle: 'flex:1;min-height:0;display:grid;grid-template-columns:' + gridCols,
+      editorWrapStyle: wide
+        ? 'min-width:0;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,100%);overflow:hidden'
+        : 'min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden',
+      showList: mid || !d,
+      showTabs: showTabs,
+      showEditor: !!d && (wide || !showTabs || s.studioTab === 'write'),
+      showPreview: !!d && (wide || s.studioTab === 'preview'),
+      hasDraft: !!d,
+      noDraft: !d,
+      previewPaneStyle: 'flex:1;min-height:0;overflow-y:auto;padding:clamp(18px,2.4vw,34px)' + (wide ? ';border-left:1px solid var(--w08,rgba(255,255,255,.08));background:var(--s0,#090B0C)' : ''),
+
+      studioQuery: s.studioQuery,
+      onStudioQuery: this.setStudioQuery,
+      studioFilters: [
+        { key: 'all', label: 'ALL' }, { key: 'published', label: 'LIVE' }, { key: 'draft', label: 'DRAFTS' }
+      ].map(f => ({
+        label: f.label,
+        onClick: this.setStudioFilter(f.key),
+        style: 'flex:1;height:30px;border-radius:7px;font:500 10px/1 \'JetBrains Mono\',monospace;letter-spacing:.07em;cursor:pointer;'
+          + (s.studioFilter === f.key
+            ? 'background:var(--a14,rgba(198,242,78,.14));color:var(--acx,#C6F24E);border:1px solid var(--a3,rgba(198,242,78,.3))'
+            : 'background:transparent;color:var(--g6,#6B737B);border:1px solid var(--w09,rgba(255,255,255,.09))')
+      })),
+      studioTabs: [
+        { key: 'write', label: 'WRITE' }, { key: 'preview', label: 'PREVIEW' }
+      ].map(t => ({
+        label: t.label,
+        onClick: this.setStudioTab(t.key),
+        style: 'flex:1;height:36px;border-radius:8px;font:500 11px/1 \'JetBrains Mono\',monospace;letter-spacing:.07em;cursor:pointer;'
+          + (s.studioTab === t.key
+            ? 'background:var(--w07,rgba(255,255,255,.07));color:var(--tx,#EDEDE8);border:1px solid var(--w14,rgba(255,255,255,.14))'
+            : 'background:transparent;color:var(--g6,#6B737B);border:1px solid transparent')
+      })),
+      studioEmpty: studioPosts.length === 0,
+      studioPosts: studioPosts.map(p => ({
+        title: p.title || 'Untitled',
+        statusLabel: p.status === 'published' ? 'LIVE' : 'DRAFT',
+        dateLabel: this.dateLabel(p.updatedAt),
+        tagLine: (p.tags || []).length ? (p.tags || []).join(' · ') : 'no tags',
+        select: this.selectPost(p.id),
+        dotStyle: 'width:6px;height:6px;border-radius:50%;background:' + (p.status === 'published' ? 'var(--acx,#C6F24E)' : 'var(--g8,#4A5158)'),
+        rowStyle: 'padding:13px 14px;border-bottom:1px solid var(--w06,rgba(255,255,255,.06));cursor:pointer;transition:background .15s;'
+          + (p.id === s.editingId ? 'background:var(--a06,rgba(198,242,78,.06));box-shadow:inset 2px 0 0 var(--acx,#C6F24E)' : 'background:transparent')
+      })),
+
+      draftTitle: d ? d.title : '',
+      draftSlug: d ? (d.slug || 'untitled') : '',
+      draftExcerpt: d ? d.excerpt : '',
+      draftBody: d ? d.body : '',
+      draftCover: d && d.cover ? d.cover : '',
+      draftCoverStyle: this.coverStyle(d && d.cover, 10, 24),
+      draftTags: d ? (d.tags || []).join(', ') : '',
+      draftWords: d ? this.words(d.body) : 0,
+      draftRead: d ? this.readMin(d.body) + ' min read' : '',
+      onTitle: this.onTitle, onExcerpt: this.onExcerpt, onBody: this.onBody, onCover: this.onCover, onTags: this.onTags,
+      bodyRef: this.bodyRef,
+      insertImage: this.insertMd('image'),
+      insertLink: this.insertMd('link'),
+      insertYoutube: this.insertMd('youtube'),
+      insertCode: this.insertMd('code'),
+      insertBtnStyle: 'height:30px;padding:0 11px;border-radius:7px;background:transparent;color:var(--g4,#8B9199);border:1px solid var(--w13,rgba(255,255,255,.13));font:500 10px/1 \'JetBrains Mono\',monospace;letter-spacing:.1em;cursor:pointer;transition:all .18s',
+      previewTitle: d ? (d.title || 'Untitled post') : '',
+      previewHtml: { __html: d ? this.md(d.body) : '' },
+
+      togglePublish: this.togglePublish,
+      publishLabel: d && d.status === 'published' ? 'UNPUBLISH' : 'PUBLISH',
+      publishBtnStyle: smallBtn + (d && d.status === 'published'
+        ? 'background:transparent;border:1px solid var(--w16,rgba(255,255,255,.16));color:var(--tx2,#C9CDD2)'
+        : 'background:var(--accf,#C6F24E);border:1px solid var(--acx,#C6F24E);color:var(--onacc,var(--bg,#08090A))'),
+      deleteDraft: this.deleteDraft,
+      deleteLabel: s.confirmDelete ? 'CLICK AGAIN TO DELETE' : 'DELETE',
+      deleteBtnStyle: 'margin-left:auto;height:30px;padding:0 11px;border-radius:7px;font:500 10.5px/1 \'JetBrains Mono\',monospace;letter-spacing:.06em;cursor:pointer;'
+        + (s.confirmDelete
+          ? 'background:#E5484D;color:#FFFFFF;border:1px solid #E5484D'
+          : 'background:transparent;color:var(--g6,#6B737B);border:1px solid var(--w1,rgba(255,255,255,.1))'),
+
+      saveLabel: s.saveState === 'saving' ? 'saving…' : s.saveState === 'saved' ? 'all changes saved locally' : 'autosave on',
+      saveColor: s.saveState === 'saving' ? 'var(--warn,#F2B25E)' : 'var(--g8,#4A5158)'
+    };
+  }
+}
+</script>
+</body>
+</html>

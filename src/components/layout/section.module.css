@@ -1,0 +1,9 @@
+.section {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: clamp(64px, 11vh, 120px) var(--gutter) 0;
+}
+
+.last {
+  padding-bottom: clamp(48px, 7vh, 80px);
+}
