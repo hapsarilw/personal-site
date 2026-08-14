@@ -24,7 +24,7 @@ export function extractYouTubeId(line: string): string | null {
 
 /**
  * Line-oriented block parser. Each branch either consumes a run of lines and
- * pushes one block, or falls through to a paragraph — so adding a block type
+ * pushes one block, or falls through to a paragraph  so adding a block type
  * means adding one branch, not touching shared flush logic.
  */
 export function parseBlocks(source: string): Block[] {

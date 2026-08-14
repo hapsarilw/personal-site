@@ -29,8 +29,8 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.role}`,
-    template: `%s — ${site.shortName}`,
+    default: `${site.name}  ${site.role}`,
+    template: `%s  ${site.shortName}`,
   },
   description: site.description,
   applicationName: site.name,
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: site.name,
-    title: `${site.name} — ${site.role}`,
+    title: `${site.name}  ${site.role}`,
     description: site.description,
     locale: 'en_GB',
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${site.name} — ${site.role}`,
+    title: `${site.name}  ${site.role}`,
     description: site.description,
   },
   icons: {
@@ -68,7 +68,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     // The theme attribute is written by the pre-paint script below, so the
-    // server markup will not match — that difference is intentional.
+    // server markup will not match  that difference is intentional.
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

@@ -103,7 +103,7 @@ export function createParticleField({
       powerPreference: 'low-power',
     });
   } catch {
-    return null; // No WebGL — the site is fully usable without the field.
+    return null; // No WebGL  the site is fully usable without the field.
   }
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO));

@@ -36,7 +36,7 @@ const ALIASES: Record<string, string> = {
 /** String literals, written without backreferences so they compose into one alternation. */
 const STRING = String.raw`"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'|` + '`(?:\\\\.|[^`\\\\])*`';
 
-/** Checked in order — the first group that matched wins. */
+/** Checked in order  the first group that matched wins. */
 const TOKEN_NAMES = ['comment', 'string', 'keyword', 'number', 'fn'] as const;
 
 function resolveLanguage(language: string): LanguageSpec | undefined {
@@ -61,7 +61,7 @@ function buildScanner(spec: LanguageSpec): RegExp {
  * Highlights code in a single left-to-right pass.
  *
  * One alternation means every character is consumed exactly once, so a later
- * rule can never match inside markup an earlier rule produced — the failure mode
+ * rule can never match inside markup an earlier rule produced  the failure mode
  * of the multi-pass approach this replaced, where the digits of a placeholder
  * were themselves highlighted as numbers.
  *

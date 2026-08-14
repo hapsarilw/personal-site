@@ -1,6 +1,6 @@
 # personal-site
 
-Personal site and technical blog for Hapsari Laksmi Wijayanti — junior software engineer.
+Personal site and technical blog for Hapsari Laksmi Wijayanti  junior software engineer.
 
 Next.js App Router, statically generated. Posts are markdown files in this repo, so publishing
 is a commit.
@@ -11,10 +11,10 @@ is a commit.
 | --- | --- |
 | Framework | Next.js 16 (App Router, React 19, TypeScript strict) |
 | Styling | CSS Modules + design tokens in `src/app/globals.css` |
-| 3D | three.js — ambient particle field and wireframe solids |
+| 3D | three.js  ambient particle field and wireframe solids |
 | Motion | GSAP + ScrollTrigger via `@gsap/react` |
 | Content | Markdown + frontmatter, parsed at build time with `gray-matter` |
-| Fonts | `next/font` — Archivo and JetBrains Mono, self-hosted |
+| Fonts | `next/font`  Archivo and JetBrains Mono, self-hosted |
 
 ## Run locally
 
@@ -37,7 +37,7 @@ src/
 ├── app/                    routes, global CSS, metadata, manifest, sitemap
 │   ├── page.tsx            the one-page site
 │   ├── writing/            post index (/writing) and post pages (/writing/[slug])
-│   ├── globals.css         design tokens — both themes live here
+│   ├── globals.css         design tokens  both themes live here
 │   └── prose.css           styling for rendered markdown
 ├── components/
 │   ├── background/         three.js field + comet trail (React lifecycle only)
@@ -59,7 +59,7 @@ src/
 
 ## Writing a post
 
-Add a markdown file to `src/content/posts/`. The filename becomes the URL slug —
+Add a markdown file to `src/content/posts/`. The filename becomes the URL slug 
 `reconnect-is-the-design.md` is served at `/writing/reconnect-is-the-design`.
 
 ```markdown
@@ -67,7 +67,7 @@ Add a markdown file to `src/content/posts/`. The filename becomes the URL slug �
 title: 'Reconnect is the design, not the edge case'
 excerpt: 'One line shown in the index and in search results.'
 tags: ['system-design', 'real-time']
-status: published        # or `draft` — drafts never reach the site
+status: published        # or `draft`  drafts never reach the site
 publishedAt: '2026-05-28'
 updatedAt: '2026-05-28'
 ---
@@ -107,7 +107,7 @@ Theme follows the system preference until the visitor picks one, then persists u
 
 ## Deploy
 
-**Vercel** — import the repo. Framework preset *Next.js*, no configuration needed.
+**Vercel**  import the repo. Framework preset *Next.js*, no configuration needed.
 
 For a purely static host (GitHub Pages, S3), add `output: 'export'` to `next.config.ts` and
 serve the generated `out/` directory.

@@ -1,6 +1,6 @@
 export type PostStatus = 'published' | 'draft';
 
-/** Everything needed to render a post in a list — no body, so it stays cheap to pass to the client. */
+/** Everything needed to render a post in a list  no body, so it stays cheap to pass to the client. */
 export type PostMeta = {
   slug: string;
   title: string;

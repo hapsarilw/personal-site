@@ -10,7 +10,7 @@ import type { Post, PostMeta, PostStatus } from '@/lib/types';
 const POSTS_DIR = join(process.cwd(), 'src', 'content', 'posts');
 
 /**
- * Posts are read from disk once per build. `cache` is unnecessary here — module
+ * Posts are read from disk once per build. `cache` is unnecessary here  module
  * scope already memoises it for the lifetime of the process, and in production
  * every page that uses it is statically generated.
  */
@@ -68,7 +68,7 @@ function toMeta({ body, ...meta }: Post): PostMeta {
   return meta;
 }
 
-/** Published posts only — drafts stay in the repo but never reach the site. */
+/** Published posts only  drafts stay in the repo but never reach the site. */
 export function getPublishedPosts(): PostMeta[] {
   return allPosts.filter((post) => post.status === 'published').map(toMeta);
 }

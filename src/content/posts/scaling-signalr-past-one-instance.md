@@ -11,7 +11,7 @@ A plain `AddSignalR()` keeps group membership in process memory. One instance, a
 
 ## Why it fails quietly
 
-Nothing throws. The send succeeds, the database row is written, the sender sees their own message. Only the other half of the room sees nothing — and they report it as "chat is laggy", which sends you looking at the wrong layer entirely.
+Nothing throws. The send succeeds, the database row is written, the sender sees their own message. Only the other half of the room sees nothing  and they report it as "chat is laggy", which sends you looking at the wrong layer entirely.
 
 ```
 Client A ──▶ Instance 1 ──▶ group "chat:42" (in memory of Instance 1)
@@ -27,7 +27,7 @@ A sends → Instance 1 broadcasts → B never hears it.
 
 ## What changes in your code
 
-Almost nothing — one registration line. What changes is what you must now think about.
+Almost nothing  one registration line. What changes is what you must now think about.
 
 - Message ordering is per-connection, never global.
 - A backplane outage becomes a chat outage, so it needs its own alert.

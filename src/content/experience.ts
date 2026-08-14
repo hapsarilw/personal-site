@@ -8,7 +8,7 @@ export type ExperienceEntry = {
 
 export const experience: ExperienceEntry[] = [
   {
-    period: 'MAY 2022 — NOW',
+    period: 'MAY 2022  NOW',
     industry: 'Logistics',
     role: 'Front End Developer',
     company: 'OneByOne Logistical',

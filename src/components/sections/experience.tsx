@@ -20,7 +20,7 @@ export function Experience() {
               </div>
               <div>
                 <h3 className={styles.role}>
-                  {entry.role} — <span className={styles.company}>{entry.company}</span>
+                  {entry.role}  <span className={styles.company}>{entry.company}</span>
                 </h3>
                 <p className={styles.summary}>{entry.summary}</p>
               </div>

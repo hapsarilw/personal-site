@@ -36,7 +36,7 @@ export const hero = {
   eyebrow: 'HAPSARI LAKSMI WIJAYANTI  /  JUNIOR SOFTWARE ENGINEER',
   headline: 'Four years of production frontend. Now shipping the API behind it.',
   summary:
-    'I write TypeScript for enterprise logistics, where a mis-rendered pallet ID sends someone to the wrong aisle. That taught me to be careful about state and unromantic about clever code. I am applying the same discipline to the other half of the stack — NestJS, Prisma, Postgres, containerised and deployed.',
+    'I write TypeScript for enterprise logistics, where a mis-rendered pallet ID sends someone to the wrong aisle. That taught me to be careful about state and unromantic about clever code. I am applying the same discipline to the other half of the stack NestJS, Prisma, Postgres, containerised and deployed',
   badges: [
     { label: '4 YRS PRODUCTION REACT', accent: true },
     { label: 'LED A FEATURE AREA END TO END', accent: false },
@@ -44,19 +44,19 @@ export const hero = {
   ],
   facts: [
     { label: 'BASED', value: 'Bali, Indonesia · GMT+8' },
-    { label: 'FOCUS', value: 'Full-stack TypeScript — React front, NestJS back' },
-    { label: 'OPEN TO', value: 'Junior software engineer — frontend or full-stack' },
+    { label: 'FOCUS', value: 'Full-stack TypeScript  React front, NestJS back' },
+    { label: 'OPEN TO', value: 'Junior software engineer  frontend or full-stack' },
   ],
 } as const;
 
 export const about = {
   paragraphs: [
-    'I write frontend for enterprise logistics — software where a mis-rendered pallet ID sends someone to the wrong aisle. Four years of that has made me careful about state and unromantic about clever code.',
+    'I write frontend for enterprise logistics  software where a mis-rendered pallet ID sends someone to the wrong aisle. Four years of that has made me careful about state and unromantic about clever code.',
     'I am looking for a junior software engineer role where I can widen out: keep the React and TypeScript depth, and add the backend, testing, and systems work I currently only meet from the client side of the fetch.',
   ],
   facts: [
-    { label: 'LEARNING', value: 'NestJS, Prisma and Postgres — the other side of the request' },
-    { label: 'BUILDING', value: 'OptiRoute — a dispatcher dashboard I use as a proving ground' },
+    { label: 'LEARNING', value: 'NestJS, Prisma and Postgres  the other side of the request' },
+    { label: 'BUILDING', value: 'OptiRoute  a dispatcher dashboard I use as a proving ground' },
     { label: 'HABIT', value: 'Writing the reusable version the second time, not the fourth' },
   ],
 } as const;

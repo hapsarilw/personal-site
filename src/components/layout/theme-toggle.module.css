@@ -1,6 +1,6 @@
 /*
  * Both glyphs ship in the markup and CSS picks one. That keeps the toggle
- * correct on the very first paint — a JS-chosen glyph would briefly show the
+ * correct on the very first paint  a JS-chosen glyph would briefly show the
  * wrong icon while React hydrates.
  */
 .forDark {

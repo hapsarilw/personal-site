@@ -1,9 +1,9 @@
 /*
  * Design tokens, in two layers.
  *
- *   1. Palette   — the raw colour system. One accent; every neutral carries a
+ *   1. Palette    the raw colour system. One accent; every neutral carries a
  *                  little of it, so nothing reads as grey. Change colours here.
- *   2. Semantics — the role names components actually use (--surface-2,
+ *   2. Semantics  the role names components actually use (--surface-2,
  *                  --text-muted). These only ever point at palette entries, so
  *                  the light theme below restates the palette and nothing else.
  *
@@ -13,7 +13,7 @@
  */
 
 :root {
-  /* ---------------- Palette — dark: plum-black surfaces, mauve greys -------- */
+  /* ---------------- Palette  dark: plum-black surfaces, mauve greys -------- */
 
   /* Accent. --accf fills, buttons, underlines; --acx is the text-safe one. */
   --accf: #ff4d8d;
@@ -21,7 +21,7 @@
   --acx-rgb: 255, 77, 141;
   --onacc: #2b0a18;
 
-  /* Accent alphas — rgba(255, 77, 141, a); light multiplies every a by 1.5. */
+  /* Accent alphas  rgba(255, 77, 141, a); light multiplies every a by 1.5. */
   --a00: rgba(255, 77, 141, 0);
   --a06: rgba(255, 77, 141, 0.06);
   --a10: rgba(255, 77, 141, 0.1);
@@ -58,19 +58,19 @@
   --tx2: #e3dde6;
   --tx: #f5f0f7;
 
-  /* Borders — dark rgba(255, 238, 246, a); light rgba(32, 23, 33, a × 1.8). */
+  /* Borders  dark rgba(255, 238, 246, a); light rgba(32, 23, 33, a × 1.8). */
   --w07: rgba(255, 238, 246, 0.07);
   --w08: rgba(255, 238, 246, 0.08);
   --w10: rgba(255, 238, 246, 0.1);
   --w14: rgba(255, 238, 246, 0.14);
   --w18: rgba(255, 238, 246, 0.18);
 
-  /* Header/footer scrims — the background colour at partial opacity. */
+  /* Header/footer scrims  the background colour at partial opacity. */
   --k74: rgba(13, 8, 16, 0.74);
   --k86: rgba(13, 8, 16, 0.86);
   --k97: rgba(13, 8, 16, 0.97);
 
-  /* Card fills — dark rgba(21, 14, 25, a); light rgba(255, 255, 255, a + .22). */
+  /* Card fills  dark rgba(21, 14, 25, a); light rgba(255, 255, 255, a + .22). */
   --c72: rgba(21, 14, 25, 0.72);
   --c80: rgba(21, 14, 25, 0.8);
 
@@ -84,7 +84,7 @@
   --syn-num: #ffc46b;
   --syn-fn: #8fd0ff;
 
-  /* ---------------- Semantics — roles, not colours ------------------------- */
+  /* ---------------- Semantics  roles, not colours ------------------------- */
 
   /* Accent */
   --accent: var(--accf);
@@ -150,9 +150,9 @@
   --radius-lg: 14px;
 }
 
-/* Palette only — every semantic token above re-resolves against these. */
+/* Palette only  every semantic token above re-resolves against these. */
 [data-theme='light'] {
-  /* ---------------- Palette — light: blush paper, rose-grey ink ------------ */
+  /* ---------------- Palette  light: blush paper, rose-grey ink ------------ */
 
   /* Fills keep the full accent; text darkens it to ACC × 0.46 to stay legible. */
   --acx: #752341;

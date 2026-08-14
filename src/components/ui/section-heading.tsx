@@ -16,8 +16,8 @@ type SectionHeadingProps = {
 };
 
 /**
- * Numbered section header. Owns its own entrance — the parts stagger in and the
- * title wipes open — because the animation is part of what this component is,
+ * Numbered section header. Owns its own entrance  the parts stagger in and the
+ * title wipes open  because the animation is part of what this component is,
  * not something callers should have to remember to wire up.
  */
 export function SectionHeading({ index, title, meta, tight = false }: SectionHeadingProps) {

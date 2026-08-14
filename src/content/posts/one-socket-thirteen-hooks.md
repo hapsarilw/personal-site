@@ -51,7 +51,7 @@ Which is a fine answer. What I pushed on, and I'm glad I did, was whether it was
 
 It's in the infrastructure doc now, with the trigger condition spelled out, so the decision to scale out and the decision to add a backplane are the same decision. That's the single most useful thing I did that quarter and it wasn't code.
 
-> TODO before publishing — confirm instance count is still pinned, and that the ceiling note in the infra doc is current.
+> TODO before publishing  confirm instance count is still pinned, and that the ceiling note in the infra doc is current.
 
 The thing I took away: as a junior you will find things that look wrong. Usually there's a reason and you'll learn it. Sometimes there's a reason and nobody wrote it down, which is almost as bad as no reason at all. Asking costs you five minutes of feeling stupid.
 
@@ -73,7 +73,7 @@ Two things settled it for me. Everything's over TLS, so it's encrypted in transi
 
 I still think it's the weakest part of the connection setup.
 
-> TODO before publishing — check whether the access logs actually record query strings. If they do, that needs scrubbing before this paragraph goes out.
+> TODO before publishing  check whether the access logs actually record query strings. If they do, that needs scrubbing before this paragraph goes out.
 
 ### Groups belong to the connection, not the user
 
@@ -239,7 +239,7 @@ The message appears the instant you hit Enter, as a pending bubble with a tempor
 
 Same shape for edits and deletes: apply straight away, undo on failure.
 
-> TODO before publishing — describe what a failed media delete actually restores. I believe it puts back attachment state as well as the message body, but write what the code does, not what I remember.
+> TODO before publishing  describe what a failed media delete actually restores. I believe it puts back attachment state as well as the message body, but write what the code does, not what I remember.
 
 ---
 
@@ -303,7 +303,7 @@ Both are the same shape of bug: the server echo is authoritative for most fields
 
 One more, worth a comment in the code: the request field is `replyId`, not `replyMessageId`. It doesn't match our client-side name. That mismatch cost me an hour and it's the kind of thing that's invisible in review, so it's commented now.
 
-> TODO before publishing — confirm the field names in both directions: `replyId` on the request, and what the broadcast does or doesn't carry back. Getting this backwards in public undermines everything near it.
+> TODO before publishing  confirm the field names in both directions: `replyId` on the request, and what the broadcast does or doesn't carry back. Getting this backwards in public undermines everything near it.
 
 ---
 

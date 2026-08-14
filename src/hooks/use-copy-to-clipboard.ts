@@ -18,7 +18,7 @@ export function useCopyToClipboard() {
     try {
       await navigator.clipboard.writeText(value);
     } catch {
-      // Insecure context or denied permission — the address is still selectable.
+      // Insecure context or denied permission  the address is still selectable.
       return;
     }
 

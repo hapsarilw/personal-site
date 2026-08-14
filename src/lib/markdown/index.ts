@@ -5,7 +5,7 @@ import { renderBlocks } from './render';
  * Renders post markdown to HTML.
  *
  * Runs at build time inside a server component, so the parser never ships to the
- * browser. Output is semantic HTML with class hooks only — all styling lives in
+ * browser. Output is semantic HTML with class hooks only  all styling lives in
  * `prose.css`, which keeps the renderer free of presentation concerns.
  *
  * Supported beyond CommonMark basics:

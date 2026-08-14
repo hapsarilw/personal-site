@@ -1,13 +1,13 @@
 ---
 title: 'Tracing a slow message send'
-excerpt: 'Draft — a health endpoint tells you the service is up. It does not tell you which of six hops ate 900ms.'
+excerpt: 'Draft  a health endpoint tells you the service is up. It does not tell you which of six hops ate 900ms.'
 tags: ['system-design', 'observability']
 status: draft
 publishedAt: '2026-08-06'
 updatedAt: '2026-08-06'
 ---
 
-Notes toward a proper write-up. Right now the system exposes `GET /health` aggregating both database contexts, and nothing else — no spans, no APM.
+Notes toward a proper write-up. Right now the system exposes `GET /health` aggregating both database contexts, and nothing else  no spans, no APM.
 
 ## The six hops a send actually makes
 

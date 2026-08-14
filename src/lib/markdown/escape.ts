@@ -20,7 +20,7 @@ export function escapeText(value: string): string {
 }
 
 /**
- * Post bodies are authored in this repo, so they are trusted — but markdown link
+ * Post bodies are authored in this repo, so they are trusted  but markdown link
  * targets are the one place a stray `javascript:` URL would become an executable
  * attribute, so allow only the schemes we actually use.
  */

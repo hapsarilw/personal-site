@@ -574,31 +574,31 @@ const SEED = [
     body: [
       'Crew Connect is a portal for offshore crews: rosters, forms, pool management, and a chat module that has to work over a satellite link. The chat is the part people judge the product by, so it is worth drawing the whole system before talking about any single feature.',
       '',
-      '![Crew Connect infrastructure — frontend, backend, data stores, and the third-party services around them](./assets/crew-connect-infrastructure.png)',
+      '![Crew Connect infrastructure  frontend, backend, data stores, and the third-party services around them](./assets/crew-connect-infrastructure.png)',
       '',
       '## The layers, briefly',
       '',
       'A React SPA is served as static output from Vercel. Every non-asset path rewrites to `index.html`, and the API base URL is injected at build time rather than discovered at runtime.',
       '',
-      'The backend is a single ASP.NET Core container on Azure App Service. Auth, Chat, Pool, Form, Metadata, and admin all register as modules **inside one process** — not separate microservices. For a team of this size that is the right call: one deploy, one set of logs, no distributed transaction to reason about when a message send also has to write a notification.',
+      'The backend is a single ASP.NET Core container on Azure App Service. Auth, Chat, Pool, Form, Metadata, and admin all register as modules **inside one process**  not separate microservices. For a team of this size that is the right call: one deploy, one set of logs, no distributed transaction to reason about when a message send also has to write a notification.',
       '',
       '```',
       'Browser (React SPA, Vercel)',
       '   │  REST + WebSocket',
       '   ▼',
-      'Azure App Service — CrewConnect.API (Linux container)',
+      'Azure App Service  CrewConnect.API (Linux container)',
       '   ├── CORS → AuthN (JWT Bearer) → AuthZ',
       '   ├── Controllers   /chats, /contacts, …',
       '   └── SignalR Hub   /hubs/chat',
       '        │',
-      '        ├── SQL Server      (EF Core, OLTP — messages live here)',
+      '        ├── SQL Server      (EF Core, OLTP  messages live here)',
       '        ├── Fabric DB       (read models, synced in background)',
-      '        └── Blob Storage    (media, via SAS URL — bytes skip the API)',
+      '        └── Blob Storage    (media, via SAS URL  bytes skip the API)',
       F.slice(0),
       '',
       '## The constraint that shapes everything',
       '',
-      'The hub is registered with a plain `AddSignalR()` — no Redis, no Azure SignalR Service, no backplane of any kind. Group membership therefore lives in the memory of **one** instance.',
+      'The hub is registered with a plain `AddSignalR()`  no Redis, no Azure SignalR Service, no backplane of any kind. Group membership therefore lives in the memory of **one** instance.',
       '',
       '> This design is correct for exactly one App Service instance. Scale out to two and half your connections stop receiving broadcasts, because the instance that owns the group is not the instance that received the send.',
       '',
@@ -616,7 +616,7 @@ const SEED = [
       '  chatId, contentType: file.type,',
       '});',
       '',
-      '// 2. bytes go straight to storage — the API is not in this path',
+      '// 2. bytes go straight to storage  the API is not in this path',
       'await fetch(uploadUrl, { method: "PUT", body: file });',
       '',
       '// 3. the message itself is just a reference',
@@ -631,14 +631,14 @@ const SEED = [
       '',
       '## Notifications are a fan-out, not a feature',
       '',
-      'Every new message triggers a push through Azure Notification Hub in parallel with the SignalR broadcast — because the people who most need the message are the ones with the app closed. Transactional email goes out through Azure Communication Services for the non-push cases, like an invitation to a new chat.',
+      'Every new message triggers a push through Azure Notification Hub in parallel with the SignalR broadcast  because the people who most need the message are the ones with the app closed. Transactional email goes out through Azure Communication Services for the non-push cases, like an invitation to a new chat.',
       '',
       'Two things matter here. The push is fired **alongside** the broadcast, not after it, so a slow push provider cannot delay the in-app message. And the push carries an identifier rather than the message body, so the client fetches current state instead of rendering a payload that may already be stale or redacted.',
       '',
       '## What I would change next',
       '',
       '1. Put a backplane in before anyone needs to scale out, not after.',
-      '2. Tighten CORS — allow-all is fine in development and indefensible in production.',
+      '2. Tighten CORS  allow-all is fine in development and indefensible in production.',
       '3. Add real tracing. There is a `/health` endpoint aggregating both database contexts, but no distributed tracing, so a slow send is currently diagnosed by reading code rather than a span.',
       '',
       'None of those are rewrites. That is usually the sign that the original shape was right: the improvements are additions, not replacements.'
@@ -660,7 +660,7 @@ const SEED = [
       '```ts',
       'type Message = {',
       '  id: string;          // server id, or a client uuid while pending',
-      '  clientId: string;    // never changes — this is the reconciliation key',
+      '  clientId: string;    // never changes  this is the reconciliation key',
       '  status: "pending" | "sent" | "failed";',
       '  body: string;',
       '};',
@@ -676,7 +676,7 @@ const SEED = [
       '- Sent messages re-sort by server sequence.',
       '- Failed messages hold their position and never re-sort.',
       '',
-      '> Unread counts are the same problem wearing a hat. Derive them from the last read sequence, never by incrementing a local counter — a counter drifts the first time a reconnect replays messages you already saw.',
+      '> Unread counts are the same problem wearing a hat. Derive them from the last read sequence, never by incrementing a local counter  a counter drifts the first time a reconnect replays messages you already saw.',
       '',
       'Sub-second updates with no polling, and the list stays honest when the connection does not.'
     ].join('\n')
@@ -713,7 +713,7 @@ const SEED = [
       '',
       '## The banner is part of the contract',
       '',
-      'A quiet connection state is worse than a broken one, because the user keeps typing into a void. A thin persistent bar — reconnecting, then syncing, then gone — costs almost nothing and turns a mystery into a wait.',
+      'A quiet connection state is worse than a broken one, because the user keeps typing into a void. A thin persistent bar  reconnecting, then syncing, then gone  costs almost nothing and turns a mystery into a wait.',
       '',
       '> Design the offline state as a first-class screen. If the only way to see it is to unplug your laptop, nobody on the team has ever really looked at it.'
     ].join('\n')
@@ -725,7 +725,7 @@ const SEED = [
     tags: ['system-design', 'databases', 'architecture'], cover: '',
     createdAt: '2026-04-30T09:00:00.000Z', updatedAt: '2026-04-30T09:00:00.000Z',
     body: [
-      'Crew Connect runs two stores: SQL Server as the transactional source of truth, and a second analytical database kept in sync by a background service. That is not redundancy — it is two different access patterns refusing to share a lock.',
+      'Crew Connect runs two stores: SQL Server as the transactional source of truth, and a second analytical database kept in sync by a background service. That is not redundancy  it is two different access patterns refusing to share a lock.',
       '',
       '## The pattern that forces the split',
       '',
@@ -751,7 +751,7 @@ const SEED = [
       '',
       '## The honest trade',
       '',
-      'You have accepted a second thing that can break, a second schema to migrate, and a lag the business will eventually ask you to shrink. In exchange, no analyst can take down chat with a `GROUP BY`. On a system where the chat is the product, that is a trade worth making — and worth writing down, so the next person knows it was a choice.'
+      'You have accepted a second thing that can break, a second schema to migrate, and a lag the business will eventually ask you to shrink. In exchange, no analyst can take down chat with a `GROUP BY`. On a system where the chat is the product, that is a trade worth making  and worth writing down, so the next person knows it was a choice.'
     ].join('\n')
   },
   {
@@ -765,7 +765,7 @@ const SEED = [
       '',
       '## Why it fails quietly',
       '',
-      'Nothing throws. The send succeeds, the database row is written, the sender sees their own message. Only the other half of the room sees nothing — and they report it as "chat is laggy", which sends you looking at the wrong layer entirely.',
+      'Nothing throws. The send succeeds, the database row is written, the sender sees their own message. Only the other half of the room sees nothing  and they report it as "chat is laggy", which sends you looking at the wrong layer entirely.',
       '',
       '```',
       'Client A ──▶ Instance 1 ──▶ group "chat:42" (in memory of Instance 1)',
@@ -781,7 +781,7 @@ const SEED = [
       '',
       '## What changes in your code',
       '',
-      'Almost nothing — one registration line. What changes is what you must now think about.',
+      'Almost nothing  one registration line. What changes is what you must now think about.',
       '',
       '- Message ordering is per-connection, never global.',
       '- A backplane outage becomes a chat outage, so it needs its own alert.',
@@ -793,11 +793,11 @@ const SEED = [
   {
     id: 'p6', slug: 'tracing-a-slow-send', status: 'draft',
     title: 'Tracing a slow message send',
-    excerpt: 'Draft — a health endpoint tells you the service is up. It does not tell you which of six hops ate 900ms.',
+    excerpt: 'Draft  a health endpoint tells you the service is up. It does not tell you which of six hops ate 900ms.',
     tags: ['system-design', 'observability'], cover: '',
     createdAt: '2026-08-06T09:00:00.000Z', updatedAt: '2026-08-06T09:00:00.000Z',
     body: [
-      'Notes toward a proper write-up. Right now the system exposes `GET /health` aggregating both database contexts, and nothing else — no spans, no APM.',
+      'Notes toward a proper write-up. Right now the system exposes `GET /health` aggregating both database contexts, and nothing else  no spans, no APM.',
       '',
       '## The six hops a send actually makes',
       '',
@@ -1530,7 +1530,7 @@ class Component extends DCLogic {
   };
 
   downloadResume = () => {
-    const txt = 'HAPSARI LAKSMI WIJAYANTI — Front End Developer\nhapsari.laksmiw@gmail.com · linkedin.com/in/hapsarilw · github.com/hapsarilw\n\nReplace this placeholder with your real résumé PDF.\n';
+    const txt = 'HAPSARI LAKSMI WIJAYANTI  Front End Developer\nhapsari.laksmiw@gmail.com · linkedin.com/in/hapsarilw · github.com/hapsarilw\n\nReplace this placeholder with your real résumé PDF.\n';
     const blob = new Blob([txt], { type: 'text/plain' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);

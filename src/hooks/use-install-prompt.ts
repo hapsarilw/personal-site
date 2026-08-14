@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-/** Not in lib.dom yet — Chromium-only, and the reason this hook exists. */
+/** Not in lib.dom yet  Chromium-only, and the reason this hook exists. */
 type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;

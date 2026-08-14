@@ -5,12 +5,12 @@ import { THEME_COLORS } from '@/lib/theme';
 
 /**
  * Served at /manifest.webmanifest. Generated rather than hand-written so the
- * name, description and theme colour cannot drift from the rest of the site —
+ * name, description and theme colour cannot drift from the rest of the site 
  * the previous static file still advertised a different person entirely.
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${site.name} — ${site.role}`,
+    name: `${site.name}  ${site.role}`,
     short_name: site.shortName,
     description: site.description,
     start_url: '/',

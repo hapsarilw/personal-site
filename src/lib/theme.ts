@@ -14,7 +14,7 @@ export function isTheme(value: unknown): value is Theme {
 /**
  * Runs before first paint, inlined into <head>, so the correct theme is on
  * <html> before React hydrates and the page never flashes the wrong palette.
- * Kept as a string because it must execute synchronously — a component cannot.
+ * Kept as a string because it must execute synchronously  a component cannot.
  */
 export const themeInitScript = `
 (function(){

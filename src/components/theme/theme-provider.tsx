@@ -87,7 +87,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(THEME_STORAGE_KEY, next);
     } catch {
-      // Private browsing — the choice still applies for this session.
+      // Private browsing  the choice still applies for this session.
     }
   }, []);
 

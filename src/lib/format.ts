@@ -15,7 +15,7 @@ export function readingMinutes(text: string): number {
 
 /**
  * Formats as `JUL 22 2026`. Uses UTC parts so the label never shifts with the
- * viewer's timezone — otherwise the server and client can disagree and React
+ * viewer's timezone  otherwise the server and client can disagree and React
  * reports a hydration mismatch.
  */
 export function formatDate(iso: string): string {

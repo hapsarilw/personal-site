@@ -37,7 +37,7 @@ function scale(hex: string, factor: number): string {
 
 /**
  * Reads the accent straight from the stylesheet so CSS remains the single
- * source of truth for brand colour — change `--accent` and the 3D field follows.
+ * source of truth for brand colour  change `--accent` and the 3D field follows.
  */
 export function readAccent(): string {
   if (typeof window === 'undefined') return FALLBACK_ACCENT;
