@@ -43,7 +43,7 @@ export const hero = {
     { label: 'BUILDING FULL-STACK NOW', accent: false },
   ],
   facts: [
-    { label: 'BASED', value: 'Bandung, Indonesia · GMT+7' },
+    { label: 'BASED', value: 'Bali, Indonesia · GMT+8' },
     { label: 'FOCUS', value: 'Full-stack TypeScript — React front, NestJS back' },
     { label: 'OPEN TO', value: 'Junior software engineer — frontend or full-stack' },
   ],
