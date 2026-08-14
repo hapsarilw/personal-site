@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
-import { usePrefersReducedMotion } from '@/hooks/use-media-query';
+import { useMediaQuery, usePrefersReducedMotion } from '@/hooks/use-media-query';
 import { createCometTrail } from '@/lib/canvas/comet-trail';
 
 import styles from './ambient-background.module.css';
@@ -12,10 +12,15 @@ const FALLBACK_CHANNELS = '198, 242, 78';
 export function CometTrail() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const reducedMotion = usePrefersReducedMotion();
+  // `pointermove` also fires for touch drags, so without this check the
+  // trail would "follow the cursor" on phones and tablets, which have no
+  // actual cursor to follow.
+  const isCoarsePointer = useMediaQuery('(pointer: coarse)');
+  const disabled = reducedMotion || isCoarsePointer;
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || reducedMotion) return;
+    if (!canvas || disabled) return;
 
     const trail = createCometTrail({
       canvas,
@@ -26,9 +31,9 @@ export function CometTrail() {
     });
 
     return () => trail?.dispose();
-  }, [reducedMotion]);
+  }, [disabled]);
 
-  if (reducedMotion) return null;
+  if (disabled) return null;
 
   return (
     <canvas

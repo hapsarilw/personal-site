@@ -14,9 +14,30 @@ type MobileMenuProps = {
 
 export function MobileMenu({ onClose }: MobileMenuProps) {
   // Lock the page behind the overlay and restore scrolling on unmount.
+  //
+  // `overflow: hidden` alone doesn't stop scroll on iOS Safari — a real touch
+  // still rubber-bands the page underneath, which swallows the tap before it
+  // reaches a link. Pinning the body with `position: fixed` at the negative
+  // scroll offset removes it from the scroll flow entirely, then the offset
+  // is used to restore the exact scroll position on close.
   useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    const scrollY = window.scrollY;
+    const { body } = document;
+    const previousStyle = {
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+      overflow: body.style.overflow,
+    };
+
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    body.style.width = '100%';
+    body.style.overflow = 'hidden';
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose();
@@ -24,7 +45,13 @@ export function MobileMenu({ onClose }: MobileMenuProps) {
     document.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      body.style.position = previousStyle.position;
+      body.style.top = previousStyle.top;
+      body.style.left = previousStyle.left;
+      body.style.right = previousStyle.right;
+      body.style.width = previousStyle.width;
+      body.style.overflow = previousStyle.overflow;
+      window.scrollTo(0, scrollY);
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [onClose]);
