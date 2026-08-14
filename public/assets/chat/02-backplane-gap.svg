@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="960" height="640" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#16212E"/>
+    </marker>
+    <marker id="arR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#B3421A"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="640" fill="#F4F4F1"/>
+
+  <text x="60" y="52" font-size="12" letter-spacing="2.2" fill="#5C6B7A">CREW CHAT / WHAT I FOUND IN THE INFRA DOC</text>
+  <text x="60" y="90" font-size="30" font-weight="700" fill="#16212E">Why <tspan font-family="Menlo, monospace" font-size="26">AddSignalR()</tspan> breaks on scale-out</text>
+  <line x1="60" y1="112" x2="900" y2="112" stroke="#C9CFD6"/>
+
+  <!-- LB -->
+  <rect x="360" y="142" width="240" height="48" fill="#FFFFFF" stroke="#16212E" stroke-width="1.5"/>
+  <text x="480" y="172" font-size="14" font-weight="600" text-anchor="middle" fill="#16212E">Azure App Service · load balancer</text>
+  <path d="M480,190 L480,208 L245,208 L245,236" fill="none" stroke="#16212E" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <path d="M480,190 L480,208 L715,208 L715,236" fill="none" stroke="#16212E" stroke-width="1.5" marker-end="url(#ar2)"/>
+
+  <!-- Instance 1 -->
+  <rect x="90" y="240" width="310" height="196" fill="#16212E"/>
+  <text x="112" y="268" font-size="14" font-weight="700" fill="#FFFFFF">Instance 1</text>
+  <rect x="112" y="284" width="266" height="60" fill="#233448" stroke="#3E5670"/>
+  <text x="128" y="306" font-size="12.5" fill="#9DB2C7">in-memory group registry</text>
+  <text x="128" y="328" font-size="13" fill="#FFFFFF" font-family="Menlo, monospace">room-42 → [ Alice ]</text>
+  <rect x="112" y="358" width="266" height="52" fill="#E3EDF9"/>
+  <text x="128" y="380" font-size="13" font-weight="600" fill="#16212E">Alice, connected here</text>
+  <text x="128" y="399" font-size="12.5" fill="#5C6B7A">sends message to room 42</text>
+
+  <!-- Instance 2 -->
+  <rect x="560" y="240" width="310" height="196" fill="#16212E"/>
+  <text x="582" y="268" font-size="14" font-weight="700" fill="#FFFFFF">Instance 2</text>
+  <rect x="582" y="284" width="266" height="60" fill="#233448" stroke="#3E5670"/>
+  <text x="598" y="306" font-size="12.5" fill="#9DB2C7">in-memory group registry</text>
+  <text x="598" y="328" font-size="13" fill="#FFFFFF" font-family="Menlo, monospace">room-42 → [ Bob ]</text>
+  <rect x="582" y="358" width="266" height="52" fill="#FBEDE7"/>
+  <text x="598" y="380" font-size="13" font-weight="600" fill="#B3421A">Bob, connected here</text>
+  <text x="598" y="399" font-size="12.5" fill="#8A5340">receives nothing. No error.</text>
+
+  <!-- broken link -->
+  <path d="M400,314 L560,314" stroke="#B3421A" stroke-width="2" stroke-dasharray="7 6"/>
+  <circle cx="480" cy="314" r="17" fill="#F4F4F1" stroke="#B3421A" stroke-width="2"/>
+  <path d="M472,306 L488,322 M488,306 L472,322" stroke="#B3421A" stroke-width="2.5"/>
+  <text x="480" y="352" font-size="12.5" font-weight="600" text-anchor="middle" fill="#B3421A">no backplane</text>
+  <text x="480" y="370" font-size="12" text-anchor="middle" fill="#8A5340">no shared registry</text>
+
+  <!-- persistence line -->
+  <path d="M245,436 L245,472 L480,472 L480,496" fill="none" stroke="#16212E" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <rect x="330" y="500" width="300" height="52" fill="#FFFFFF" stroke="#16212E" stroke-width="1.5"/>
+  <text x="480" y="522" font-size="13.5" font-weight="600" text-anchor="middle" fill="#16212E">SQL Server: message IS persisted</text>
+  <text x="480" y="541" font-size="12.5" text-anchor="middle" fill="#5C6B7A">Bob sees it on reload. Nothing is lost.</text>
+
+  <rect x="60" y="576" width="840" height="46" fill="#FBEDE7" stroke="#B3421A" stroke-width="1.5"/>
+  <text x="80" y="596" font-size="13" font-weight="600" fill="#B3421A">Failure mode: silent partial delivery.</text>
+  <text x="80" y="614" font-size="12.5" fill="#16212E">No exception, no failed health check. It reaches users as “chat is laggy sometimes.” Safe on 1 instance, and written down.</text>
+</svg>

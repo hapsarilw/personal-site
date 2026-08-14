@@ -88,7 +88,12 @@ export function Hero() {
         <ButtonLink href="/#work" variant="primary" size="lg">
           Selected work <span aria-hidden="true">→</span>
         </ButtonLink>
-        <ButtonLink href={site.resumeFile} variant="outline" size="lg" download>
+        <ButtonLink
+          href={site.resumeFile}
+          variant="outline"
+          size="lg"
+          download={site.resumeDownloadName}
+        >
           Download résumé <span className={styles.resumeHint}>PDF</span>
         </ButtonLink>
       </div>

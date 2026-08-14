@@ -150,7 +150,8 @@
   overflow-x: auto;
   margin: 0;
   padding: 15px 16px;
-  color: var(--text);
+  /* A step below body text, so highlighted tokens carry the emphasis. */
+  color: var(--text-code);
   font: 400 13px / 1.7 var(--font-mono), monospace;
 }
 
@@ -158,40 +159,25 @@
   font: inherit;
 }
 
+/* Syntax colours are theme tokens; both themes are declared in globals.css. */
 .tok-comment {
-  color: var(--text-placeholder);
+  color: var(--text-faint);
 }
 
 .tok-string {
-  color: #9be58a;
+  color: var(--syn-str);
 }
 
 .tok-keyword {
-  color: #e48bff;
+  color: var(--syn-kw);
 }
 
 .tok-number {
-  color: #f2b25e;
+  color: var(--syn-num);
 }
 
 .tok-fn {
-  color: #7fd4ff;
-}
-
-[data-theme='light'] .tok-string {
-  color: #2f7d20;
-}
-
-[data-theme='light'] .tok-keyword {
-  color: #8b2bb0;
-}
-
-[data-theme='light'] .tok-number {
-  color: #9a5b00;
-}
-
-[data-theme='light'] .tok-fn {
-  color: #0d6c94;
+  color: var(--syn-fn);
 }
 
 /* ---- YouTube preview card ---- */
@@ -214,7 +200,8 @@
 .prose .video-card__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(8, 9, 10, 0.15), rgba(8, 9, 10, 0.72));
+  /* Sits over a photographic thumbnail, so it stays dark in both themes. */
+  background: linear-gradient(180deg, rgba(13, 8, 16, 0.15), rgba(13, 8, 16, 0.72));
 }
 
 .prose .video-card__play {

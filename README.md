@@ -114,8 +114,8 @@ serve the generated `out/` directory.
 
 ## Notes
 
-- `public/hapsari-laksmi-resume.pdf` is a **placeholder**. Replace it with the real résumé;
-  the path is set once in `site.resumeFile`.
+- `public/resume.pdf` is the résumé served at `/resume.pdf`; the path is set once in
+  `site.resumeFile`.
 - The About section has a portrait placeholder waiting for a 4:5 image.
 - `dist/` holds the previous no-build version of the site and can be deleted once you are
   happy with this one.

@@ -43,7 +43,12 @@ export function Contact() {
               {label} <span className={styles.linkArrow}>↗</span>
             </ButtonLink>
           ))}
-          <ButtonLink href={site.resumeFile} variant="primary" size="md" download>
+          <ButtonLink
+            href={site.resumeFile}
+            variant="primary"
+            size="md"
+            download={site.resumeDownloadName}
+          >
             RESUME.PDF ↓
           </ButtonLink>
         </div>

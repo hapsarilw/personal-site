@@ -3,8 +3,8 @@ export type Theme = 'dark' | 'light';
 export const THEME_STORAGE_KEY = 'hlw_theme_v1';
 
 export const THEME_COLORS: Record<Theme, string> = {
-  dark: '#08090A',
-  light: '#FBFAF8',
+  dark: '#0D0810',
+  light: '#FFF8FA',
 };
 
 export function isTheme(value: unknown): value is Theme {

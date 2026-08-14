@@ -9,12 +9,13 @@ export const site = {
   shortName: 'H. Laksmi',
   role: 'Junior Software Engineer',
   email: 'hapsari.laksmiw@gmail.com',
-  location: 'Bandung, Indonesia',
-  timezone: 'GMT+7',
+  location: 'Bali, Indonesia',
+  timezone: 'GMT+8',
   url: 'https://hapsarilw.vercel.app',
   description:
     'Four years of production frontend for enterprise logistics, now shipping the API behind it. Selected work, engineering notes, and availability.',
-  resumeFile: '/hapsari-laksmi-resume.pdf',
+  resumeFile: '/resume.pdf',
+  resumeDownloadName: 'Hapsari_Laksmi_W_Resume.pdf',
 } as const;
 
 export const socialLinks = [

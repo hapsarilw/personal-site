@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 700" width="960" height="700" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5C6B7A"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="700" fill="#F4F4F1"/>
+
+  <text x="60" y="52" font-size="12" letter-spacing="2.2" fill="#5C6B7A">CREW CHAT / FRONTEND v3</text>
+  <text x="60" y="90" font-size="30" font-weight="700" fill="#16212E">Six layers, one direction of flow</text>
+  <line x1="60" y1="112" x2="900" y2="112" stroke="#C9CFD6"/>
+
+  <!-- direction rail -->
+  <path d="M78,150 L78,556" stroke="#5C6B7A" stroke-width="1.5" marker-end="url(#ar3)"/>
+  <text x="60" y="360" font-size="11.5" letter-spacing="1.6" fill="#5C6B7A" transform="rotate(-90 60 360)" text-anchor="middle">DEPENDENCY DIRECTION</text>
+
+  <!-- L6 -->
+  <rect x="110" y="142" width="790" height="56" fill="#FFFFFF" stroke="#16212E" stroke-width="1.5"/>
+  <text x="132" y="166" font-size="13.5" font-weight="700" fill="#16212E" font-family="Menlo, monospace">chat.page.tsx</text>
+  <text x="132" y="185" font-size="12.5" fill="#5C6B7A">Two-pane layout and header. isCreatingGroup swaps the whole page for the New Group form.</text>
+
+  <!-- L5 -->
+  <rect x="110" y="206" width="790" height="56" fill="#FFFFFF" stroke="#16212E" stroke-width="1.5"/>
+  <text x="132" y="230" font-size="13.5" font-weight="700" fill="#16212E" font-family="Menlo, monospace">containers/chat-panes</text>
+  <text x="132" y="249" font-size="12.5" fill="#5C6B7A">ConversationListPane and ActivePane. The right pane is picked from a view.</text>
+
+  <!-- L4 provider -->
+  <rect x="110" y="270" width="790" height="62" fill="#E3EDF9" stroke="#2E5C8A" stroke-width="1.5"/>
+  <text x="132" y="294" font-size="13.5" font-weight="700" fill="#16212E" font-family="Menlo, monospace">chat.service.provider</text>
+  <text x="132" y="313" font-size="12.5" fill="#16212E">Calls useChat() ONCE for the whole subtree. A second call opens a second hub connection.</text>
+  <text x="132" y="329" font-size="12" fill="#2E5C8A">No component touches the socket or the repository. Everything goes through useChatContext().</text>
+
+  <!-- L3 orchestrator -->
+  <rect x="110" y="340" width="790" height="62" fill="#16212E"/>
+  <text x="132" y="364" font-size="13.5" font-weight="700" fill="#FFFFFF" font-family="Menlo, monospace">chat.service, useChat()</text>
+  <text x="132" y="383" font-size="12.5" fill="#9DB2C7">Wiring, not a state file. Holds the refs, calls 13 hooks in dependency order, exposes derived values.</text>
+  <text x="132" y="398" font-size="12" fill="#9DB2C7">activeIdRef, conversationsRef, messagesRef, loadRoomMoreRef, didAutoSelectRef</text>
+
+  <!-- L2 hooks -->
+  <rect x="110" y="410" width="790" height="128" fill="#FFFFFF" stroke="#16212E" stroke-width="1.5"/>
+  <text x="132" y="434" font-size="13.5" font-weight="700" fill="#16212E" font-family="Menlo, monospace">hooks/ : 13 files, one concern each</text>
+
+  <g font-size="11.5" fill="#16212E" font-family="Menlo, monospace">
+    <rect x="132" y="446" width="176" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="142" y="464">useChatRooms</text>
+    <rect x="318" y="446" width="176" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="328" y="464">useMemberDirectory</text>
+    <rect x="504" y="446" width="176" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="514" y="464">useMessagesData</text>
+    <rect x="690" y="446" width="188" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="700" y="464">useChatRealtime</text>
+
+    <rect x="132" y="478" width="176" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="142" y="496">useSendMessage</text>
+    <rect x="318" y="478" width="176" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="328" y="496">useMessageActions</text>
+    <rect x="504" y="478" width="176" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="514" y="496">useReadReceipts</text>
+    <rect x="690" y="478" width="188" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="700" y="496">useTypingIndicator</text>
+
+    <rect x="132" y="510" width="176" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="142" y="528">useOutgoingTyping</text>
+    <rect x="318" y="510" width="176" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="328" y="528">useSharedMedia</text>
+    <rect x="504" y="510" width="176" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="514" y="528">useChatNavigation</text>
+    <rect x="690" y="510" width="188" height="26" fill="#F0F2F5" stroke="#C9CFD6"/><text x="700" y="528">useVoiceRecorder …</text>
+  </g>
+
+  <!-- edges -->
+  <text x="110" y="578" font-size="12" letter-spacing="2" fill="#5C6B7A">THE EDGES</text>
+  <rect x="110" y="588" width="252" height="76" fill="#FFFFFF" stroke="#16212E" stroke-width="1.5"/>
+  <text x="130" y="612" font-size="13" font-weight="700" fill="#16212E" font-family="Menlo, monospace">state/</text>
+  <text x="130" y="632" font-size="12.5" fill="#5C6B7A">2 pure reducers, no React.</text>
+  <text x="130" y="650" font-size="12.5" fill="#5C6B7A">rooms and messages. Unit-testable.</text>
+
+  <rect x="378" y="588" width="252" height="76" fill="#FFFFFF" stroke="#16212E" stroke-width="1.5"/>
+  <text x="398" y="612" font-size="13" font-weight="700" fill="#16212E" font-family="Menlo, monospace">realtime/</text>
+  <text x="398" y="632" font-size="12.5" fill="#5C6B7A">SignalR ChatSocket.</text>
+  <text x="398" y="650" font-size="12.5" fill="#5C6B7A">Built once, handlers via ref.</text>
+
+  <rect x="646" y="588" width="254" height="76" fill="#FFFFFF" stroke="#16212E" stroke-width="1.5"/>
+  <text x="666" y="612" font-size="13" font-weight="700" fill="#16212E" font-family="Menlo, monospace">repository/</text>
+  <text x="666" y="632" font-size="12.5" fill="#5C6B7A">REST client.</text>
+  <text x="666" y="650" font-size="12.5" fill="#5C6B7A">History, search, backfill.</text>
+</svg>

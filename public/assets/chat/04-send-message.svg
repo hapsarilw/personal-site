@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 660" width="960" height="660" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#16212E"/>
+    </marker>
+    <marker id="ar4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2E5C8A"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="660" fill="#F4F4F1"/>
+
+  <text x="60" y="52" font-size="12" letter-spacing="2.2" fill="#5C6B7A">CREW CHAT / SEND PATH</text>
+  <text x="60" y="90" font-size="30" font-weight="700" fill="#16212E">One button, three branches</text>
+  <line x1="60" y1="112" x2="900" y2="112" stroke="#C9CFD6"/>
+
+  <!-- composer -->
+  <rect x="60" y="140" width="230" height="56" fill="#16212E"/>
+  <text x="80" y="164" font-size="13.5" font-weight="700" fill="#FFFFFF" font-family="Menlo, monospace">sendMessage()</text>
+  <text x="80" y="183" font-size="12.5" fill="#9DB2C7">clientId = pending-&lt;ts&gt;</text>
+
+  <path d="M290,168 L338,168" stroke="#16212E" stroke-width="1.5" marker-end="url(#ar4)"/>
+  <rect x="342" y="140" width="290" height="56" fill="#E3EDF9" stroke="#2E5C8A" stroke-width="1.5"/>
+  <text x="362" y="164" font-size="13" font-weight="700" fill="#16212E">Optimistic bubble rendered</text>
+  <text x="362" y="183" font-size="12.5" fill="#2E5C8A">replyTarget read into a local FIRST</text>
+
+  <path d="M487,196 L487,222" stroke="#16212E" stroke-width="1.5" marker-end="url(#ar4)"/>
+
+  <!-- branch labels -->
+  <path d="M487,222 L160,222 L160,250" fill="none" stroke="#16212E" stroke-width="1.5" marker-end="url(#ar4)"/>
+  <path d="M487,222 L487,250" fill="none" stroke="#16212E" stroke-width="1.5" marker-end="url(#ar4)"/>
+  <path d="M487,222 L790,222 L790,250" fill="none" stroke="#16212E" stroke-width="1.5" marker-end="url(#ar4)"/>
+
+  <!-- branch 1 text -->
+  <rect x="60" y="254" width="200" height="72" fill="#FFFFFF" stroke="#16212E" stroke-width="1.5"/>
+  <text x="80" y="278" font-size="13" font-weight="700" fill="#16212E">1 · Text</text>
+  <text x="80" y="298" font-size="12" fill="#5C6B7A" font-family="Menlo, monospace">SendMessage(</text>
+  <text x="80" y="315" font-size="12" fill="#5C6B7A" font-family="Menlo, monospace">  roomId, text)</text>
+
+  <!-- branch 2 reply -->
+  <rect x="387" y="254" width="200" height="72" fill="#FFFFFF" stroke="#16212E" stroke-width="1.5"/>
+  <text x="407" y="278" font-size="13" font-weight="700" fill="#16212E">2 · Reply</text>
+  <text x="407" y="298" font-size="12" fill="#5C6B7A" font-family="Menlo, monospace">+ replyId</text>
+  <text x="407" y="315" font-size="11.5" fill="#B3421A">not replyMessageId</text>
+
+  <!-- branch 3 media -->
+  <rect x="646" y="254" width="254" height="72" fill="#FFFFFF" stroke="#2E5C8A" stroke-width="2"/>
+  <text x="666" y="278" font-size="13" font-weight="700" fill="#16212E">3 · With media</text>
+  <text x="666" y="298" font-size="12.5" fill="#2E5C8A">three steps, none skippable</text>
+  <text x="666" y="315" font-size="12" fill="#5C6B7A">detail below</text>
+
+  <path d="M773,326 L773,352 L480,352 L480,378" fill="none" stroke="#2E5C8A" stroke-width="1.5" marker-end="url(#ar4b)"/>
+
+  <!-- media detail panel -->
+  <rect x="60" y="382" width="840" height="176" fill="#FFFFFF" stroke="#2E5C8A" stroke-width="1.5"/>
+  <text x="82" y="410" font-size="13.5" font-weight="700" fill="#16212E">The media path, and why the bytes skip the API</text>
+
+  <rect x="82" y="426" width="252" height="86" fill="#F0F2F5" stroke="#C9CFD6"/>
+  <text x="100" y="450" font-size="12.5" font-weight="700" fill="#2E5C8A">STEP 1</text>
+  <text x="100" y="470" font-size="12.5" fill="#16212E" font-family="Menlo, monospace">prepare-media</text>
+  <text x="100" y="490" font-size="12.5" fill="#5C6B7A">Backend issues a SAS URL.</text>
+  <text x="100" y="506" font-size="12.5" fill="#5C6B7A">Milliseconds of work.</text>
+
+  <path d="M340,468 L364,468" stroke="#2E5C8A" stroke-width="1.5" marker-end="url(#ar4b)"/>
+
+  <rect x="368" y="426" width="252" height="86" fill="#E3EDF9" stroke="#2E5C8A"/>
+  <text x="386" y="450" font-size="12.5" font-weight="700" fill="#2E5C8A">STEP 2</text>
+  <text x="386" y="470" font-size="12.5" fill="#16212E" font-family="Menlo, monospace">PUT bytes to Blob Storage</text>
+  <text x="386" y="490" font-size="12.5" fill="#16212E">Browser uploads DIRECT.</text>
+  <text x="386" y="506" font-size="12.5" fill="#16212E">App Service is not in the path.</text>
+
+  <path d="M626,468 L650,468" stroke="#2E5C8A" stroke-width="1.5" marker-end="url(#ar4b)"/>
+
+  <rect x="654" y="426" width="224" height="86" fill="#F0F2F5" stroke="#C9CFD6"/>
+  <text x="672" y="450" font-size="12.5" font-weight="700" fill="#2E5C8A">STEP 3</text>
+  <text x="672" y="470" font-size="12.5" fill="#16212E" font-family="Menlo, monospace">SendMessageWithMedia</text>
+  <text x="672" y="490" font-size="12.5" fill="#5C6B7A">Creates the row and</text>
+  <text x="672" y="506" font-size="12.5" fill="#5C6B7A">broadcasts. Skip it = no message.</text>
+
+  <text x="82" y="540" font-size="12.5" fill="#16212E"><tspan font-weight="700">Count guard:</tspan> if uploads.length !== files.length → throw. A short array sends fewer attachments than the user picked,</text>
+  <text x="82" y="552" font-size="12.5" fill="#16212E">and it would look like success. A visible failure beats a silent one.</text>
+
+  <!-- footer -->
+  <rect x="60" y="576" width="840" height="60" fill="#16212E"/>
+  <text x="82" y="600" font-size="13" font-weight="700" fill="#FFFFFF">Kept from the local bundle, deliberately</text>
+  <text x="82" y="620" font-size="12.5" fill="#9DB2C7">attachments: local object URLs stay, because CDN links can briefly 404 while storage settles.   replyTo: the broadcast doesn’t echo it,</text>
+  <text x="82" y="634" font-size="12.5" fill="#9DB2C7">so taking the server payload wholesale would strip the quote off your own reply the instant the server answered.</text>
+</svg>
