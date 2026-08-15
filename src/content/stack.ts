@@ -14,7 +14,7 @@ export const stackGroups: StackGroup[] = [
   },
   {
     title: 'BACKEND',
-    items: ['NestJS', 'Express', 'Node.js', 'REST API design'],
+    items: ['Express', 'Node.js', 'REST API design'],
   },
   {
     title: 'DATABASE & ORM',

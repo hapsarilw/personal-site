@@ -32,13 +32,13 @@ export const navLinks = [
 ] as const;
 
 export const hero = {
-  availability: 'OPEN TO JUNIOR SOFTWARE ENGINEER ROLES',
+  availability: 'OPEN TO FRONTEND AND JUNIOR SOFTWARE ENGINEER ROLES',
   eyebrow: 'HAPSARI LAKSMI WIJAYANTI  /  JUNIOR SOFTWARE ENGINEER',
   headline: 'Four years of production frontend. Now shipping the API behind it.',
   summary:
-    'I write TypeScript for enterprise logistics, where a mis-rendered pallet ID sends someone to the wrong aisle. That taught me to be careful about state and unromantic about clever code. I am applying the same discipline to the other half of the stack NestJS, Prisma, Postgres, containerised and deployed',
+    'I write typescript for enterprise logistics. One mis-rendered pallet id and someone walks to the wrong aisle, so i\'m careful about state and unimpressed by code that shows off. Currently pointing that same discipline at express, prisma, postgres, containerised and shipped.',
   badges: [
-    { label: '4 YRS PRODUCTION REACT', accent: true },
+    { label: '48-COMPONENT UI SYSTEM', accent: true },
     { label: 'LED A FEATURE AREA END TO END', accent: false },
     { label: 'BUILDING FULL-STACK NOW', accent: false },
   ],
@@ -51,13 +51,13 @@ export const hero = {
 
 export const about = {
   paragraphs: [
-    'I write frontend for enterprise logistics  software where a mis-rendered pallet ID sends someone to the wrong aisle. Four years of that has made me careful about state and unromantic about clever code.',
-    'I am looking for a junior software engineer role where I can widen out: keep the React and TypeScript depth, and add the backend, testing, and systems work I currently only meet from the client side of the fetch.',
+    'I got into software through the part people actually touch. Frontend taught me that trust lives in small stuff, a loading state that doesn\'t lie, a form that fails without drama, a layout that survives bad wifi.',
+    'Now i\'m going wide without losing the depth. Backend, testing, systems, all the stuff. Because the engineer i\'m becoming owns the whole feature, from the call where someone explains what they actually need to the query that makes it happen.',
   ],
   facts: [
     { label: 'LEARNING', value: 'NestJS, Prisma and Postgres  the other side of the request' },
     { label: 'BUILDING', value: 'OptiRoute  a dispatcher dashboard I use as a proving ground' },
-    { label: 'HABIT', value: 'Writing the reusable version the second time, not the fourth' },
+    { label: 'HABIT', value: "I frame feedback as what it fixes, not what's wrong" },
   ],
 } as const;
 

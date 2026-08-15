@@ -72,3 +72,8 @@
   flex-wrap: wrap;
   gap: 6px;
 }
+
+.preview {
+  align-self: flex-start;
+  margin-top: 18px;
+}

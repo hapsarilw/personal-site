@@ -10,6 +10,7 @@ export type Project = {
   description: string;
   metrics: ProjectMetric[];
   tech: string[];
+  previewUrl?: string;
 };
 
 export const projects: Project[] = [
@@ -18,7 +19,7 @@ export const projects: Project[] = [
     meta: 'LEAD FRONTEND · 2022–NOW',
     title: 'Crew communication portal',
     description:
-      'Lead frontend developer on a vessel crew portal at OneByOne Logistical. Real-time group chat on SignalR with optimistic rendering, live typing, edit, delete and unread-count sync  sub-second, no polling. React 19 + TypeScript + Vite across 350+ modules and 15 feature areas.',
+      'Lead frontend developer on a vessel crew portal at OneByOne Logistical. Real-time group chat on SignalR with optimistic rendering, live typing, edit, unread-count sync  sub-second, no polling. Spanning 350+ modules across 15 feature areas.',
     metrics: [
       { label: 'commits authored', value: '391 of 576' },
       { label: 'UI system', value: '48 components' },
@@ -36,6 +37,7 @@ export const projects: Project[] = [
       { label: 'filter + sort latency', value: 'under 200ms' },
     ],
     tech: ['Next.js 16', 'TypeScript', 'Mapbox GL', 'TanStack Virtual', 'Vitest'],
+    previewUrl: 'https://opti-route-mauve.vercel.app/',
   },
   {
     id: '03',

@@ -10,7 +10,7 @@ export const lookingForCards: LookingForCard[] = [
     eyebrow: 'THE ROLE',
     title: 'Junior software engineer',
     description:
-      'Frontend-leaning or full-stack. Four years of production React means I arrive useful on day one  and I am already writing the NestJS half in my own time.',
+      'Frontend-leaning or full-stack. Production React experience means I arrive useful on day one  and I am already writing the NestJS half in my own time.',
     points: ['React + TypeScript foundation', 'Open to backend and platform'],
   },
   {
@@ -18,7 +18,7 @@ export const lookingForCards: LookingForCard[] = [
     title: 'Somewhere with real users',
     description:
       'Operations tooling, logistics, anything with a domain. I do my best work where correctness matters more than novelty.',
-    points: ['Code review and pairing', 'Remote or Bandung / Jakarta'],
+    points: ['Code review and pairing', 'Remote or on-site Bali / Jakarta'],
   },
   {
     eyebrow: 'DAY ONE',

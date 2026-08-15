@@ -1,5 +1,6 @@
 import { Section } from '@/components/layout/section';
 import { RevealGroup } from '@/components/motion/reveal-group';
+import { ButtonLink } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { Tag } from '@/components/ui/tag';
@@ -37,6 +38,19 @@ export function SelectedWork() {
                 <Tag key={item}>{item}</Tag>
               ))}
             </div>
+
+            {project.previewUrl ? (
+              <ButtonLink
+                href={project.previewUrl}
+                variant="subtle"
+                size="sm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.preview}
+              >
+                Live preview <span aria-hidden="true">↗</span>
+              </ButtonLink>
+            ) : null}
           </Card>
         ))}
       </RevealGroup>
