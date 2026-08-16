@@ -10,7 +10,7 @@ export const stackGroups: StackGroup[] = [
   },
   {
     title: 'FRONTEND',
-    items: ['React 19', 'Next.js 16'],
+    items: ['React 19', 'Next.js 16', 'Three.js'],
   },
   {
     title: 'BACKEND',
