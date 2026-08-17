@@ -1,7 +1,9 @@
+import Image from 'next/image';
+
 import { Section } from '@/components/layout/section';
 import { Reveal } from '@/components/motion/reveal';
 import { SectionHeading } from '@/components/ui/section-heading';
-import { about } from '@/content/site';
+import { about, site } from '@/content/site';
 
 import styles from './about.module.css';
 
@@ -15,8 +17,20 @@ export function About() {
       <div className={styles.layout}>
         <Reveal>
           <div className={styles.portrait}>
-            <span className={styles.portraitLabel}>PORTRAIT PLACEHOLDER</span>
-            <span className={styles.portraitHint}>4 : 5 · drop a photo here</span>
+            <Image
+              src="/assets/portrait-dark.jpg"
+              alt={`Portrait of ${site.name}`}
+              fill
+              sizes="(max-width: 640px) 100vw, 420px"
+              className={`${styles.portraitImage} ${styles.forDark}`}
+            />
+            <Image
+              src="/assets/portrait-light.jpg"
+              alt={`Portrait of ${site.name}`}
+              fill
+              sizes="(max-width: 640px) 100vw, 420px"
+              className={`${styles.portraitImage} ${styles.forLight}`}
+            />
           </div>
         </Reveal>
 
