@@ -8,17 +8,17 @@ export type LookingForCard = {
 export const lookingForCards: LookingForCard[] = [
   {
     eyebrow: 'THE ROLE',
-    title: 'Junior software engineer',
+    title: 'Frontend or full-stack engineer',
     description:
-      'Frontend-leaning or full-stack. Production React experience means I arrive useful on day one  and I am already writing the NestJS half in my own time.',
-    points: ['React + TypeScript foundation', 'Open to backend and platform'],
+      'Four years of production React means I arrive useful on day one, and I am already writing the NestJS half in my own time.',
+    points: ['React + TypeScript, four years in production', 'Open to backend and platform'],
   },
   {
     eyebrow: 'THE TEAM',
     title: 'Somewhere with real users',
     description:
       'Operations tooling, logistics, anything with a domain. I do my best work where correctness matters more than novelty.',
-    points: ['Code review and pairing', 'Remote or on-site Bali / Jakarta'],
+    points: ['Code review and pairing', 'Remote, GMT+8  full APAC overlap, European mornings'],
   },
   {
     eyebrow: 'DAY ONE',

@@ -14,7 +14,7 @@ export const stackGroups: StackGroup[] = [
   },
   {
     title: 'BACKEND',
-    items: ['Express', 'Node.js', 'REST API design'],
+    items: ['Node.js', 'NestJS', 'Express', 'REST API design'],
   },
   {
     title: 'DATABASE & ORM',
@@ -39,6 +39,10 @@ export const stackGroups: StackGroup[] = [
   {
     title: 'REAL-TIME & MAPS',
     items: ['SignalR', 'Mapbox GL'],
+  },
+  {
+    title: 'AI & LLM',
+    items: ['LLM integration', 'Structured output', 'Schema-constrained validation'],
   },
   {
     title: 'TOOLING & TESTING',
