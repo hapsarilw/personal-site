@@ -12,12 +12,9 @@
 }
 
 .bar {
-  position: sticky;
-  /* Sits below the fixed site header rather than colliding with it. */
-  top: var(--header-height);
-  z-index: 30;
+  /* Scrolls away with the page: the post title should own the reading view. */
+  position: relative;
   border-bottom: 1px solid var(--border-faint);
-  /* Opaque: body copy scrolls beneath it, and translucency here only ghosts. */
   background: var(--bg);
 }
 
