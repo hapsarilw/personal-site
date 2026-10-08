@@ -3,68 +3,30 @@ export type StackGroup = {
   items: string[];
 };
 
+/**
+ * Kept to five groups so the grid fills a single row on desktop. Only what
+ * current frontend and full-stack roles ask for; the long tail lives in the
+ * project write-ups.
+ */
 export const stackGroups: StackGroup[] = [
   {
-    title: 'LANGUAGES',
-    items: ['TypeScript', 'JavaScript (ES6+)', 'HTML5', 'CSS3 & Sass'],
-  },
-  {
     title: 'FRONTEND',
-    items: ['React 19', 'Next.js 16', 'Vite', 'React Router', 'Three.js', 'React Three Fiber'],
+    items: ['TypeScript', 'React 19', 'Next.js 16', 'Tailwind CSS', 'Three.js & R3F', 'SignalR'],
   },
   {
-    title: 'BACKEND',
-    items: ['Node.js', 'NestJS', 'Express', 'REST API design'],
+    title: 'STATE & FORMS',
+    items: ['TanStack Query', 'Redux Toolkit', 'Zustand', 'React Hook Form', 'Zod'],
   },
   {
-    title: 'DATABASE & ORM',
-    items: ['PostgreSQL', 'Prisma', 'SQL', 'Schema migrations'],
+    title: 'BACKEND & AI',
+    items: ['Node.js', 'NestJS', 'PostgreSQL', 'Prisma', 'REST & JWT auth', 'LLM integration'],
   },
   {
-    title: 'AUTH & ACCESS',
-    items: ['JWT authentication', 'Role-based access', 'Guards & interceptors'],
+    title: 'TESTING & QUALITY',
+    items: ['Vitest & RTL', 'Playwright', 'Storybook', 'WCAG 2.2 accessibility'],
   },
   {
-    title: 'STATE & DATA',
-    items: [
-      'Redux Toolkit',
-      'Zustand',
-      'TanStack Query',
-      'TanStack Table & Virtual',
-      'Web Workers & Comlink',
-      'IndexedDB',
-    ],
-  },
-  {
-    title: 'FORMS & VALIDATION',
-    items: ['React Hook Form', 'Zod', 'Formik', 'Yup'],
-  },
-  {
-    title: 'UI & DESIGN SYSTEMS',
-    items: ['Tailwind CSS', 'Radix UI', 'Storybook', 'Component architecture'],
-  },
-  {
-    title: 'REAL-TIME & MAPS',
-    items: ['SignalR', 'Mapbox GL'],
-  },
-  {
-    title: 'AI & LLM',
-    items: ['LLM integration', 'Structured output', 'Schema-constrained validation'],
-  },
-  {
-    title: 'TOOLING & TESTING',
-    items: [
-      'Git & GitHub',
-      'Vitest & RTL',
-      'Playwright & axe',
-      'Property tests (fast-check)',
-      'MSW',
-      'Lighthouse CI',
-      'SonarQube',
-    ],
-  },
-  {
-    title: 'DEVOPS & CLOUD',
-    items: ['Docker', 'AWS', 'CI/CD pipelines', 'GitHub Actions', 'Azure Pipelines & Vercel'],
+    title: 'CLOUD & DELIVERY',
+    items: ['Docker', 'AWS', 'GitHub Actions', 'CI/CD pipelines', 'Vercel'],
   },
 ];
