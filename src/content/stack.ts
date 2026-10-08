@@ -10,7 +10,7 @@ export const stackGroups: StackGroup[] = [
   },
   {
     title: 'FRONTEND',
-    items: ['React 19', 'Next.js 16', 'Three.js'],
+    items: ['React 19', 'Next.js 16', 'Vite', 'React Router', 'Three.js', 'React Three Fiber'],
   },
   {
     title: 'BACKEND',
@@ -26,7 +26,14 @@ export const stackGroups: StackGroup[] = [
   },
   {
     title: 'STATE & DATA',
-    items: ['Redux Toolkit', 'Zustand', 'TanStack Query', 'TanStack Table & Virtual'],
+    items: [
+      'Redux Toolkit',
+      'Zustand',
+      'TanStack Query',
+      'TanStack Table & Virtual',
+      'Web Workers & Comlink',
+      'IndexedDB',
+    ],
   },
   {
     title: 'FORMS & VALIDATION',
@@ -46,10 +53,18 @@ export const stackGroups: StackGroup[] = [
   },
   {
     title: 'TOOLING & TESTING',
-    items: ['Git & GitHub', 'Vitest & RTL', 'MSW', 'SonarQube'],
+    items: [
+      'Git & GitHub',
+      'Vitest & RTL',
+      'Playwright & axe',
+      'Property tests (fast-check)',
+      'MSW',
+      'Lighthouse CI',
+      'SonarQube',
+    ],
   },
   {
     title: 'DEVOPS & CLOUD',
-    items: ['Docker', 'AWS', 'CI/CD pipelines', 'Azure Pipelines & Vercel'],
+    items: ['Docker', 'AWS', 'CI/CD pipelines', 'GitHub Actions', 'Azure Pipelines & Vercel'],
   },
 ];
