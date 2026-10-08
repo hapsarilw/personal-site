@@ -32,7 +32,8 @@ type ButtonLinkProps = StyleProps &
 
 /**
  * Internal hrefs route through `next/link` for client-side navigation and
- * prefetching; external and hash links stay plain anchors.
+ * prefetching; external links, hash links and static files (`/resume.pdf`)
+ * stay plain anchors, so a PDF or video is never prefetched as a route.
  */
 export function ButtonLink({
   variant,
@@ -43,7 +44,8 @@ export function ButtonLink({
   ...props
 }: ButtonLinkProps) {
   const classes = classesFor({ variant, size, className });
-  const isInternal = href.startsWith('/') && !href.startsWith('/#');
+  const isFile = /\.[a-z0-9]+$/i.test(href);
+  const isInternal = href.startsWith('/') && !href.startsWith('/#') && !isFile;
 
   if (isInternal) {
     return (
