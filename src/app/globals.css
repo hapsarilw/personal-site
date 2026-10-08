@@ -227,6 +227,11 @@ html {
   color-scheme: dark;
 }
 
+/* A modal dialog (project video or PDF) holds the page still behind it. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   background: var(--bg);

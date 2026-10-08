@@ -6,12 +6,16 @@ import { SectionHeading } from '@/components/ui/section-heading';
 import { Tag } from '@/components/ui/tag';
 import { projects } from '@/content/projects';
 
+import { ProjectMediaLink } from './project-media-link';
 import styles from './selected-work.module.css';
+
+/** Project files that open in a modal rather than a new tab. */
+const MEDIA_FILE = /\.(mp4|webm|pdf)$/i;
 
 export function SelectedWork() {
   return (
     <Section id="work">
-      <SectionHeading index="01" title="Selected work" meta="THREE BUILDS" />
+      <SectionHeading index="01" title="Selected work" meta="FOUR BUILDS" />
 
       <RevealGroup className={styles.grid} stagger={0.1} distance={40}>
         {projects.map((project) => (
@@ -39,17 +43,36 @@ export function SelectedWork() {
               ))}
             </div>
 
-            {project.previewUrl ? (
-              <ButtonLink
-                href={project.previewUrl}
-                variant="subtle"
-                size="sm"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.preview}
-              >
-                Live preview <span aria-hidden="true">↗</span>
-              </ButtonLink>
+            {project.previewUrl || project.links ? (
+              <div className={styles.actions}>
+                {project.previewUrl ? (
+                  <ButtonLink
+                    href={project.previewUrl}
+                    variant="subtle"
+                    size="sm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Live preview <span aria-hidden="true">↗</span>
+                  </ButtonLink>
+                ) : null}
+
+                {project.links?.map((link) =>
+                  MEDIA_FILE.test(link.href) ? (
+                    <ProjectMediaLink
+                      key={link.href}
+                      href={link.href}
+                      label={link.label}
+                      title={`${project.title} · ${link.label}`}
+                      poster={link.poster}
+                    />
+                  ) : (
+                    <ButtonLink key={link.href} href={link.href} variant="subtle" size="sm">
+                      {link.label} <span aria-hidden="true">→</span>
+                    </ButtonLink>
+                  ),
+                )}
+              </div>
             ) : null}
           </Card>
         ))}

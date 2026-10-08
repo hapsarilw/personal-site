@@ -1,6 +1,7 @@
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* Two columns on desktop: four projects sit as a 2 × 2 grid instead of 3 + 1. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
   gap: clamp(14px, 2vw, 22px);
 }
 
@@ -73,7 +74,9 @@
   gap: 6px;
 }
 
-.preview {
-  align-self: flex-start;
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-top: 18px;
 }
