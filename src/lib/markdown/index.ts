@@ -10,6 +10,7 @@ import { renderBlocks } from './render';
  *
  * Supported beyond CommonMark basics:
  *   `![caption](src)` on its own line  → figure with caption, links to full size
+ *   `![caption](clip.mp4 "poster.jpg")` → self-hosted video player with caption
  *   a bare YouTube URL on its own line → video preview card
  */
 export function renderMarkdown(source: string): string {

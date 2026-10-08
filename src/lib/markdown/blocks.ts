@@ -6,6 +6,7 @@ export type Block =
   | { type: 'code'; language: string; code: string }
   | { type: 'figure'; src: string; caption: string }
   | { type: 'video'; id: string }
+  | { type: 'clip'; src: string; caption: string; poster: string }
   | { type: 'divider' };
 
 const FENCE = /^```(\w*)\s*$/;
@@ -14,7 +15,8 @@ const UNORDERED_ITEM = /^[-*]\s+(.*)$/;
 const ORDERED_ITEM = /^\d+\.\s+(.*)$/;
 const QUOTE = /^>\s?(.*)$/;
 const DIVIDER = /^-{3,}$/;
-const IMAGE = /^!\[([^\]]*)\]\(([^)\s]+)\)$/;
+const IMAGE = /^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)$/;
+const VIDEO_FILE = /\.(mp4|webm)$/i;
 const YOUTUBE =
   /^(?:https?:\/\/)?(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?(?:[^\s]*&)?v=|embed\/|live\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,20})(?:[?&#][^\s]*)?$/;
 
@@ -66,7 +68,13 @@ export function parseBlocks(source: string): Block[] {
 
     const image = IMAGE.exec(line);
     if (image) {
-      blocks.push({ type: 'figure', src: image[2] ?? '', caption: image[1] ?? '' });
+      const src = image[2] ?? '';
+      const caption = image[1] ?? '';
+      blocks.push(
+        VIDEO_FILE.test(src)
+          ? { type: 'clip', src, caption, poster: image[3] ?? '' }
+          : { type: 'figure', src, caption },
+      );
       index += 1;
       continue;
     }

@@ -79,10 +79,11 @@ Frontmatter is validated at build time: a missing `title`, a bad date, or an unk
 fails the build rather than shipping a broken post.
 
 Markdown supports headings, lists, quotes, fenced code (` ```ts `, ` ```py `, ` ```sql `),
-bold, italic, inline code and links, plus two extras:
+bold, italic, inline code and links, plus three extras:
 
 ```markdown
 ![caption text](/assets/diagram.png)      → figure with caption, click to open full size
+![caption](/assets/clip.mp4 "/assets/clip.jpg") → self-hosted video player; the quoted poster is optional
 https://www.youtube.com/watch?v=VIDEOID   → on its own line, becomes a video preview card
 ```
 

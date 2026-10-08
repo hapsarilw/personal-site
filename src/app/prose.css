@@ -121,6 +121,16 @@
   height: auto;
 }
 
+.prose figure.clip video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+
 .prose figcaption {
   margin-top: 10px;
   color: var(--text-faint);

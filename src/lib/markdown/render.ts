@@ -30,6 +30,24 @@ function renderFigure(src: string, caption: string): string {
   ].join('');
 }
 
+/** A self-hosted clip. The optional poster comes from the markdown title: `![caption](a.mp4 "a.jpg")`. */
+function renderClip(src: string, caption: string, poster: string): string {
+  const safeSrc = sanitiseUrl(src);
+  if (!safeSrc) return '';
+
+  const safePoster = poster ? sanitiseUrl(poster) : '';
+  const posterAttr = safePoster ? ` poster="${safePoster}"` : '';
+  const label = caption ? ` aria-label="${escapeHtml(caption)}"` : '';
+  const captionHtml = caption ? `<figcaption>${renderInline(caption)}</figcaption>` : '';
+
+  return [
+    '<figure class="clip">',
+    `<video src="${safeSrc}"${posterAttr}${label} controls playsinline preload="metadata"></video>`,
+    captionHtml,
+    '</figure>',
+  ].join('');
+}
+
 function renderVideo(id: string): string {
   const safeId = encodeURIComponent(id);
   const watchUrl = `https://www.youtube.com/watch?v=${safeId}`;
@@ -70,6 +88,9 @@ function renderBlock(block: Block): string {
 
     case 'video':
       return renderVideo(block.id);
+
+    case 'clip':
+      return renderClip(block.src, block.caption, block.poster);
 
     case 'divider':
       return '<hr />';
