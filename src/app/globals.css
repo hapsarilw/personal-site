@@ -18,7 +18,6 @@
   /* Accent. --accf fills, buttons, underlines; --acx is the text-safe one. */
   --accf: #ff4d8d;
   --acx: #ff4d8d;
-  --acx-rgb: 255, 77, 141;
   --onacc: #2b0a18;
 
   /* Accent alphas  rgba(255, 77, 141, a); light multiplies every a by 1.5. */
@@ -89,7 +88,6 @@
   /* Accent */
   --accent: var(--accf);
   --accent-text: var(--acx);
-  --accent-comet: var(--acx-rgb);
   --on-accent: var(--onacc);
   --accent-fade: var(--a00);
   --accent-wash: var(--a06);
@@ -156,7 +154,6 @@
 
   /* Fills keep the full accent; text darkens it to ACC × 0.46 to stay legible. */
   --acx: #752341;
-  --acx-rgb: 117, 35, 65;
 
   --a06: rgba(255, 77, 141, 0.09);
   --a10: rgba(255, 77, 141, 0.15);

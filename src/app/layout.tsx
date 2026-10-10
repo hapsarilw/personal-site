@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 import { Archivo, JetBrains_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
 
-import { CometTrail } from '@/components/background/comet-trail';
 import { ParticleField } from '@/components/background/particle-field';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
@@ -76,7 +75,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className={`${archivo.variable} ${jetBrainsMono.variable}`}>
         <ThemeProvider>
           <ParticleField />
-          <CometTrail />
           <Header />
           {children}
           <Footer />
